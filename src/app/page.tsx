@@ -176,7 +176,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
-                    {[...Array(12)].map((_, i) => (
+                    {[...Array(20)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -212,7 +212,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
-                    {[...Array(4)].map((_, i) => (
+                    {[...Array(6)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -248,7 +248,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
-                    {[...Array(12)].map((_, i) => (
+                    {[...Array(20)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -284,7 +284,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
-                    {[...Array(4)].map((_, i) => (
+                    {[...Array(6)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -314,37 +314,62 @@ export default function Home() {
               </div>
               
               {/* Title container with padding for the light border */}
-              <div className="px-6 py-6 sm:px-8 sm:py-6 md:px-12 md:py-8 lg:px-16 lg:py-10">
+              <div className="px-6 py-6 sm:px-8 sm:py-6 md:px-12 md:py-8 lg:px-16 lg:py-10 relative">
+                {/* Luxury background pattern */}
+                <div className="absolute inset-0 opacity-10" style={{
+                  backgroundImage: `
+                    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+                    linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.1) 50%, transparent 60%)
+                  `
+                }}></div>
+                
+                {/* Luxury corner accents */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-yellow-500/60"></div>
+                <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-yellow-500/60"></div>
+                <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-yellow-500/60"></div>
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-500/60"></div>
+                
                 <motion.h1 
-                  className="text-3xl sm:text-[5vh] md:text-[7vh] lg:text-[9vh] font-black bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent cursor-pointer font-serif leading-none tracking-tight text-center"
+                  className="text-3xl sm:text-[5vh] md:text-[7vh] lg:text-[9vh] font-black cursor-pointer font-serif leading-none tracking-wider text-center font-extrabold"
+                  style={{
+                    textShadow: `
+                      -2px -2px 0 #FFD700,
+                      2px -2px 0 #FFD700,
+                      -2px 2px 0 #FFD700,
+                      2px 2px 0 #FFD700,
+                      -1px -1px 0 #FFD700,
+                      1px -1px 0 #FFD700,
+                      -1px 1px 0 #FFD700,
+                      1px 1px 0 #FFD700,
+                      0 0 15px #FFD700,
+                      0 0 25px #FFD700,
+                      0 0 35px #FFD700,
+                      0 0 45px #FFD700,
+                      0 0 55px #FFD700,
+                      0 0 65px #FFD700
+                    `,
+                    WebkitTextStroke: '3px #FFD700',
+                    filter: 'drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 25px rgba(255, 215, 0, 0.7)) drop-shadow(0 0 35px rgba(255, 215, 0, 0.5)) drop-shadow(0 0 45px rgba(255, 215, 0, 0.3))',
+                    color: '#000000',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    fontVariant: 'small-caps'
+                  }}
                   initial={{ opacity: 0, scale: 0.5, y: -100, rotateX: -90 }}
                   animate={{ 
                     opacity: 1, 
                     scale: 1, 
                     y: 0,
-                    rotateX: 0,
-                    textShadow: [
-                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4)",
-                      "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6)",
-                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4)"
-                    ]
+                    rotateX: 0
                   }}
                   transition={{ 
                     duration: 2.0, 
                     ease: "easeOut",
-                    delay: 0.3,
-                    textShadow: {
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }
+                    delay: 0.3
                   }}
                   whileHover={{ 
-                    scale: 1.02,
-                    textShadow: "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6)"
-                  }}
-                  style={{
-                    filter: "drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.2))"
+                    scale: 1.02
                   }}
                   onMouseMove={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();

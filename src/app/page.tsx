@@ -163,58 +163,98 @@ export default function Home() {
             </div>
           </div>
           
-          <motion.h1 
-            className="text-5xl sm:text-7xl font-bold mb-4 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent cursor-pointer font-serif"
-            initial={{ opacity: 0, scale: 0.8, y: -50 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              y: 0,
-              textShadow: [
-                "0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4), 0 0 80px rgba(255, 215, 0, 0.2)",
-                "0 0 30px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.8), 0 0 90px rgba(255, 215, 0, 0.6), 0 0 120px rgba(255, 215, 0, 0.4)",
-                "0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4), 0 0 80px rgba(255, 215, 0, 0.2)"
-              ]
-            }}
-            transition={{ 
-              duration: 1.2, 
-              ease: "easeOut",
-              delay: 0.3,
-              textShadow: {
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              textShadow: "0 0 40px rgba(255, 215, 0, 1), 0 0 80px rgba(255, 215, 0, 0.8), 0 0 120px rgba(255, 215, 0, 0.6), 0 0 160px rgba(255, 215, 0, 0.4)"
-            }}
-            style={{
-              filter: "drop-shadow(0 0 30px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 60px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 90px rgba(255, 215, 0, 0.2))"
-            }}
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              const centerX = rect.width / 2;
-              const centerY = rect.height / 2;
-              const deltaX = (x - centerX) / centerX;
-              const deltaY = (y - centerY) / centerY;
+          <div className="relative w-full mb-8">
+            {/* Title container with light border */}
+            <div className="relative inline-block mx-auto">
+              {/* Casino-style light border around the title container */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Corner lights only - no duplicates */}
+                {/* Top-left corner */}
+                <motion.div
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -top-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
+                />
+                
+                {/* Top-right corner */}
+                <motion.div
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  className="absolute -top-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
+                />
+                
+                {/* Bottom-left corner */}
+                <motion.div
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.0 }}
+                  className="absolute -bottom-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
+                />
+                
+                {/* Bottom-right corner */}
+                <motion.div
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                  className="absolute -bottom-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
+                />
+              </div>
               
-              e.currentTarget.style.filter = `
-                drop-shadow(0 0 30px rgba(255, 215, 0, 0.6)) 
-                drop-shadow(0 0 60px rgba(255, 215, 0, 0.4)) 
-                drop-shadow(0 0 90px rgba(255, 215, 0, 0.2))
-                drop-shadow(${deltaX * 10}px ${deltaY * 10}px 20px rgba(255, 215, 0, 0.3))
-              `;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.filter = "drop-shadow(0 0 30px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 60px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 90px rgba(255, 215, 0, 0.2))";
-            }}
-          >
-            HERNANDEZ CASINO
-          </motion.h1>
+              {/* Title container with padding for the light border */}
+              <div className="px-8 py-6 sm:px-12 sm:py-8 md:px-16 md:py-10 lg:px-20 lg:py-12">
+                <motion.h1 
+                  className="text-[8vh] sm:text-[10vh] md:text-[12vh] lg:text-[14vh] font-black bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent cursor-pointer font-serif leading-none tracking-tight text-center"
+                  initial={{ opacity: 0, scale: 0.5, y: -100, rotateX: -90 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1, 
+                    y: 0,
+                    rotateX: 0,
+                    textShadow: [
+                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4)",
+                      "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6)",
+                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4)"
+                    ]
+                  }}
+                  transition={{ 
+                    duration: 2.0, 
+                    ease: "easeOut",
+                    delay: 0.3,
+                    textShadow: {
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }
+                  }}
+                  whileHover={{ 
+                    scale: 1.02,
+                    textShadow: "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6)"
+                  }}
+                  style={{
+                    filter: "drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.2))"
+                  }}
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const deltaX = (x - centerX) / centerX;
+                    const deltaY = (y - centerY) / centerY;
+                    
+                    e.currentTarget.style.filter = `
+                      drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)) 
+                      drop-shadow(0 0 40px rgba(255, 215, 0, 0.2))
+                      drop-shadow(${deltaX * 10}px ${deltaY * 10}px 20px rgba(255, 215, 0, 0.3))
+                    `;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.filter = "drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.2))";
+                  }}
+                >
+                  HERNANDEZ CASINO
+                </motion.h1>
+              </div>
+            </div>
+          </div>
           
           <p className="text-2xl text-yellow-200 mb-2 font-serif">Birthday Edition</p>
           

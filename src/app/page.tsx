@@ -168,34 +168,149 @@ export default function Home() {
             <div className="relative inline-block mx-auto">
               {/* Casino-style light border around the title container */}
               <div className="absolute inset-0 pointer-events-none">
-                {/* Corner lights only - no duplicates */}
-                {/* Top-left corner */}
-                <motion.div
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
-                />
+                {/* Top border lights */}
+                <div className="absolute -top-2 left-0 right-0 flex justify-between items-center">
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                  <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
+                    {[...Array(30)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ 
+                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
+                          boxShadow: [
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
+                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
+                          ]
+                        }}
+                        transition={{ 
+                          duration: 0.5, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                          delay: i * 0.01
+                        }}
+                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
+                      />
+                    ))}
+                  </div>
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.1 }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                </div>
                 
-                {/* Top-right corner */}
-                <motion.div
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  className="absolute -top-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
-                />
+                {/* Right border lights */}
+                <div className="absolute top-0 bottom-0 -right-2 flex flex-col justify-between items-center">
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                  <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+                    {[...Array(8)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ 
+                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
+                          boxShadow: [
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
+                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
+                          ]
+                        }}
+                        transition={{ 
+                          duration: 0.5, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                          delay: i * 0.04 + 0.5
+                        }}
+                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
+                      />
+                    ))}
+                  </div>
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 2.1 }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                </div>
                 
-                {/* Bottom-left corner */}
-                <motion.div
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.0 }}
-                  className="absolute -bottom-2 -left-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
-                />
+                {/* Bottom border lights */}
+                <div className="absolute -bottom-2 left-0 right-0 flex justify-between items-center">
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                  <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
+                    {[...Array(30)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ 
+                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
+                          boxShadow: [
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
+                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
+                          ]
+                        }}
+                        transition={{ 
+                          duration: 0.5, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                          delay: i * 0.01 + 1.0
+                        }}
+                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
+                      />
+                    ))}
+                  </div>
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 3.6 }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                </div>
                 
-                {/* Bottom-right corner */}
-                <motion.div
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                  className="absolute -bottom-2 -right-2 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-300 rounded-full shadow-lg shadow-yellow-300/60"
-                />
+                {/* Left border lights */}
+                <div className="absolute top-0 bottom-0 -left-2 flex flex-col justify-between items-center">
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 3.9 }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                  <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+                    {[...Array(8)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ 
+                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
+                          boxShadow: [
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
+                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
+                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
+                          ]
+                        }}
+                        transition={{ 
+                          duration: 0.5, 
+                          repeat: Infinity, 
+                          ease: "easeInOut",
+                          delay: i * 0.04 + 1.5
+                        }}
+                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
+                      />
+                    ))}
+                  </div>
+                  <motion.div
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 4.8 }}
+                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
+                  />
+                </div>
               </div>
               
               {/* Title container with padding for the light border */}

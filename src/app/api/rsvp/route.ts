@@ -5,13 +5,14 @@ import { google } from 'googleapis';
 const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID;
 const API_KEY = process.env.GOOGLE_SHEETS_API_KEY;
 
-// Sample data for public display (what everyone sees)
-const publicResponses = [
-  { name: "John Doe", email: "john@example.com", response: "yes", message: "Can't wait for Texas Hold'em! 🃏", preferredGame: "texas-holdem" },
-  { name: "Sarah Wilson", email: "sarah@example.com", response: "yes", preferredGame: "blackjack" },
-  { name: "Mike Chen", email: "mike@example.com", response: "maybe", message: "I'll try to make it!", preferredGame: "loteria" },
-  { name: "Emma Davis", email: "emma@example.com", response: "no", message: "Sorry, I'm out of town" },
-];
+// Empty array for public display - no sample data
+const publicResponses: Array<{
+  name: string;
+  email: string;
+  response: "yes" | "no" | "maybe";
+  message?: string;
+  preferredGame?: "texas-holdem" | "blackjack" | "loteria" | "all";
+}> = [];
 
 // In-memory storage for fallback (only for development)
 const fallbackResponses: Array<{
@@ -67,7 +68,7 @@ async function appendToGoogleSheets(data: {
 }
 
 export async function GET() {
-  // Return sample data plus any real submissions (for privacy, only show sample data to public)
+  // Return only real submissions (no sample data)
   const allResponses = [...publicResponses, ...fallbackResponses];
   return NextResponse.json(allResponses);
 }

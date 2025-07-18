@@ -16,7 +16,7 @@ export default function PokerCard({ id, name, email, rsvp, onRSVPChange, onRemov
   const rsvpColors = {
     yes: "border-green-500/50 bg-green-500/10",
     maybe: "border-yellow-500/50 bg-yellow-500/10",
-    no: "border-red-500/50 bg-red-500/10",
+    no: "border-red-800/70 bg-gradient-to-br from-red-950/40 to-red-900/30 shadow-lg shadow-red-900/20",
   };
 
   const rsvpText = {
@@ -32,7 +32,9 @@ export default function PokerCard({ id, name, email, rsvp, onRSVPChange, onRemov
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
       whileHover={{ scale: 1.02 }}
-      className={`relative bg-white/5 backdrop-blur-lg rounded-xl p-4 border ${rsvpColors[rsvp]} transition-all duration-200`}
+      className={`relative bg-white/5 backdrop-blur-lg rounded-xl p-4 border ${rsvpColors[rsvp]} transition-all duration-200 ${
+        rsvp === "no" ? "ring-1 ring-red-800/30" : ""
+      }`}
     >
       {/* Card Suit Decoration */}
       <div className="absolute top-2 right-2 text-white/20 text-2xl">
@@ -79,7 +81,7 @@ export default function PokerCard({ id, name, email, rsvp, onRSVPChange, onRemov
         <span className={`text-xs px-2 py-1 rounded-full ${
           rsvp === "yes" ? "bg-green-500/20 text-green-300" :
           rsvp === "maybe" ? "bg-yellow-500/20 text-yellow-300" :
-          "bg-red-500/20 text-red-300"
+          "bg-gradient-to-r from-red-800/40 to-red-700/40 text-red-200 font-semibold shadow-sm shadow-red-900/30"
         }`}>
           {rsvpText[rsvp]}
         </span>

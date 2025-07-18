@@ -219,7 +219,7 @@ export default function Home() {
           <p className="text-2xl text-yellow-200 mb-2 font-serif">Celebrating Another Revolution Around the Sun</p>
           
           {/* Birthday Celebration Description */}
-          <div className="bg-gradient-to-r from-red-950/60 to-red-900/60 p-6 mb-6 border-l-4 border-r-4 border-red-500/30">
+          <div className="bg-gradient-to-br from-red-950/80 to-red-900/70 p-6 mb-6 border-l-4 border-r-4 border-red-800/50 shadow-lg shadow-red-900/30 backdrop-blur-sm">
             <p className="text-lg text-yellow-100 max-w-4xl mx-auto leading-relaxed">
               <span className="text-yellow-300 font-semibold">In celebration of Joe & Ayde&apos;s birthday,</span> we are inviting you to celebrate our revolutions around the sun. 
               Join us for an evening of luxury, excitement, and unforgettable memories at Hernandez Casino!

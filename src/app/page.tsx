@@ -216,7 +216,7 @@ export default function Home() {
             HERNANDEZ CASINO
           </motion.h1>
           
-          <p className="text-2xl text-yellow-200 mb-2 font-serif">Celebrating Another Revolution Around the Sun</p>
+          <p className="text-2xl text-yellow-200 mb-2 font-serif">Birthday Edition</p>
           
           {/* Birthday Celebration Description */}
           <div className="bg-gradient-to-br from-red-950/80 to-red-900/70 p-6 mb-6 border-l-4 border-r-4 border-red-800/50 shadow-lg shadow-red-900/30 backdrop-blur-sm">

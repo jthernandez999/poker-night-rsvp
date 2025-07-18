@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎰 Poker Night RSVP
 
-## Getting Started
+A beautiful, animated poker night invitation website with RSVP functionality that stores responses in Google Sheets.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Beautiful UI** with poker-themed animations
+- **RSVP Form** with game preferences
+- **Google Sheets Integration** for storing responses
+- **Privacy-First** - only you see real responses, others see sample data
+- **Responsive Design** works on all devices
+- **Modern Tech Stack** - Next.js, React, TypeScript, Tailwind CSS
+
+## 🚀 Quick Start
+
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd poker-night-invite
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up Google Sheets** (see [GOOGLE_SHEETS_SETUP.md](./GOOGLE_SHEETS_SETUP.md))
+   - Create a Google Sheet
+   - Get API key from Google Cloud Console
+   - Add environment variables to `.env.local`
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser** to `http://localhost:3000`
+
+## 🌐 Deploy to Vercel
+
+### Option 1: Deploy with Vercel CLI
+
+1. **Install Vercel CLI**
+   ```bash
+   npm i -g vercel
+   ```
+
+2. **Login to Vercel**
+   ```bash
+   vercel login
+   ```
+
+3. **Deploy**
+   ```bash
+   vercel
+   ```
+
+4. **Set environment variables** in Vercel dashboard:
+   - `GOOGLE_SHEETS_API_KEY`
+   - `GOOGLE_SPREADSHEET_ID`
+
+### Option 2: Deploy via GitHub
+
+1. **Push your code to GitHub**
+
+2. **Connect to Vercel**:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your GitHub repository
+   - Add environment variables
+   - Deploy!
+
+## 🔧 Environment Variables
+
+Create a `.env.local` file for local development:
+
+```env
+GOOGLE_SHEETS_API_KEY=your_api_key_here
+GOOGLE_SPREADSHEET_ID=your_spreadsheet_id_here
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**For Vercel deployment**, add these in your Vercel project settings.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📊 Google Sheets Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See [GOOGLE_SHEETS_SETUP.md](./GOOGLE_SHEETS_SETUP.md) for detailed instructions on setting up Google Sheets integration.
 
-## Learn More
+## 🎨 Customization
 
-To learn more about Next.js, take a look at the following resources:
+- **Colors**: Update Tailwind classes in components
+- **Text**: Modify content in `src/app/page.tsx`
+- **Games**: Add/remove games in the RSVP form
+- **Animations**: Adjust Framer Motion settings
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework**: Next.js 15
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **UI Components**: Headless UI
+- **Icons**: Lucide React
+- **Data Storage**: Google Sheets API
 
-## Deploy on Vercel
+## 📝 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+MIT License - feel free to use this for your own poker nights!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Support
+
+If you need help setting up Google Sheets or deploying, check the setup documentation or open an issue.

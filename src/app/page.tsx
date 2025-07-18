@@ -165,9 +165,9 @@ export default function Home() {
           
           <div className="relative w-full mb-8">
             {/* Title container with light border */}
-            <div className="relative inline-block mx-auto">
+            <div className="relative inline-block mx-auto max-w-full overflow-visible">
               {/* Casino-style light border around the title container */}
-              <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute inset-0 pointer-events-none overflow-visible">
                 {/* Top border lights */}
                 <div className="absolute -top-2 left-0 right-0 flex justify-between items-center">
                   <motion.div
@@ -176,7 +176,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
-                    {[...Array(30)].map((_, i) => (
+                    {[...Array(12)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -212,7 +212,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
-                    {[...Array(8)].map((_, i) => (
+                    {[...Array(4)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -248,7 +248,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
-                    {[...Array(30)].map((_, i) => (
+                    {[...Array(12)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -284,7 +284,7 @@ export default function Home() {
                     className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
                   />
                   <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
-                    {[...Array(8)].map((_, i) => (
+                    {[...Array(4)].map((_, i) => (
                       <motion.div
                         key={i}
                         animate={{ 
@@ -314,9 +314,9 @@ export default function Home() {
               </div>
               
               {/* Title container with padding for the light border */}
-              <div className="px-8 py-6 sm:px-12 sm:py-8 md:px-16 md:py-10 lg:px-20 lg:py-12">
+              <div className="px-6 py-6 sm:px-8 sm:py-6 md:px-12 md:py-8 lg:px-16 lg:py-10">
                 <motion.h1 
-                  className="text-[8vh] sm:text-[10vh] md:text-[12vh] lg:text-[14vh] font-black bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent cursor-pointer font-serif leading-none tracking-tight text-center"
+                  className="text-3xl sm:text-[5vh] md:text-[7vh] lg:text-[9vh] font-black bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent cursor-pointer font-serif leading-none tracking-tight text-center"
                   initial={{ opacity: 0, scale: 0.5, y: -100, rotateX: -90 }}
                   animate={{ 
                     opacity: 1, 

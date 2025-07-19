@@ -27,12 +27,12 @@ export default function Header() {
           <div className="light-bulb light-bulb-top" style={{ top: '-8px', left: '95.5%', zIndex: 100 }}></div>
           
           {/* Right Column - 6 bulbs evenly spaced (avoiding corner overlaps) */}
-          <div className="light-bulb light-bulb-left" style={{ right: '-8px', top: '88%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '72%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '56%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '40%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '24%', zIndex: 100 }}></div>
           <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '8%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '24%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '40%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '56%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '72%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-right" style={{ right: '-8px', top: '88%', zIndex: 100 }}></div>
           
           {/* Bottom Row - 19 bulbs evenly spaced (right to left for clockwise, avoiding corner overlaps) */}
           <div className="light-bulb light-bulb-bottom" style={{ bottom: '-8px', left: '2%', zIndex: 100 }}></div>
@@ -55,12 +55,12 @@ export default function Header() {
           <div className="light-bulb light-bulb-bottom" style={{ bottom: '-8px', left: '95.5%', zIndex: 100 }}></div>
           
           {/* Left Column - 6 bulbs evenly spaced (avoiding corner overlaps) */}
-          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '88%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '72%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '56%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '40%', zIndex: 100 }}></div>
-          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '24%', zIndex: 100 }}></div>
           <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '8%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '24%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '40%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '56%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '72%', zIndex: 100 }}></div>
+          <div className="light-bulb light-bulb-left" style={{ left: '-8px', top: '88%', zIndex: 100 }}></div>
  
           
           {/* Title Inside the Sign */}

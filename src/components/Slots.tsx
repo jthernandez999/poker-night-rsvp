@@ -755,7 +755,7 @@ const Slots: React.FC<SlotsProps> = ({
 
     return (
         <div
-        className={`flex flex-col w-full h-full max-w-[400px] md:max-w-[800px] m-auto items-center justify-center duration-300 overflow-y-visible`}
+        className={`slot-container flex flex-col w-full h-full max-w-[300px] md:max-w-[800px] m-auto items-center justify-center duration-300 overflow-y-visible`}
     >
             {/* <h1 className="price">{"Jackpot: " + jackpot + "€"}</h1> */}
             <div className='hidden sm:block absolute z-30 md:-translate-x-[300px] -translate-x-[194px] -translate-y-10 w-[84px]'>
@@ -788,7 +788,7 @@ const Slots: React.FC<SlotsProps> = ({
             </div>
 
             <div
-                className={`absolute z-30 -translate-x-[4px] -translate-y-[130px] max-w-[386px] md:max-w-[800px] self-center min-w-[384px] md:-translate-x-[105px] md:-translate-y-[15px] ${
+                className={`slot-machine absolute z-30 -translate-x-[4px] max-w-[386px] md:max-w-[800px] self-center min-w-[384px] -translate-y-[130px] md:-translate-x-[105px] md:-translate-y-[15px] ${
                     leverPull
                         ? "md:rotate-[5deg] rotate-[-1deg]"
                         : "md:rotate-6"
@@ -804,7 +804,7 @@ const Slots: React.FC<SlotsProps> = ({
                 />
             </div>
 
-            <div className='h-24 w-24 md:h-32 md:w-max flex z-40 absolute -translate-x-2 md:translate-x-40 -translate-y-[148px] md:-translate-y-56'>
+            <div className='h-24 w-24 md:h-32 md:w-max flex z-40 absolute translate-x-24 -translate-y-[148px] md:translate-x-48 md:-translate-y-56'>
                 <Image 
                     draggable={false} 
                     className='' 
@@ -814,7 +814,7 @@ const Slots: React.FC<SlotsProps> = ({
                     alt='dice2' 
                 />
             </div>
-            <div className='h-28 w-28 md:h-max md:w-max  flex z-40 absolute translate-x-0 md:translate-x-[148px] translate-y-20 md:translate-y-[156px]'>
+            <div className='h-28 w-28 md:h-max md:w-max  flex z-40 absolute translate-x-28 translate-y-20 md:translate-x-[156px] md:translate-y-[156px]'>
                 {" "}
                 <Image 
                     draggable={false} 
@@ -849,7 +849,7 @@ const Slots: React.FC<SlotsProps> = ({
                 />
             </div>
             <div
-                className={`absolute z-10 min-w-[400px] md:min-h-[600px] md:min-w-[864px] md:h-[642px] flex flex-col items-center justify-center  duration-300 overflow-y-visible overflow-x-hidden`}
+                className={`absolute z-10 min-w-[656px] md:min-h-[600px] md:min-w-[864px] md:h-[642px] flex flex-col items-center justify-center  duration-300 overflow-y-visible overflow-x-hidden`}
             >
                 <Image 
                     draggable={false}

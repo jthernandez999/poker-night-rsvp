@@ -448,6 +448,18 @@ body {
 
 /* Slot machine styles */
 @media (max-width: 768px) {
+  /* Ensure consistent mobile slot container alignment */
+  .slot-container {
+    max-width: 300px !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+  
+  /* Fix mobile positioning issues */
+  .slot-machine {
+    position: relative !important;
+    transform: none !important;
+  }
   .row1 {
     flex: 1 0 auto;
     height: 164px;

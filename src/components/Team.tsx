@@ -69,7 +69,7 @@ const artius = {
 
 type Props = Record<string, never>;
 
-const Team = (props: Props) => {
+const Team = (_props: Props) => {
   return (
     <div
       id="team"

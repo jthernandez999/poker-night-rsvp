@@ -1,7 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Image from "next/image";
 
 type Props = {
   setShowModal: (showModal: boolean) => void;
@@ -17,13 +16,13 @@ export default function PokerRegistrationModal({
   checking,
   showModal,
   setShowModal,
-  walletAddy,
+  _walletAddy,
   setWalletAddy,
   handleCheck,
   myRef,
 }: Props) {
   const cancelButtonRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [_isVisible, _setIsVisible] = useState(false);
   const [volume, setVolume] = useState(myRef?.current?.volume || 0.5);
   const [playerName, setPlayerName] = useState("");
 

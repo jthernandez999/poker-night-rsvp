@@ -1,6 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import Image from "next/image";
 //
 
 type Props = {
@@ -42,8 +43,8 @@ export default function PP({ showModal, setShowModal }: Props) {
     }
   }, [projectName, website, twitter, otherLinks, whitelists, why, token, contact]);
 
-  const submitForm = async (e:any) => {
-    e.preventDefault();
+  const submitForm = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
     //if the form is valid, submit the form
     if (valid) {
       //send the form data to https://docs.google.com/forms/d/1z7HftArWwKWQKeZD

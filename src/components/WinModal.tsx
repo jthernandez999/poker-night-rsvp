@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import animationData from "./images/falling_coins.json";
+
 
 function Coins() {
   return (
@@ -22,7 +22,7 @@ type Props = {
 export default function WinModal({
   showModal,
   setShowModal,
-  claimed,
+  claimed: _claimed,
 }: Props) {
   const cancelButtonRef = useRef(null);
 
@@ -86,7 +86,8 @@ export default function WinModal({
                     </p>
                   </div>
                 </div>
-                
+2
+               
                 <div className="relative z-10 mt-5 sm:mt-6">
                   <button
                     type="button"

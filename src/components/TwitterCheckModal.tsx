@@ -16,7 +16,7 @@ export default function PokerRegistrationModal({
   checking,
   showModal,
   setShowModal,
-  _walletAddy,
+  walletAddy: _walletAddy,
   setWalletAddy,
   handleCheck,
   myRef,

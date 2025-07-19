@@ -426,7 +426,7 @@ export default function Home() {
                     </div>
                   )}
 
-                  <div className="text-center mt-8 space-x-4">
+                  <div className="text-center mt-8 flex flex-col sm:flex-row gap-4 sm:gap-0 sm:space-x-4">
                     <button 
                       onClick={() => setShowRSVPForm(!showRSVPForm)}
                       className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] text-black font-bold transition-all duration-300"

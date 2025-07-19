@@ -1,806 +1,185 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Users, Calendar, MapPin, CheckCircle, XCircle, Clock, Coins, Trophy, Star, Crown, Sparkles, Building2, Car, Dice1 } from "lucide-react";
-
-interface RSVPResponse {
-  name: string;
-  email: string;
-  response: "yes" | "no" | "maybe";
-  message?: string;
-  preferredGame?: "texas-holdem" | "blackjack" | "loteria" | "all";
-}
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import PokerRegistrationModal from "../components/TwitterCheckModal";
+import Slots from "../components/Slots";
+import WinModal from "../components/WinModal";
+import LModal from "../components/LModal";
 
 export default function Home() {
-  const [rsvpForm, setRsvpForm] = useState({
-    name: "",
-    email: "",
-    response: "yes" as "yes" | "no" | "maybe",
-    message: "",
-    preferredGame: "all" as "texas-holdem" | "blackjack" | "loteria" | "all",
-  });
-  const [showRSVPForm, setShowRSVPForm] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [responses, setResponses] = useState<RSVPResponse[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [spin, setSpin] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showWinModal, setShowWinModal] = useState(false);
+  const [showLModal, setShowLModal] = useState(false);
+  const [twitterCheck, setTwitterCheck] = useState(false);
+  const [approved, setApproved] = useState(false);
+  const [walletAddy, setWalletAddy] = useState("");
+  const [checking, setChecking] = useState(false);
+  const [spinning, setSpinning] = useState(false);
+  const [audioStatus, setAudioStatus] = useState(false);
+  const [claimed, setClaimed] = useState(false);
+  const [showPP, setShowPP] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const myRef = useRef<HTMLAudioElement>(null);
 
-  // Load responses from API on component mount
+  // Handle hydration mismatch by ensuring client-side rendering
   useEffect(() => {
-    const loadResponses = async () => {
-      try {
-        const response = await fetch('/api/rsvp');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        // Ensure data is an array
-        if (Array.isArray(data)) {
-          setResponses(data);
-        } else {
-          console.error('Expected array but got:', typeof data, data);
-          setResponses([]);
-        }
-      } catch (error) {
-        console.error('Failed to load responses:', error);
-        setResponses([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    loadResponses();
+    setMounted(true);
   }, []);
 
-  const handleRSVPSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (rsvpForm.name && rsvpForm.email) {
-      try {
-        const response = await fetch('/api/rsvp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(rsvpForm),
-        });
-        
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.response) {
-            // Ensure we're adding a valid response object
-            const newResponse = {
-              name: result.response.name,
-              email: result.response.email,
-              response: result.response.response,
-              message: result.response.message || '',
-              preferredGame: result.response.preferredGame || 'all'
-            };
-            setResponses(prev => [...prev, newResponse]);
-            setSubmitted(true);
-            setRsvpForm({ name: "", email: "", response: "yes", message: "", preferredGame: "all" });
-            setShowRSVPForm(false);
-            setTimeout(() => setSubmitted(false), 3000);
-          } else {
-            console.error('RSVP submission failed:', result.message);
-          }
-        } else {
-          console.error('Failed to submit RSVP');
-        }
-      } catch (error) {
-        console.error('Error submitting RSVP:', error);
+  const startAudio = () => {
+    if (myRef.current) {
+      myRef.current.play();
+    }
+    setAudioStatus(true);
+  };
+
+  const pauseAudio = () => {
+    if (myRef.current) {
+      myRef.current.pause();
+    }
+    setAudioStatus(false);
+  };
+
+  useEffect(() => {
+    if (twitterCheck) {
+      setSpinning(true);
+      setSpin(true);
+      setShowModal(false);
+      setTwitterCheck(false);
+    }
+  }, [twitterCheck]);
+
+  useEffect(() => {
+    if (!showLModal && !showWinModal) {
+      pauseAudio();
       }
+  }, [showLModal, showWinModal]);
+
+  useEffect(() => {
+    if (showModal) {
+      startAudio();
+    } else if (!showModal && spinning === false) {
+      pauseAudio();
+    }
+  }, [showModal, spinning]);
+
+  const handleCheck = async () => {
+    setChecking(true);
+    // Simplified poker night check - always approve for demonstration
+    setApproved(true);
+    setTwitterCheck(true);
+    setSpinning(true);
+    setChecking(false);
+    setClaimed(false);
+    setWalletAddy("");
+  };
+
+  const handleModalOpen = () => {
+    if (spinning === false) setShowModal(true);
+  };
+
+  // Direct spin handler that bypasses modal
+  const handleDirectSpin = () => {
+    if (spinning === false) {
+      // Randomly decide if player wins (20% chance)
+      const willWin = Math.random() < 0.2;
+      setApproved(willWin);
+      setSpinning(true);
+      setSpin(true);
     }
   };
 
-  const responseCounts = {
-    yes: Array.isArray(responses) ? responses.filter(r => r && r.response === "yes").length : 0,
-    maybe: Array.isArray(responses) ? responses.filter(r => r && r.response === "maybe").length : 0,
-    no: Array.isArray(responses) ? responses.filter(r => r && r.response === "no").length : 0,
-  };
-
-  const gamePreferences = {
-    "texas-holdem": Array.isArray(responses) ? responses.filter(r => r && r.preferredGame === "texas-holdem").length : 0,
-    "blackjack": Array.isArray(responses) ? responses.filter(r => r && r.preferredGame === "blackjack").length : 0,
-    "loteria": Array.isArray(responses) ? responses.filter(r => r && r.preferredGame === "loteria").length : 0,
-    "all": Array.isArray(responses) ? responses.filter(r => r && r.preferredGame === "all").length : 0,
-  };
+  // Prevent hydration mismatch during SSR
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Pure black background with gold accents */}
-      <div className="fixed inset-0 bg-black"></div>
-      
-      {/* Gold gradient overlays for depth */}
-      <div className="fixed inset-0 bg-gradient-to-tr from-transparent via-yellow-900/15 to-transparent"></div>
-      <div className="fixed inset-0 bg-gradient-to-bl from-transparent via-yellow-800/10 to-transparent"></div>
-      
-      {/* Subtle gold mesh gradient */}
-      <div className="fixed inset-0 opacity-25" style={{
-        background: `
-          radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.2) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 40% 40%, rgba(184, 134, 11, 0.1) 0%, transparent 50%)
-        `
-      }}></div>
-      
-      {/* Classic luxury pattern overlay */}
-      <div className="fixed inset-0 opacity-5" style={{
-        backgroundImage: `
-          repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 2px,
-            rgba(212, 175, 55, 0.1) 2px,
-            rgba(212, 175, 55, 0.1) 4px
-          )
-        `
-      }}></div>
-      
-      {/* Casino background assets */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full opacity-30">
-          <img src="/4aces copy.png" alt="Four Aces" className="w-full h-full object-cover" />
-        </div>
-        <div className="absolute top-[100%] left-0 w-full h-[30%] opacity-25">
-          <img src="/3d285c3bf1733b96597c0d7059568ca1 copy.png" alt="Casino Card" className="w-full h-full object-contain" />
-        </div>
-        <div className="absolute top-[130%] left-0 w-full h-[30%] opacity-20">
-          <img src="/R copy.png" alt="Royal Card" className="w-full h-full object-contain" />
-        </div>
-      </div>
+    <div className="min-h-max relative mx-auto max-w-[2000px]">
+      <div id="home" />
+      <div className=" pt-16 flex flex-col  lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide  relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible ">
+        <div className="lg:hidden relative z-20 flex flex-col mb-0 mt-6 px-4 ">
+          <h1 className="font-myriad pt-2 font-[1100] break-normal leading-[1] text-[40px] sm:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] ">
+            Join the Poker Night!
+          </h1>
 
-      <div className="relative z-10 max-w-6xl mx-auto p-6">
-        {/* Header with Sparkles */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
-        >
-          
-          <div className="text-center mb-8 mt-16">
-            <div className="inline-block border-t-2 border-b-2 border-yellow-500/30 px-8 py-2 mb-4">
-              <span className="text-yellow-300 text-sm tracking-widest font-light">EST. 1987-1989</span>
-            </div>
-          </div>
-          
-          <div className="relative w-full mb-8">
-            {/* Title container with light border */}
-            <div className="relative inline-block mx-auto max-w-full overflow-visible">
-              {/* Casino-style light border around the title container */}
-              <div className="absolute inset-0 pointer-events-none overflow-visible">
-                {/* Top border lights */}
-                <div className="absolute -top-2 left-0 right-0 flex justify-between items-center">
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                  <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
-                    {[...Array(20)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        animate={{ 
-                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
-                          boxShadow: [
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
-                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
-                          ]
-                        }}
-                        transition={{ 
-                          duration: 0.5, 
-                          repeat: Infinity, 
-                          ease: "easeInOut",
-                          delay: i * 0.01
-                        }}
-                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
-                      />
-                    ))}
-                  </div>
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.1 }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                </div>
-                
-                {/* Right border lights */}
-                <div className="absolute top-0 bottom-0 -right-2 flex flex-col justify-between items-center">
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                  <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
-                    {[...Array(6)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        animate={{ 
-                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
-                          boxShadow: [
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
-                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
-                          ]
-                        }}
-                        transition={{ 
-                          duration: 0.5, 
-                          repeat: Infinity, 
-                          ease: "easeInOut",
-                          delay: i * 0.04 + 0.5
-                        }}
-                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
-                      />
-                    ))}
-                  </div>
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 2.1 }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                </div>
-                
-                {/* Bottom border lights */}
-                <div className="absolute -bottom-2 left-0 right-0 flex justify-between items-center">
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                  <div className="flex gap-1 sm:gap-2 md:gap-3 lg:gap-4 flex-1 justify-between">
-                    {[...Array(20)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        animate={{ 
-                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
-                          boxShadow: [
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
-                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
-                          ]
-                        }}
-                        transition={{ 
-                          duration: 0.5, 
-                          repeat: Infinity, 
-                          ease: "easeInOut",
-                          delay: i * 0.01 + 1.0
-                        }}
-                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
-                      />
-                    ))}
-                  </div>
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 3.6 }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                </div>
-                
-                {/* Left border lights */}
-                <div className="absolute top-0 bottom-0 -left-2 flex flex-col justify-between items-center">
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 3.9 }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                  <div className="flex flex-col gap-2 sm:gap-3 md:gap-4 lg:gap-6">
-                    {[...Array(6)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        animate={{ 
-                          backgroundColor: ["rgb(253 224 71)", "rgb(255 255 255)", "rgb(253 224 71)"],
-                          boxShadow: [
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)",
-                            "0 0 8px rgb(255 255 255), 0 0 16px rgb(255 255 255), 0 0 24px rgb(255 255 255)",
-                            "0 0 5px rgb(253 224 71), 0 0 10px rgb(253 224 71), 0 0 15px rgb(253 224 71)"
-                          ]
-                        }}
-                        transition={{ 
-                          duration: 0.5, 
-                          repeat: Infinity, 
-                          ease: "easeInOut",
-                          delay: i * 0.04 + 1.5
-                        }}
-                        className="w-2 h-2 sm:w-3 sm:h-3 rounded-full opacity-100"
-                      />
-                    ))}
-                  </div>
-                  <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 4.8 }}
-                    className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-100 rounded-full shadow-lg shadow-yellow-100/80"
-                  />
-                </div>
-              </div>
-              
-              {/* Title container with padding for the light border */}
-              <div className="px-6 py-6 sm:px-8 sm:py-6 md:px-12 md:py-8 lg:px-16 lg:py-10 relative">
-                {/* Luxury background pattern */}
-                <div className="absolute inset-0 opacity-10" style={{
-                  backgroundImage: `
-                    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.3) 0%, transparent 50%),
-                    radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
-                    linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.1) 50%, transparent 60%)
-                  `
-                }}></div>
-                
-                {/* Luxury corner accents */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-yellow-500/60"></div>
-                <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-yellow-500/60"></div>
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-yellow-500/60"></div>
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-500/60"></div>
-                
-                <motion.h1 
-                  className="text-3xl sm:text-[5vh] md:text-[7vh] lg:text-[9vh] font-black cursor-pointer font-serif leading-none tracking-wider text-center font-extrabold"
-                  style={{
-                    textShadow: `
-                      -2px -2px 0 #FFD700,
-                      2px -2px 0 #FFD700,
-                      -2px 2px 0 #FFD700,
-                      2px 2px 0 #FFD700,
-                      -1px -1px 0 #FFD700,
-                      1px -1px 0 #FFD700,
-                      -1px 1px 0 #FFD700,
-                      1px 1px 0 #FFD700,
-                      0 0 15px #FFD700,
-                      0 0 25px #FFD700,
-                      0 0 35px #FFD700,
-                      0 0 45px #FFD700,
-                      0 0 55px #FFD700,
-                      0 0 65px #FFD700
-                    `,
-                    WebkitTextStroke: '3px #FFD700',
-                    filter: 'drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 25px rgba(255, 215, 0, 0.7)) drop-shadow(0 0 35px rgba(255, 215, 0, 0.5)) drop-shadow(0 0 45px rgba(255, 215, 0, 0.3))',
-                    color: '#000000',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    fontVariant: 'small-caps'
-                  }}
-                  initial={{ opacity: 0, scale: 0.5, y: -100, rotateX: -90 }}
-                  animate={{ 
-                    opacity: 1, 
-                    scale: 1, 
-                    y: 0,
-                    rotateX: 0
-                  }}
-                  transition={{ 
-                    duration: 2.0, 
-                    ease: "easeOut",
-                    delay: 0.3
-                  }}
-                  whileHover={{ 
-                    scale: 1.02
-                  }}
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const deltaX = (x - centerX) / centerX;
-                    const deltaY = (y - centerY) / centerY;
-                    
-                    e.currentTarget.style.filter = `
-                      drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)) 
-                      drop-shadow(0 0 40px rgba(255, 215, 0, 0.2))
-                      drop-shadow(${deltaX * 10}px ${deltaY * 10}px 20px rgba(255, 215, 0, 0.3))
-                    `;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.filter = "drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.2))";
-                  }}
-                >
-                  HERNANDEZ CASINO
-                </motion.h1>
-              </div>
-            </div>
-          </div>
-          
-          <p className="text-2xl text-yellow-200 mb-2 font-serif">Birthday Edition</p>
-          
-          {/* Birthday Celebration Description */}
-          <div className="bg-gradient-to-br from-red-950/80 to-red-900/70 p-6 mb-6 border-l-4 border-r-4 border-red-800/50 shadow-lg shadow-red-900/30 backdrop-blur-sm">
-            <p className="text-lg text-yellow-100 max-w-4xl mx-auto leading-relaxed">
-              <span className="text-yellow-300 font-semibold">In celebration of Joe & Ayde&apos;s birthday,</span> we are inviting you to celebrate our revolutions around the sun. 
-              Join us for an evening of luxury, excitement, and unforgettable memories at Hernandez Casino!
-            </p>
-          </div>
-          
-          <p className="text-lg text-yellow-100 max-w-3xl mx-auto font-light leading-relaxed">
-            Experience the thrill of Texas Hold&apos;em, the excitement of Blackjack, and the fun of Lotería. 
-            Whether you&apos;re a high roller or just looking for a good time, everyone&apos;s welcome!
+          <p className="hidden sm:flex px-6 font-myriad leading-[1.1] font-[1100] text-xl sm:text-2xl pt-4 min-w-max text-[#cf976a]">
+            Place your bet
           </p>
-        </motion.div>
-
-        {/* Event Details Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-green-900/40 backdrop-blur-lg p-8 mb-8 border border-yellow-500/20 shadow-2xl relative overflow-hidden"
-        >
-          {/* Classic luxury corner accents */}
-          <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-500/40"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center border border-yellow-400/30">
-                  <Calendar className="w-6 h-6 text-black" />
-                </div>
-                <div>
-                  <p className="text-yellow-300 text-sm font-medium">DATE & TIME</p>
-                  <p className="text-white text-xl font-bold">Saturday, July 26th, 2025</p>
-                  <p className="text-yellow-100">3:00 PM - 11:00 PM</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center border border-yellow-400/30">
-                  <MapPin className="w-6 h-6 text-black" />
-                </div>
-                <div>
-                  <p className="text-yellow-300 text-sm font-medium">LOCATION</p>
-                  <p className="text-white text-xl font-bold">Hernandez Casino</p>
-                  <p className="text-yellow-100">11811 Beverly Blvd</p>
-                  <p className="text-yellow-100">APT 1</p>
-                  <p className="text-yellow-100">Whittier, CA 90601</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center border border-yellow-400/30">
-                  <Coins className="w-6 h-6 text-black" />
-                </div>
-                <div>
-                  <p className="text-yellow-300 text-sm font-medium">MINIMUM BUY-IN</p>
-                  <p className="text-white text-xl font-bold">$5</p>
-                  <p className="text-yellow-100">Cash prizes and jackpots</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center border border-yellow-400/30">
-                  <Users className="w-6 h-6 text-black" />
-                </div>
-                <div>
-                  <p className="text-yellow-300 text-sm font-medium">CAPACITY</p>
-                  <p className="text-white text-xl font-bold">100+ Guests</p>
-                  <p className="text-yellow-100">Multiple gaming rooms</p>
-                </div>
-              </div>
-            </div>
         </div>
-        </motion.div>
-
-        {/* Gaming Rooms */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="bg-green-900/40 backdrop-blur-lg p-8 mb-8 border border-yellow-500/20 shadow-2xl relative overflow-hidden"
-        >
-          {/* Classic luxury corner accents */}
-          <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-500/40"></div>
-                      <h2 className="text-3xl font-bold mb-8 text-center flex items-center justify-center gap-3 font-serif">
-              <Car className="w-8 h-8 text-yellow-400" />
-              Gaming Rooms
-            </h2>
+        <div className="flex flex-col-reverse lg:flex-row lg:px-[5%] w-full justify-end lg:justify-between  overflow-y-visible overflow-x-clip  lg:overflow-hidden h-max min-h-[416px] lg:min-h-[612px] 2xl:min-h-[798px] lg:my-auto ">
+          <div className="relative z-30 lg:mt-[128px] flex flex-col  items-center lg:h-full min-h-max min-w-max scale-105 text-center lg:self-start xl:mr-12 2xl:scale-125 2xl:mt-[17.5%]">
+            <h1 className="  hidden lg:flex cursor-default font-myriad leading-[1.1] font-[1100] text-[84px] font- text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] max-w-[372px]">
+              Join the Poker Night!
+            </h1>
+            <p className=" hidden lg:flex font-myriadpro text-xl lg:text-2xl pt-4 min-w-max  text-[#cf976a]">
+              Place your bet
+            </p>
+            <p className="hidden font-myriadpro md:flex text-xs md:text-base mt-0 mb-2 lg:mt-0 text-[#cf976a]">
+              or..
+            </p>
+            <div className="relative z-50">
+              <button className="golden-btn2" onClick={handleDirectSpin}>
+                click to spin
+              </button>
+            </div>
+          </div>
+          <div className="2xl:scale-125 md:mt-16 lg:mt-0 xl:-translate-x-14 lg:z-40 relative min-h-[298px] lg:min-h-max lg:min-w-[712px] my-4 lg:my-0  lg:h-max w-full lg:w-[712px] flex flex-col xl:justify-center self-center mx-auto lg:pr-[5%] overflow-y-visible overflow-x-clip  md:overflow-visible">
+            <Slots 
+              setMakeSpin={setSpin}
+              makeSpin={spin}
+              handleModalOpen={handleDirectSpin}
+              approved={approved}
+              setSpinning={setSpinning}
+              setShowWin={setShowWinModal}
+              setShowL={setShowLModal}
+            />
+          </div>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Texas Hold'em Room */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-green-800/50 p-6 border border-yellow-500/20"
-            >
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center mx-auto mb-4 border border-yellow-400/30">
-                  <Car className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Texas Hold&apos;em</h3>
-                <p className="text-yellow-200 text-sm mb-4">High-stakes poker action</p>
-                <div className="text-center">
-                  <p className="text-yellow-400 font-semibold">{gamePreferences["texas-holdem"]} interested</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Blackjack Room */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-green-800/50 p-6 border border-yellow-500/20"
-            >
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center mx-auto mb-4 border border-yellow-400/30">
-                  <Car className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Blackjack</h3>
-                <p className="text-yellow-200 text-sm mb-4">Beat the dealer to 21</p>
-                <div className="text-center">
-                  <p className="text-yellow-400 font-semibold">{gamePreferences["blackjack"]} interested</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Lotería Room */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-green-800/50 p-6 border border-yellow-500/20"
-            >
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-700 flex items-center justify-center mx-auto mb-4 border border-yellow-400/30">
-                  <Dice1 className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Lotería</h3>
-                <p className="text-yellow-200 text-sm mb-4">Traditional Mexican bingo</p>
-                <div className="text-center">
-                  <p className="text-yellow-400 font-semibold">{gamePreferences["loteria"]} interested</p>
-                </div>
-              </div>
-            </motion.div>
+        <div className="w-full max-h-[2px] h-[2px] absolute -translate-y-40 bottom-0 hidden z-0 md:flex justify-between  xl:pr-[0%] xl:pl-[7.5%] px-[.5%] pb-[2%]">
+          <div className="-translate-y-12 md:-translate-y-0">
+            <Image draggable={false} src="/coinL.png" alt="" width={100} height={100} />
           </div>
-        </motion.div>
-
-        {/* RSVP Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-green-900/40 backdrop-blur-lg p-8 mb-8 border border-yellow-500/20 shadow-2xl relative overflow-hidden"
-        >
-          {/* Classic luxury corner accents */}
-          <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-500/40"></div>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4 flex items-center justify-center gap-3 font-serif">
-              <Crown className="w-8 h-8 text-yellow-400" />
-              Will You Join Us?
-            </h2>
-            <p className="text-yellow-100">Let us know if you can make it to our birthday celebration!</p>
+          <div className="-translate-y-12 md:-translate-y-20 ">
+            <Image draggable={false} src="/coinR.png" alt="" width={100} height={100} />
           </div>
-
-          {/* RSVP Stats */}
-          <div className="grid grid-cols-3 gap-4 mb-8">
-            <div className="bg-green-800/50 p-4 text-center border border-yellow-500/20">
-              <CheckCircle className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-yellow-400">{responseCounts.yes}</p>
-              <p className="text-yellow-200 text-sm">Coming</p>
-            </div>
-            <div className="bg-green-800/50 p-4 text-center border border-yellow-500/20">
-              <Clock className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-yellow-400">{responseCounts.maybe}</p>
-              <p className="text-yellow-200 text-sm">Maybe</p>
-            </div>
-            <div className="bg-green-800/50 p-4 text-center border border-yellow-500/20">
-              <XCircle className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-yellow-400">{responseCounts.no}</p>
-              <p className="text-yellow-200 text-sm">Can&apos;t Make It</p>
             </div>
           </div>
 
-          {/* RSVP Button */}
-          <div className="text-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowRSVPForm(true)}
-              className="bg-gradient-to-r from-yellow-500 to-yellow-700 hover:from-yellow-600 hover:to-yellow-800 text-black py-4 px-8 font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl border border-yellow-400/30"
-            >
-              RSVP Now
-            </motion.button>
-          </div>
-        </motion.div>
-
-        {/* Guest Responses */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="bg-green-900/40 backdrop-blur-lg p-8 border border-yellow-500/20 shadow-2xl relative overflow-hidden"
-        >
-          {/* Classic luxury corner accents */}
-          <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-yellow-500/40"></div>
-          <div className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-500/40"></div>
-                      <h3 className="text-2xl font-bold mb-6 text-center flex items-center justify-center gap-2 font-serif">
-              <Star className="w-6 h-6 text-yellow-400" />
-              Who&apos;s Coming
-            </h3>
-          
-          {loading ? (
-            <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
-              <p className="text-yellow-200 mt-2">Loading responses...</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {Array.isArray(responses) && responses.length > 0 ? (
-                responses.map((response, index) => {
-                  // Ensure response is a valid object with required properties
-                  if (!response || typeof response !== 'object' || !response.name || !response.response) {
-                    return null;
-                  }
-                  
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * index }}
-                      className="p-4 border border-yellow-500/20 bg-green-800/50"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-white font-semibold">{String(response.name)}</p>
-                          {response.message && (
-                            <p className="text-yellow-100 text-sm mt-1">{String(response.message)}</p>
-                          )}
-                          {response.preferredGame && response.preferredGame !== "all" && (
-                            <p className="text-yellow-200 text-xs mt-1">
-                              Interested in: {
-                                response.preferredGame === "texas-holdem" ? "Texas Hold'em" :
-                                response.preferredGame === "blackjack" ? "Blackjack" :
-                                response.preferredGame === "loteria" ? "Lotería" : "All games"
-                              }
-                            </p>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {response.response === "yes" && <CheckCircle className="w-5 h-5 text-yellow-400" />}
-                          {response.response === "maybe" && <Clock className="w-5 h-5 text-yellow-400" />}
-                          {response.response === "no" && <XCircle className="w-5 h-5 text-yellow-400" />}
-                          <span className="text-sm font-medium text-yellow-400">
-                            {response.response === "yes" ? "Coming" : 
-                             response.response === "maybe" ? "Maybe" : "Can&apos;t Make It"}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })
-              ) : (
-                <div className="text-center py-8">
-                  <p className="text-yellow-200">No responses yet. Be the first to RSVP!</p>
-                </div>
-              )}
-            </div>
-          )}
-        </motion.div>
-      </div>
-
-      {/* RSVP Modal */}
-      <AnimatePresence>
-        {showRSVPForm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setShowRSVPForm(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-black p-8 w-full max-w-md border border-yellow-500/20 shadow-2xl"
-            >
-              <h3 className="text-2xl font-bold text-white mb-6 text-center">RSVP</h3>
-              
-              <form onSubmit={handleRSVPSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-yellow-200 text-sm font-medium mb-2">Name</label>
-                  <input
-                    type="text"
-                    value={rsvpForm.name}
-                    onChange={(e) => setRsvpForm({ ...rsvpForm, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-black/50 border border-yellow-500/20 text-white placeholder-yellow-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-yellow-200 text-sm font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    value={rsvpForm.email}
-                    onChange={(e) => setRsvpForm({ ...rsvpForm, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-black/50 border border-yellow-500/20 text-white placeholder-yellow-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-yellow-200 text-sm font-medium mb-2">Preferred Game</label>
-                  <select
-                    value={rsvpForm.preferredGame}
-                    onChange={(e) => setRsvpForm({ ...rsvpForm, preferredGame: e.target.value as "texas-holdem" | "blackjack" | "loteria" | "all" })}
-                    className="w-full px-4 py-3 bg-black/50 border border-yellow-500/20 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  >
-                    <option value="all">All games - I&apos;ll try everything!</option>
-                    <option value="texas-holdem">Texas Hold&apos;em</option>
-                    <option value="blackjack">Blackjack</option>
-                    <option value="loteria">Lotería</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-yellow-200 text-sm font-medium mb-2">Response</label>
-                  <select
-                    value={rsvpForm.response}
-                    onChange={(e) => setRsvpForm({ ...rsvpForm, response: e.target.value as "yes" | "no" | "maybe" })}
-                    className="w-full px-4 py-3 bg-black/50 border border-yellow-500/20 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                  >
-                    <option value="yes">I&apos;ll be there! 🎰</option>
-                    <option value="maybe">Maybe, I&apos;ll let you know</option>
-                    <option value="no">Sorry, I can&apos;t make it</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-yellow-200 text-sm font-medium mb-2">Message (Optional)</label>
-                  <textarea
-                    value={rsvpForm.message}
-                    onChange={(e) => setRsvpForm({ ...rsvpForm, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-black/50 border border-yellow-500/20 text-white placeholder-yellow-200 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    placeholder="Any message for the casino?"
-                    rows={3}
-                  />
-                </div>
-
-                <div className="flex gap-3 pt-4">
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-700 hover:from-yellow-600 hover:to-yellow-800 text-black py-3 px-4 font-semibold transition-all duration-300 border border-yellow-400/30"
-                  >
-                    Submit RSVP
-                  </motion.button>
-                  <motion.button
-                    type="button"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setShowRSVPForm(false)}
-                    className="flex-1 bg-black/50 hover:bg-black/70 text-white py-3 px-4 font-semibold border border-yellow-500/20 transition-colors"
-                  >
-                    Cancel
-                  </motion.button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
+      {/* Poker Registration Modal */}
+      {showModal && (
+        <PokerRegistrationModal
+          checking={checking}
+          setShowModal={setShowModal}
+          showModal={showModal}
+          walletAddy={walletAddy}
+          setWalletAddy={setWalletAddy}
+          handleCheck={handleCheck}
+          myRef={myRef}
+        />
         )}
-      </AnimatePresence>
 
-      {/* Success Message */}
-      <AnimatePresence>
-        {submitted && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-yellow-500 to-yellow-700 text-black px-6 py-3 shadow-lg z-50 border border-yellow-400/30"
-          >
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              <span>RSVP submitted successfully!</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Win Modal */}
+      {showWinModal && (
+        <WinModal 
+          setShowModal={setShowWinModal}
+          showModal={showWinModal}
+          claimed={claimed}
+        />
+      )}
+
+      {/* Lose Modal */}
+      {showLModal && (
+        <LModal 
+          setShowModal={setShowLModal}
+          showModal={showLModal}
+        />
+      )}
+
+      <audio ref={myRef} src="/bga2.mp3" className="hidden" loop />
     </div>
   );
 }

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hernandez Casino - Grand Opening Invite",
-  description: "You're invited to the grand opening of Hernandez Casino! Join us for Texas Hold'em, Blackjack, Lotería, and more!",
+  title: "Poker Night Invite - Join the Game",
+  description: "Join us for an exciting poker night! Experience Texas Hold'em, Blackjack, Lotería and more. Place your bet and test your fortune!",
 };
 
 export default function RootLayout({

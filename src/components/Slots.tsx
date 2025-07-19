@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { Transition } from '@headlessui/react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Slot_trans from "./images/Slot_trans.png";
 
@@ -28,28 +27,8 @@ const Slots: React.FC<SlotsProps> = ({
     const [ring1, setRing1] = useState<number | undefined>();
     const [ring2, setRing2] = useState<number | undefined>();
     const [ring3, setRing3] = useState<number | undefined>();
-    const [input, setInput] = useState<number | undefined>();
-    const [realBet, setRealBet] = useState<number | undefined>();
-    const [jackpot, setJackpot] = useState(0);
-    const [balance, setBalance] = useState(100000);
     const [leverPull, setLeverPull] = useState(false);
     const [bgPlaying, setBgPlaying] = useState(false);
-    const [r1, setR1] = useState(false);
-    const [r2, setR2] = useState(false);
-    const [r3, setR3] = useState(false);
-
-    useEffect(() => {
-        if (makeSpin) {
-            setMakeSpin(false);
-            lever();
-            setLeverPull(true);
-            setSpinning(true);
-            play();
-            setTimeout(() => {
-                setLeverPull(false);
-            }, 400);
-        }
-    }, [makeSpin, setMakeSpin, setSpinning]);
 
     function lever() {
         if (typeof window !== 'undefined') {
@@ -74,6 +53,34 @@ const Slots: React.FC<SlotsProps> = ({
             new Audio("/l.wav").play();
         }
     }
+
+    const play = useCallback(() => {
+        if (bgPlaying === false) {
+            setBgPlaying(true);
+        }
+        if (ring3 && ring3 > 1 || !spin) {
+            setSpin(true);
+            setRing1(undefined);
+            setRing2(undefined);
+            setRing3(undefined);
+            setTimeout(function () {
+                rand();
+            }, 2000);
+        }
+    }, [bgPlaying, ring3, spin]);
+
+    useEffect(() => {
+        if (makeSpin) {
+            setMakeSpin(false);
+            lever();
+            setLeverPull(true);
+            setSpinning(true);
+            play();
+            setTimeout(() => {
+                setLeverPull(false);
+            }, 400);
+        }
+    }, [makeSpin, setMakeSpin, setSpinning, play]);
 
     function row1() {
         if (!spin) {
@@ -746,7 +753,7 @@ const Slots: React.FC<SlotsProps> = ({
         }
     }
 
-    function play() {
+    const play = useCallback(() => {
         if (bgPlaying === false) {
             setBgPlaying(true);
         }
@@ -759,7 +766,7 @@ const Slots: React.FC<SlotsProps> = ({
                 rand();
             }, 2000);
         }
-    }
+    }, [bgPlaying, ring3, spin]);
 
     return (
         <div

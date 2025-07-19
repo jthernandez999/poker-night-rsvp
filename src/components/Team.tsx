@@ -67,7 +67,7 @@ const artius = {
   img: art,
 };
 
-type Props = {};
+type Props = Record<string, never>;
 
 const Team = (props: Props) => {
   return (
@@ -125,10 +125,12 @@ const Team = (props: Props) => {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          <img
+                          <Image
                             draggable={false}
                             src="/twitter.png"
                             alt="twitter"
+                            width={24}
+                            height={24}
                             className="min-w-max"
                           />
                         </a>
@@ -151,10 +153,12 @@ const Team = (props: Props) => {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          <img
+                          <Image
                             draggable={false}
                             src="/twitter.png"
                             alt="twitter"
+                            width={24}
+                            height={24}
                             className="min-w-max"
                           />
                         </a>
@@ -198,10 +202,12 @@ const Team = (props: Props) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <img
+                    <Image
                       draggable={false}
                       src="/twitter.png"
                       alt="twitter"
+                      width={24}
+                      height={24}
                       className="min-w-max"
                     />
                   </a>

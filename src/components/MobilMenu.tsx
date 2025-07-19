@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 type Props = {
   setMobileMenuOpen: (value: boolean) => void;
@@ -40,14 +41,14 @@ function MobilMenu({
             href="#"
             className={`font-myriad text-white  hover:text-[#985E3E] self-center`}
           > */}
-            <img src="/discord.png" alt="discord" className="h-6 min-w-max" />
+            <Image src="/discord.png" alt="discord" width={24} height={24} className="h-6 min-w-max" />
           {/* </a> */}
           <p className="self-center text-[#985E3E] mx-2"> | </p>
           <a
             href="#"
             className={`font-myriad text-white  hover:text-[#985E3E] self-center`}
           >
-            <img src="/twitter.png" alt="twitter" className="h-6 min-w-max" />
+            <Image src="/twitter.png" alt="twitter" width={24} height={24} className="h-6 min-w-max" />
           </a>
         </div>
       </div>

@@ -753,21 +753,6 @@ const Slots: React.FC<SlotsProps> = ({
         }
     }
 
-    const play = useCallback(() => {
-        if (bgPlaying === false) {
-            setBgPlaying(true);
-        }
-        if (ring3 && ring3 > 1 || !spin) {
-            setSpin(true);
-            setRing1(undefined);
-            setRing2(undefined);
-            setRing3(undefined);
-            setTimeout(function () {
-                rand();
-            }, 2000);
-        }
-    }, [bgPlaying, ring3, spin]);
-
     return (
         <div
         className={`flex flex-col w-full h-full max-w-[300px] md:max-w-[800px] m-auto items-center justify-center duration-300 overflow-y-visible`}

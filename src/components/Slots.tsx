@@ -788,7 +788,7 @@ const Slots: React.FC<SlotsProps> = ({
             </div>
 
             <div
-                className={`absolute z-30 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 sm:-translate-y-2 md:-translate-x-32 md:-translate-y-4 max-w-[386px] md:max-w-[800px] self-center min-w-[320px] md:min-w-[384px] ${
+                className={`absolute z-30 left-[42%] xs:left-[40%] top-[5%] xs:top-[50%] transform -translate-x-1/2 -translate-y-1/2 sm:-translate-y-2 md:-translate-x-32 md:-translate-y-4 max-w-[386px] md:max-w-[800px] self-center min-w-[320px] md:min-w-[384px] ${
                     leverPull
                         ? "md:rotate-[5deg] rotate-[-1deg]"
                         : "md:rotate-6"

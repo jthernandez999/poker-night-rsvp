@@ -7,6 +7,7 @@ import Slots from "../components/Slots";
 import WinModal from "../components/WinModal";
 import LModal from "../components/LModal";
 import RSVPForm from "../components/RSVPForm";
+import Header from "../components/Header";
 
 export default function Home() {
   const [spin, setSpin] = useState(false);
@@ -176,26 +177,7 @@ export default function Home() {
     <div className="min-h-max relative mx-auto max-w-[2000px]">
       <div id="home" />
       
-      {/* Main Page Title */}
-      <div className="w-full px-6 md:px-[28px] pt-8 md:pt-12">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-casino text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] mb-4">
-            Hernandez Casino
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-[#cf976a] font-myriadpro mb-2">
-            Where Legends Are Made
-          </p>
-          <div className="flex justify-center mb-6">
-            <Image
-              src="/headerLine.svg"
-              alt="Header Line"
-              width={200}
-              height={20}
-              className="h-8 w-auto"
-            />
-          </div>
-        </div>
-      </div>
+      <Header />
       
       <div className=" pt-16 flex flex-col  lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide  relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible ">
         <div className="lg:hidden relative z-20 flex flex-col mb-0 mt-6 px-4 ">

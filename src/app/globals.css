@@ -605,6 +605,103 @@ body {
   }
 }
 
+/* Vegas Casino Sign with Counterclockwise Pulsing Light Bulbs */
+@keyframes lightBulbPulse {
+  0%, 100% {
+    opacity: 0.1;
+    filter: brightness(0.2);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(3);
+  }
+}
+
+.casino-sign {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  border: 3px solid #b98459;
+  border-radius: 8px;
+  padding: 20px 40px;
+  box-shadow: 
+    0 0 20px rgba(185, 132, 89, 0.3),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.casino-sign::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #b98459, #d2b688, #b98459, #7A3F33, #b98459);
+  background-size: 400% 400%;
+  border-radius: 10px;
+  z-index: -1;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.light-bulb {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 10px #ffffff,
+    0 0 20px #ffffff,
+    0 0 30px #ffffff;
+  opacity: 0.8;
+  filter: brightness(1);
+  z-index: 100;
+}
+
+/* Larger light bulbs on desktop */
+@media (min-width: 768px) {
+  .light-bulb {
+    width: 24px;
+    height: 24px;
+    box-shadow: 
+      0 0 15px #ffffff,
+      0 0 30px #ffffff,
+      0 0 45px #ffffff;
+  }
+}
+
+@media (min-width: 1024px) {
+  .light-bulb {
+    width: 34px;
+    height: 34px;
+    box-shadow: 
+      0 0 20px #ffffff,
+      0 0 40px #ffffff,
+      0 0 60px #ffffff;
+  }
+}
+
+@media (min-width: 1280px) {
+  .light-bulb {
+    width: 40px;
+    height: 40px;
+    box-shadow: 
+      0 0 25px #ffffff,
+      0 0 50px #ffffff,
+      0 0 75px #ffffff;
+  }
+}
+
+/* All light bulbs stay on continuously - no animation */
+
 /* Casino card styles */
 .ibox {
   box-sizing: border-box;

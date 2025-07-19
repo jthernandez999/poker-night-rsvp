@@ -788,7 +788,7 @@ const Slots: React.FC<SlotsProps> = ({
             </div>
 
             <div
-                className={`absolute z-30 -translate-x-[20px] -translate-y-[0px] md:-translate-x-[105px] md:-translate-y-[15px] max-w-[386px] md:max-w-[800px] self-center min-w-[320px] md:min-w-[384px] ${
+                className={`absolute z-30 -translate-x-[30px] -translate-y-[0px] md:-translate-x-[105px] md:-translate-y-[15px] max-w-[386px] md:max-w-[800px] self-center min-w-[320px] md:min-w-[384px] ${
                     leverPull
                         ? "md:rotate-[5deg] rotate-[-1deg]"
                         : "md:rotate-6"
@@ -804,7 +804,7 @@ const Slots: React.FC<SlotsProps> = ({
                 />
             </div>
 
-            <div className='h-24 w-24 md:h-32 md:w-max flex z-40 absolute translate-x-8 md:translate-x-48 -translate-y-[148px] md:-translate-y-56'>
+            <div className='h-24 w-24 md:h-32 md:w-max flex z-40 absolute translate-x-2 md:translate-x-48 -translate-y-[148px] md:-translate-y-56'>
                 <Image 
                     draggable={false} 
                     className='' 
@@ -814,7 +814,7 @@ const Slots: React.FC<SlotsProps> = ({
                     alt='dice2' 
                 />
             </div>
-            <div className='h-28 w-28 md:h-max md:w-max  flex z-40 absolute translate-x-12 md:translate-x-[156px] translate-y-20 md:translate-y-[156px]'>
+            <div className='h-28 w-28 md:h-max md:w-max  flex z-40 absolute translate-x-6 md:translate-x-[156px] translate-y-20 md:translate-y-[156px]'>
                 {" "}
                 <Image 
                     draggable={false} 

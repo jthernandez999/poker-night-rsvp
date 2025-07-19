@@ -160,7 +160,16 @@ export default function Home() {
 
   // Prevent hydration mismatch during SSR
   if (!mounted) {
-    return null;
+    return (
+      <div className="min-h-max relative mx-auto max-w-[2000px]">
+        <div id="home" />
+        <div className="pt-16 flex flex-col lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible">
+          <div className="flex items-center justify-center h-full">
+            <div className="text-[#b98459] text-xl">Loading...</div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

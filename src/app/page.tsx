@@ -18,9 +18,9 @@ export default function Home() {
   const [walletAddy, setWalletAddy] = useState("");
   const [checking, setChecking] = useState(false);
   const [spinning, setSpinning] = useState(false);
-  const [audioStatus, setAudioStatus] = useState(false);
-  const [claimed, setClaimed] = useState(false);
-  const [showPP, setShowPP] = useState(false);
+  const [_audioStatus, setAudioStatus] = useState(false);
+  const [_claimed, setClaimed] = useState(false);
+  const [_showPP, setShowPP] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [rsvpResponses, setRsvpResponses] = useState<RSVPResponse[]>([]);
   const [loadingRSVPs, setLoadingRSVPs] = useState(false);
@@ -143,7 +143,7 @@ export default function Home() {
     setWalletAddy("");
   };
 
-  const handleModalOpen = () => {
+  const _handleModalOpen = () => {
     if (spinning === false) setShowModal(true);
   };
 
@@ -385,7 +385,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                       {rsvpResponses
                         .filter(rsvp => rsvp.response === "yes")
-                        .map((rsvp, index) => (
+                        .map((rsvp, _index) => (
                         <div 
                           key={rsvp.id} 
                           className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-30"
@@ -486,7 +486,7 @@ export default function Home() {
         <WinModal
           setShowModal={setShowWinModal}
           showModal={showWinModal}
-          claimed={claimed}
+                          claimed={_claimed}
         />
       )}
 

@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 //
 
@@ -13,12 +13,12 @@ type Props = {
 };
 
 export default function TwitterCheckModal({
-  checking,
+  checking: _checking,
   showModal,
   setShowModal,
-  walletAddy,
-  setWalletAddy,
-  handleCheck,
+  walletAddy: _walletAddy,
+  setWalletAddy: _setWalletAddy,
+  handleCheck: _handleCheck,
 }: Props) {
   const cancelButtonRef = useRef(null);
 

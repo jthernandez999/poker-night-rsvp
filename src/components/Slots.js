@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import LeverKnob from "./images/lever_knob.png";
+// import LeverKnob from "./images/lever_knob.png";
 import Slot_trans from "./images/Slot_trans.png";
 import Shine from "./images/Shine.png";
 import coins from "./images/Coins.png";
@@ -12,15 +12,15 @@ const Slots = ({ setMakeSpin, makeSpin, handleModalOpen, approved, setSpinning, 
     const [ring1, setRing1] = useState();
     const [ring2, setRing2] = useState();
     const [ring3, setRing3] = useState();
-    const [input, setInput] = useState();
-    const [realBet, setRealBet] = useState();
-    const [jackpot, setJackpot] = useState(0);
-    const [balance, setBalance] = useState(100000);
+    const [_input, setInput] = useState();
+    const [_realBet, setRealBet] = useState();
+    const [_jackpot, setJackpot] = useState(0);
+    const [_balance, setBalance] = useState(100000);
     const [leverPull, setLeverPull] = useState(false);
     const [bgPlaying, setBgPlaying] = useState(false);
-    const [r1, setR1] = useState(false);
-    const [r2, setR2] = useState(false);
-    const [r3, setR3] = useState(false);
+    const [_r1, setR1] = useState(false);
+    const [_r2, setR2] = useState(false);
+    const [_r3, setR3] = useState(false);
 
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const Slots = ({ setMakeSpin, makeSpin, handleModalOpen, approved, setSpinning, 
                 setLeverPull(false);
             }, 400);
         }
-    }, [makeSpin]);
+    }, [makeSpin, setMakeSpin, setSpinning, play]);
 
 
 

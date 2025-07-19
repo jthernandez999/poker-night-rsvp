@@ -98,7 +98,6 @@ export default function PP({ showModal, setShowModal }: Props) {
               {/* <Dialog.Panel className="min-w-min min-h-min relative transform overflow-hidden rounded-lg bg-[#0D0D0D] text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm  border border-[#b98459]"> */}
               <Dialog.Panel className="">
               <div className="w-full h-max sm:px-12 sm:pt-24  pt-20  relative z-10 flex justify-center items-center my-auto  ">
-        {" "}
         <div className="md:min-h-[356px]  h-max w-full flex flex-col items-center justify-center md:pt- md:pb-12">
           <div className="relative flex h-max w-full justify-center ">
             <form className="rounded-lg w-full  md:w-full sm:min-w-[636px] max-w-max relative p-4 flex justify-center items-center">

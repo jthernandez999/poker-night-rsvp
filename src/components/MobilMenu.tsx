@@ -7,7 +7,7 @@ type Props = {
 };
 
 function MobilMenu({
-  setMobileMenuOpen,
+  setMobileMenuOpen: _setMobileMenuOpen,
 }: Props) {
   const router = useRouter();
 

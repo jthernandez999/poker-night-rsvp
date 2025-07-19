@@ -1,27 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Lottie from "react-lottie";
 import animationData from "./images/falling_coins.json";
 
 function Coins() {
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
   return (
     <div className="w-full flex justify-center top-0 absolute ">
-      <Lottie
-        options={defaultOptions}
-        isClickToPauseDisabled={true}
-        height={464}
-        width={632}
-      />
+      <div className="w-[632px] h-[464px] bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
+        <div className="text-6xl">💰</div>
+      </div>
     </div>
   );
 }

@@ -126,8 +126,8 @@ function Information() {
                   return (
                     <Image
                       draggable={false}
-                      height={"72px"}
-                      width={"98"}
+                      height={72}
+                      width={98}
                       key={i}
                       src={image}
                       alt=""

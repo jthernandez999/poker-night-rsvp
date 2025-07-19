@@ -109,8 +109,8 @@ const Team = (props: Props) => {
                     draggable={false}
                     src={member.img}
                     alt={member.name}
-                    width={"128px"}
-                    height={"128px"}
+                    width={128}
+                    height={128}
                     className="rounded-full scale-[1.1]"
                   />
                   <div className="shadow-[inset_0px_0px_26px_0px_rgba(0,0,0,1)]  flex  w-full  h-full absolute rounded-full" />
@@ -162,7 +162,7 @@ const Team = (props: Props) => {
                     </p>
                   )}
 
-                  <p className=" text-[#b98459] text-base md:text-xl font-myriadpro pt-2">
+                  <p className=" text-[#b98459] md:text-xl font-myriadpro text-sm md:text-base pt-2">
                     {member.desc}
                   </p>
                 </div>
@@ -182,8 +182,8 @@ const Team = (props: Props) => {
                 draggable={false}
                 src={artius.img}
                 alt={artius.name}
-                width={"128px"}
-                height={"128px"}
+                width={128}
+                height={128}
                 className="rounded-full scale-[1.1]"
               />
               <div className="shadow-[inset_0px_0px_26px_0px_rgba(0,0,0,1)]  flex  w-full  h-full absolute rounded-full" />
@@ -208,7 +208,7 @@ const Team = (props: Props) => {
                 </span>
               </p>
 
-              <p className=" text-[#b98459] md:text-xl font-myriadpro sm:text-base pt-2">
+              <p className=" text-[#b98459] md:text-xl font-myriadpro text-sm md:text-base pt-2">
                 {artius.desc}
               </p>
             </div>
@@ -222,8 +222,8 @@ const Team = (props: Props) => {
             draggable={false}
             src={logo}
             alt="logo"
-            width={"498px"}
-            height={"228px"}
+            width={498}
+            height={228}
             className=""
           />
         </div>

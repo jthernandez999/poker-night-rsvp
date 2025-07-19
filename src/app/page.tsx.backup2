@@ -148,157 +148,92 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Hernandez Casino Section */}
+        {/* The River Casino Section */}
         <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
           <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/headerLine.svg"
-                alt="Header Line"
-                width={200}
-                height={20}
-                className="h-8 w-auto"
-              />
-            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-              Hernandez Casino
+              The River Casino
             </h2>
-            <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-              {/* Background image for mobile */}
-              <div className="absolute inset-0 opacity-10 md:hidden">
-                <Image
-                  src="/Background.png"
-                  alt="Background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative z-10">
-                <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
-                  Welcome to Hernandez Casino, where the finest poker nights come to life! Experience the thrill of Texas Hold&apos;em, the strategy of Blackjack, the excitement of Lotería, and the fortune of our legendary slot machines.
-                </p>
-                <h3 className="text-xl md:text-2xl font-bold text-[#b98459] mb-4 font-casino">
-                  What makes our poker nights special:
-                </h3>
-                <ul className="text-[#b98459] text-sm md:text-base space-y-2">
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Professional-grade poker tables with premium felt and authentic casino chips.
-                  </li>
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Multiple game variations including Texas Hold&apos;em, Omaha, and Seven-Card Stud.
-                  </li>
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Complimentary drinks and snacks to keep the energy high throughout the night.
-                  </li>
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Regular tournaments with exciting prizes and bragging rights for the champions.
-                  </li>
-                </ul>
-              </div>
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 md:p-8 border border-[#c79a63]/20">
+              <p className="text-[#caa689] text-sm md:text-base leading-relaxed mb-4">
+                The River will be the first casino dapp tailored for the Cardano blockchain. At launch, The River will include several classic casino games such as Blackjack, Roulette, Slots, Spin & Win, and Poker tournaments, as well as cash games.
+              </p>
+              <h3 className="text-xl md:text-2xl font-bold text-[#c79a63] mb-4 font-casino">
+                Features to look forward to include:
+              </h3>
+              <ul className="text-[#caa689] text-sm md:text-base space-y-2">
+                <li className="flex items-start">
+                  <span className="text-[#c79a63] mr-2">•</span>
+                  Wallet and smart contract integration to create a seamless experience for casino users.
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#c79a63] mr-2">•</span>
+                  The addition of new games to the platform based on community recommendations and on-chain voting.
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#c79a63] mr-2">•</span>
+                  Expanding to other cryptocurrencies after creating a worthy and effective platform for Cardano users.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
 
-        {/* Game Schedule Section */}
+        {/* Alpha Toads Section */}
         <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
           <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/headerLine.svg"
-                alt="Header Line"
-                width={200}
-                height={20}
-                className="h-8 w-auto"
-              />
-            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-              Game Schedule
+              Alpha Toads
             </h2>
-            <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-              {/* Background image for mobile */}
-              <div className="absolute inset-0 opacity-10 md:hidden">
-                <Image
-                  src="/Background.png"
-                  alt="Background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative z-10">
-                <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
-                  Join us every weekend for the most exciting poker nights in town! Our schedule is designed to accommodate players of all skill levels, from beginners to seasoned pros.
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 md:p-8 border border-[#c79a63]/20">
+              <p className="text-[#caa689] text-sm md:text-base leading-relaxed mb-4">
+                Alpha Toads are the whitelist token for The River's NFT collection and are being dispersed to lucky members of the community.
+              </p>
+              <div className="space-y-4">
+                <p className="text-[#caa689] text-sm md:text-base">
+                  The Alpha Toads are a 777 collection of 5 animated toads. Each toad will provide a stackable whitelist and allow 2 mints for the holder.
                 </p>
-                <div className="space-y-4">
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Friday Nights:</strong> Texas Hold&apos;em tournaments with buy-ins starting at $20. Perfect for casual players looking to test their skills.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Saturday Nights:</strong> High-stakes cash games and special events. Our most popular night featuring multiple tables and exciting side games.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Sunday Afternoons:</strong> Family-friendly Lotería sessions and beginner-friendly poker lessons for those new to the game.
-                  </p>
-                  <div className="text-center mt-6">
-                    <a
-                      href="#rsvp"
-                      className="inline-block border-2 border-[#b98459] rounded-lg py-2 px-12 sm:px-16 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] text-black font-bold transition-all duration-300"
-                    >
-                      Reserve Your Seat
-                    </a>
-                  </div>
+                <p className="text-[#caa689] text-sm md:text-base">
+                  Alpha Toads will also maintain utility post mint, but Toads by The River will always build on the Alpha Toad utility.
+                </p>
+                <p className="text-[#caa689] text-sm md:text-base">
+                  The Alpha Toads have 5 different unique looks and can be acquired through different methods on our Twitter and Discord.
+                </p>
+                <div className="text-center mt-6">
+                  <a
+                    href="https://jpg.store"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-gradient-to-r from-[#c79a63] to-[#d4af7a] text-black font-bold py-3 px-6 rounded-lg hover:from-[#d4af7a] hover:to-[#c79a63] transition-all duration-300"
+                  >
+                    jpg.store
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* House Rules Section */}
+        {/* Toads by The River Section */}
         <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
           <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/headerLine.svg"
-                alt="Header Line"
-                width={200}
-                height={20}
-                className="h-8 w-auto"
-              />
-            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-              House Rules
+              Toads by The River
             </h2>
-            <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-              {/* Background image for mobile */}
-              <div className="absolute inset-0 opacity-10 md:hidden">
-                <Image
-                  src="/Background.png"
-                  alt="Background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative z-10">
-                <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
-                  At Hernandez Casino, we believe in creating a welcoming and fair environment for all players. Our house rules ensure everyone has a great time while maintaining the integrity of the game.
+            <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 md:p-8 border border-[#c79a63]/20">
+              <p className="text-[#caa689] text-sm md:text-base leading-relaxed mb-4">
+                Toads by The River will be an NFT collection consisting of 6,000 high-resolution toads on the Cardano Blockchain. The collection is inspired by Jin-Chan, the money toad, which brings wealth and fortune to the holder.
+              </p>
+              <div className="space-y-4">
+                <p className="text-[#caa689] text-sm md:text-base">
+                  Toads by The River will bridge the NFT space with The River Casino and grant owners with unique access, perks, and prizes.
                 </p>
-                <div className="space-y-4">
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Respect & Sportsmanship:</strong> Treat all players with courtesy and respect. No trash talking or unsportsmanlike behavior will be tolerated.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Buy-ins & Cashouts:</strong> Minimum buy-in is $20, maximum is $500 per table. All cashouts are processed immediately at the end of each session.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Game Integrity:</strong> All games are monitored by professional dealers. Any suspicion of cheating will result in immediate removal from the premises.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base font-bold">
-                    Age Requirement: 21+ with valid ID required for entry
-                  </p>
-                </div>
+                <p className="text-[#caa689] text-sm md:text-base">
+                  Toads are created from over 100 unique traits, making each toad one of a kind. Toads will also have 5 one-of-ones for the most fortunate of fortunate.
+                </p>
+                <p className="text-[#caa689] text-sm md:text-base font-bold">
+                  Mint Date/Price: TBA
+                </p>
               </div>
             </div>
           </div>
@@ -460,7 +395,6 @@ export default function Home() {
       )}
 
       <audio ref={myRef} src="/bga2.mp3" className="hidden" loop />
-    </div>
     </div>
   );
 }

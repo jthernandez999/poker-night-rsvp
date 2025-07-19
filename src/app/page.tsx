@@ -6,6 +6,7 @@ import PokerRegistrationModal from "../components/TwitterCheckModal";
 import Slots from "../components/Slots";
 import WinModal from "../components/WinModal";
 import LModal from "../components/LModal";
+import RSVPForm from "../components/RSVPForm";
 
 export default function Home() {
   const [spin, setSpin] = useState(false);
@@ -21,12 +22,78 @@ export default function Home() {
   const [claimed, setClaimed] = useState(false);
   const [showPP, setShowPP] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [rsvpResponses, setRsvpResponses] = useState<RSVPResponse[]>([]);
+  const [loadingRSVPs, setLoadingRSVPs] = useState(false);
+  const [submittingRSVP, setSubmittingRSVP] = useState(false);
+  const [showRSVPForm, setShowRSVPForm] = useState(false);
   const myRef = useRef<HTMLAudioElement>(null);
+
+  // RSVP type definition
+  type RSVPResponse = {
+    id: number;
+    name: string;
+    email: string;
+    response: "yes" | "no" | "maybe";
+    message?: string;
+    preferredGame?: "texas-holdem" | "blackjack" | "loteria" | "all";
+    timestamp: string;
+  };
 
   // Handle hydration mismatch by ensuring client-side rendering
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Fetch RSVP responses
+  const fetchRSVPs = async () => {
+    setLoadingRSVPs(true);
+    try {
+      const response = await fetch('/api/rsvp');
+      const data = await response.json();
+      setRsvpResponses(data);
+    } catch (error) {
+      console.error('Error fetching RSVPs:', error);
+    } finally {
+      setLoadingRSVPs(false);
+    }
+  };
+
+  // Load RSVPs on mount
+  useEffect(() => {
+    if (mounted) {
+      fetchRSVPs();
+    }
+  }, [mounted]);
+
+  // Handle RSVP submission
+  const handleRSVPSubmit = async (rsvpData: { name: string; email: string; response: "yes" | "no" | "maybe"; message?: string; preferredGame?: "texas-holdem" | "blackjack" | "loteria" | "all" }) => {
+    setSubmittingRSVP(true);
+    try {
+      const response = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(rsvpData),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('RSVP submitted successfully!');
+        setShowRSVPForm(false);
+        // Refresh the RSVP list
+        fetchRSVPs();
+      } else {
+        alert('Failed to submit RSVP. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting RSVP:', error);
+      alert('Failed to submit RSVP. Please try again.');
+    } finally {
+      setSubmittingRSVP(false);
+    }
+  };
 
   const startAudio = () => {
     if (myRef.current) {
@@ -148,263 +215,235 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Hernandez Casino Section */}
-        <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/headerLine.svg"
-                alt="Header Line"
-                width={200}
-                height={20}
-                className="h-8 w-auto"
-              />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-              Hernandez Casino
-            </h2>
-            <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-              {/* Background image for mobile */}
-              <div className="absolute inset-0 opacity-10 md:hidden">
-                <Image
-                  src="/Background.png"
-                  alt="Background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative z-10">
-                <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
-                  Welcome to Hernandez Casino, where the finest poker nights come to life! Experience the thrill of Texas Hold&apos;em, the strategy of Blackjack, the excitement of Lotería, and the fortune of our legendary slot machines.
-                </p>
-                <h3 className="text-xl md:text-2xl font-bold text-[#b98459] mb-4 font-casino">
-                  What makes our poker nights special:
-                </h3>
-                <ul className="text-[#b98459] text-sm md:text-base space-y-2">
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Professional-grade poker tables with premium felt and authentic casino chips.
-                  </li>
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Multiple game variations including Texas Hold&apos;em, Omaha, and Seven-Card Stud.
-                  </li>
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Complimentary drinks and snacks to keep the energy high throughout the night.
-                  </li>
-                  <li className="flex items-start">
-                    <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                    Regular tournaments with exciting prizes and bragging rights for the champions.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Game Schedule Section */}
-        <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/headerLine.svg"
-                alt="Header Line"
-                width={200}
-                height={20}
-                className="h-8 w-auto"
-              />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-              Game Schedule
-            </h2>
-            <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-              {/* Background image for mobile */}
-              <div className="absolute inset-0 opacity-10 md:hidden">
-                <Image
-                  src="/Background.png"
-                  alt="Background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative z-10">
-                <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
-                  Join us every weekend for the most exciting poker nights in town! Our schedule is designed to accommodate players of all skill levels, from beginners to seasoned pros.
-                </p>
-                <div className="space-y-4">
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Friday Nights:</strong> Texas Hold&apos;em tournaments with buy-ins starting at $20. Perfect for casual players looking to test their skills.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Saturday Nights:</strong> High-stakes cash games and special events. Our most popular night featuring multiple tables and exciting side games.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Sunday Afternoons:</strong> Family-friendly Lotería sessions and beginner-friendly poker lessons for those new to the game.
-                  </p>
-                  <div className="text-center mt-6">
-                    <a
-                      href="#rsvp"
-                      className="inline-block border-2 border-[#b98459] rounded-lg py-2 px-12 sm:px-16 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] text-black font-bold transition-all duration-300"
-                    >
-                      Reserve Your Seat
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* House Rules Section */}
-        <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/headerLine.svg"
-                alt="Header Line"
-                width={200}
-                height={20}
-                className="h-8 w-auto"
-              />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-              House Rules
-            </h2>
-            <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-              {/* Background image for mobile */}
-              <div className="absolute inset-0 opacity-10 md:hidden">
-                <Image
-                  src="/Background.png"
-                  alt="Background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative z-10">
-                <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
-                  At Hernandez Casino, we believe in creating a welcoming and fair environment for all players. Our house rules ensure everyone has a great time while maintaining the integrity of the game.
-                </p>
-                <div className="space-y-4">
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Respect & Sportsmanship:</strong> Treat all players with courtesy and respect. No trash talking or unsportsmanlike behavior will be tolerated.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Buy-ins & Cashouts:</strong> Minimum buy-in is $20, maximum is $500 per table. All cashouts are processed immediately at the end of each session.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base">
-                    <strong>Game Integrity:</strong> All games are monitored by professional dealers. Any suspicion of cheating will result in immediate removal from the premises.
-                  </p>
-                  <p className="text-[#b98459] text-sm md:text-base font-bold">
-                    Age Requirement: 21+ with valid ID required for entry
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Team Section */}
+        {/* Casino Sections - 2x2 Grid */}
         <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
           <div className="max-w-6xl mx-auto">
-            <div className="flex justify-center mb-8">
-              <Image
-                src="/headerLine.svg"
-                alt="Header Line"
-                width={200}
-                height={20}
-                className="h-8 w-auto"
-              />
+            {/* Intro Text */}
+            <div className="text-center mb-12">
+              <div className="flex justify-center mb-8">
+                <Image
+                  src="/headerLine.svg"
+                  alt="Header Line"
+                  width={200}
+                  height={20}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <p className="text-[#b98459] text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-myriadpro">
+                Welcome to Hernandez Casino, where the finest poker nights come to life! Experience the thrill of Texas Hold&apos;em, the strategy of Blackjack, the excitement of Lotería, and the fortune of our legendary slot machines.
+              </p>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-              Team
-            </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Community Manager */}
-              <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 border border-[#c79a63]/20">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-[#c79a63] mb-2 font-casino">Community Manager</h3>
-                  <div className="flex items-center justify-center mb-3">
-                    <Image src="/flemm.jpg" alt="Flemm" width={80} height={80} className="rounded-full" />
-                    <span className="ml-3 text-[#caa689] font-bold">Flemm</span>
-                  </div>
-                  <p className="text-[#caa689] text-sm">Crypto enthusiast, NFT collector and football fanatic.</p>
+            {/* 2x2 Grid Layout for Hernandez Casino and Game Schedule */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+              {/* Hernandez Casino Section */}
+              <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+                {/* Background image for mobile */}
+                <div className="absolute inset-0 opacity-10 md:hidden">
+                  <Image
+                    src="/Background.png"
+                    alt="Background"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#c79a63] font-casino">
+                    Hernandez Casino
+                  </h2>
+                  <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-4 font-casino">
+                    What makes our poker nights special:
+                  </h3>
+                  <ul className="text-[#b98459] text-sm md:text-base space-y-2">
+                    <li className="flex items-start">
+                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
+                      Professional-grade poker tables with premium felt and authentic casino chips.
+                    </li>
+                    <li className="flex items-start">
+                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
+                      Multiple game variations including Texas Hold&apos;em, Omaha, and Seven-Card Stud.
+                    </li>
+                    <li className="flex items-start">
+                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
+                      Complimentary drinks and snacks to keep the energy high throughout the night.
+                    </li>
+                    <li className="flex items-start">
+                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
+                      Regular tournaments with exciting prizes and bragging rights for the champions.
+                    </li>
+                  </ul>
                 </div>
               </div>
 
-              {/* Marketing & Strategy */}
-              <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 border border-[#c79a63]/20">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-[#c79a63] mb-2 font-casino">Marketing & Strategy</h3>
-                  <div className="flex items-center justify-center mb-3">
-                    <Image src="/dunes.png" alt="Dunes" width={80} height={80} className="rounded-full" />
-                    <span className="ml-3 text-[#caa689] font-bold">Dunes</span>
-                  </div>
-                  <p className="text-[#caa689] text-sm">6 years of marketing experience, and what feels like a lifetime in NFTs.</p>
+              {/* Game Schedule Section */}
+              <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+                {/* Background image for mobile */}
+                <div className="absolute inset-0 opacity-10 md:hidden">
+                  <Image
+                    src="/Background.png"
+                    alt="Background"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-              </div>
-
-              {/* Front-End Developer */}
-              <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 border border-[#c79a63]/20">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-[#c79a63] mb-2 font-casino">Front-End Developer</h3>
-                  <div className="flex items-center justify-center mb-3">
-                    <Image src="/chase.png" alt="CH₳SE" width={80} height={80} className="rounded-full" />
-                    <span className="ml-3 text-[#caa689] font-bold">CH₳SE</span>
+                <div className="relative z-10">
+                  <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#c79a63] font-casino">
+                    Game Schedule
+                  </h2>
+                  <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
+                    Join us every weekend for the most exciting poker nights in town! Our schedule is designed to accommodate players of all skill levels, from beginners to seasoned pros.
+                  </p>
+                  <div className="space-y-3">
+                    <p className="text-[#b98459] text-sm md:text-base">
+                      <strong>Friday Nights:</strong> Texas Hold&apos;em tournaments with buy-ins starting at $20. Perfect for casual players looking to test their skills.
+                    </p>
+                    <p className="text-[#b98459] text-sm md:text-base">
+                      <strong>Saturday Nights:</strong> High-stakes cash games and special events. Our most popular night featuring multiple tables and exciting side games.
+                    </p>
+                    <p className="text-[#b98459] text-sm md:text-base">
+                      <strong>Sunday Afternoons:</strong> Family-friendly Lotería sessions and beginner-friendly poker lessons for those new to the game.
+                    </p>
                   </div>
-                  <p className="text-[#caa689] text-sm">Web Developer, focused on building user experiences on Cardano.</p>
-                </div>
-              </div>
-
-              {/* Back-End Developer */}
-              <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 border border-[#c79a63]/20">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-[#c79a63] mb-2 font-casino">Back-End Developer</h3>
-                  <div className="flex items-center justify-center mb-3">
-                    <Image src="/huth.png" alt="HuthS0lo" width={80} height={80} className="rounded-full" />
-                    <span className="ml-3 text-[#caa689] font-bold">HuthS0lo</span>
-                  </div>
-                  <p className="text-[#caa689] text-sm">NASA IT Engineer by day, CNFT Creator, developer, and SPO by night.</p>
-                </div>
-              </div>
-
-              {/* Lead Moderator */}
-              <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 border border-[#c79a63]/20">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-[#c79a63] mb-2 font-casino">Lead Moderator</h3>
-                  <div className="flex items-center justify-center mb-3">
-                    <Image src="/nick.png" alt="Nickthegreekx" width={80} height={80} className="rounded-full" />
-                    <span className="ml-3 text-[#caa689] font-bold">Nickthegreekx</span>
-                  </div>
-                  <p className="text-[#caa689] text-sm">NFT enthusiast. Civil engineer by day, NFT degen by night.</p>
-                </div>
-              </div>
-
-              {/* Public Relations */}
-              <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 border border-[#c79a63]/20">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-[#c79a63] mb-2 font-casino">Public Relations</h3>
-                  <div className="flex items-center justify-center mb-3">
-                    <Image src="/tanjiro.jpg" alt="Tanjiro" width={80} height={80} className="rounded-full" />
-                    <span className="ml-3 text-[#caa689] font-bold">Tanjiro</span>
-                  </div>
-                  <p className="text-[#caa689] text-sm">Twitter ambassador, NFT investor, visionary and consultant.</p>
-                </div>
-              </div>
-
-              {/* Artist */}
-              <div className="bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] rounded-lg p-6 border border-[#c79a63]/20">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-[#c79a63] mb-2 font-casino">Artist</h3>
-                  <div className="flex items-center justify-center mb-3">
-                    <Image src="/art.png" alt="Artius" width={80} height={80} className="rounded-full" />
-                    <span className="ml-3 text-[#caa689] font-bold">Artius</span>
-                  </div>
-                  <p className="text-[#caa689] text-sm">Furious NFT artist. 3D graphic magician and 2D graphic enthusiast.</p>
                 </div>
               </div>
             </div>
+
+            {/* House Rules Section - Full Width */}
+            <div className="mb-12">
+              <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+                {/* Background image for mobile */}
+                <div className="absolute inset-0 opacity-10 md:hidden">
+                  <Image
+                    src="/Background.png"
+                    alt="Background"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
+                    House Rules
+                  </h2>
+                  <p className="text-[#b98459] text-base md:text-lg leading-relaxed mb-6 text-center max-w-4xl mx-auto">
+                    At Hernandez Casino, we believe in creating a welcoming and fair environment for all players. Our house rules ensure everyone has a great time while maintaining the integrity of the game.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div className="text-center">
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Respect & Sportsmanship</h3>
+                      <p className="text-[#b98459] text-sm md:text-base">
+                        Treat all players with courtesy and respect. No trash talking or unsportsmanlike behavior will be tolerated.
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Buy-ins & Cashouts</h3>
+                      <p className="text-[#b98459] text-sm md:text-base">
+                        Minimum buy-in is $20, maximum is $500 per table. All cashouts are processed immediately at the end of each session.
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Game Integrity</h3>
+                      <p className="text-[#b98459] text-sm md:text-base">
+                        All games are monitored by professional dealers. Any suspicion of cheating will result in immediate removal from the premises.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-center mt-8">
+                    <p className="text-[#b98459] text-lg md:text-xl font-bold">
+                      Age Requirement: 21+ with valid ID required for entry
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Who's Coming Section - Full Width */}
+            <div className="mb-12">
+              <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+                {/* Background image for mobile */}
+                <div className="absolute inset-0 opacity-10 md:hidden">
+                  <Image
+                    src="/Background.png"
+                    alt="Background"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
+                    Who&apos;s Coming
+                  </h2>
+                  
+                  {loadingRSVPs ? (
+                    <div className="text-center">
+                      <p className="text-[#b98459] text-lg">Loading RSVPs...</p>
+                    </div>
+                  ) : rsvpResponses.length === 0 ? (
+                    <div className="text-center">
+                      <p className="text-[#b98459] text-lg">No RSVPs yet. Be the first to join!</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                      {rsvpResponses
+                        .filter(rsvp => rsvp.response === "yes")
+                        .map((rsvp, index) => (
+                        <div 
+                          key={rsvp.id} 
+                          className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-30"
+                        >
+                          <div className="flex items-center mb-3">
+                            <div className="w-12 h-12 bg-[#b98459] rounded-full flex items-center justify-center mr-3">
+                              <span className="text-black font-bold text-lg">
+                                {rsvp.name.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                            <span className="text-[#b98459] font-bold text-lg">{rsvp.name}</span>
+                          </div>
+                          <p className="text-[#b98459] text-sm mb-2">
+                            <strong>Game:</strong> {rsvp.preferredGame === "all" ? "All Games" : 
+                              rsvp.preferredGame === "texas-holdem" ? "Texas Hold'em" :
+                              rsvp.preferredGame === "blackjack" ? "Blackjack" :
+                              rsvp.preferredGame === "loteria" ? "Lotería" : "All Games"}
+                          </p>
+                          {rsvp.message && (
+                            <p className="text-[#b98459] text-sm italic mb-2">
+                              &quot;{rsvp.message}&quot;
+                            </p>
+                          )}
+                          <p className="text-[#b98459] text-xs opacity-75">
+                            {new Date(rsvp.timestamp).toLocaleDateString()}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="text-center mt-8 space-x-4">
+                    <button 
+                      onClick={() => setShowRSVPForm(!showRSVPForm)}
+                      className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] text-black font-bold transition-all duration-300"
+                    >
+                      {showRSVPForm ? "Hide RSVP Form" : "RSVP Now"}
+                    </button>
+                    <button 
+                      onClick={fetchRSVPs}
+                      className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-transparent hover:bg-[#b98459] hover:text-black text-[#b98459] font-bold transition-all duration-300"
+                    >
+                      Refresh RSVPs
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* RSVP Form - Full Width Below Grid */}
+            {showRSVPForm && (
+              <div className="mt-8">
+                <RSVPForm 
+                  onRSVPSubmit={handleRSVPSubmit}
+                  isSubmitting={submittingRSVP}
+                />
+              </div>
+            )}
           </div>
         </div>
 

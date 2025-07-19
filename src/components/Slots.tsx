@@ -67,7 +67,7 @@ const Slots: React.FC<SlotsProps> = ({
                 rand();
             }, 2000);
         }
-    }, [bgPlaying, ring3, spin, rand]);
+    }, [bgPlaying, ring3, spin]);
 
     useEffect(() => {
         if (makeSpin) {
@@ -788,7 +788,7 @@ const Slots: React.FC<SlotsProps> = ({
             </div>
 
             <div
-                className={`absolute z-30 -translate-x-[4px] -translate-y-[135px] xs:-translate-y-[100px] sm:-translate-y-[135px] md:-translate-x-[105px] md:-translate-y-[15px] max-w-[386px] md:max-w-[800px] self-center min-w-[384px] ${
+                className={`absolute z-30 -translate-x-[4px] -translate-y-[0px]  md:-translate-x-[105px] md:-translate-y-[15px] max-w-[386px] md:max-w-[800px] self-center min-w-[384px] ${
                     leverPull
                         ? "md:rotate-[5deg] rotate-[-1deg]"
                         : "md:rotate-6"

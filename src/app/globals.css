@@ -1,6 +1,7 @@
 /* Import Google Fonts first, before Tailwind */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
 
 @import "tailwindcss";
 
@@ -19,6 +20,11 @@
 @font-face {
   font-family: "Casino";
   src: url("/fonts/Casino.otf");
+}
+
+/* Handwriting font family */
+.font-handwriting {
+  font-family: 'Dancing Script', cursive;
 }
 @font-face {
   font-family: "Korean";
@@ -653,14 +659,14 @@ body {
 
 .light-bulb {
   position: absolute;
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #fef1a2 0%, #bc881b 50%, #a54e07 100%);
   border-radius: 50%;
   box-shadow: 
-    0 0 10px #ffffff,
-    0 0 20px #ffffff,
-    0 0 30px #ffffff;
+    0 0 10px #fef1a2,
+    0 0 20px #bc881b,
+    0 0 30px #a54e07;
   opacity: 0.8;
   filter: brightness(1);
   z-index: 100;
@@ -669,38 +675,138 @@ body {
 /* Larger light bulbs on desktop */
 @media (min-width: 768px) {
   .light-bulb {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     box-shadow: 
-      0 0 15px #ffffff,
-      0 0 30px #ffffff,
-      0 0 45px #ffffff;
+      0 0 15px #fef1a2,
+      0 0 30px #bc881b,
+      0 0 45px #a54e07;
   }
 }
 
 @media (min-width: 1024px) {
   .light-bulb {
-    width: 34px;
-    height: 34px;
+    width: 37px;
+    height: 37px;
     box-shadow: 
-      0 0 20px #ffffff,
-      0 0 40px #ffffff,
-      0 0 60px #ffffff;
+      0 0 20px #fef1a2,
+      0 0 40px #bc881b,
+      0 0 60px #a54e07;
   }
 }
 
 @media (min-width: 1280px) {
   .light-bulb {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     box-shadow: 
-      0 0 25px #ffffff,
-      0 0 50px #ffffff,
-      0 0 75px #ffffff;
+      0 0 25px #fef1a2,
+      0 0 50px #bc881b,
+      0 0 75px #a54e07;
   }
 }
 
-/* All light bulbs stay on continuously - no animation */
+/* Counterclockwise pulsing animation for casino sign effect */
+@keyframes counterclockwisePulse {
+  0% {
+    opacity: 0.8;
+    filter: brightness(1);
+  }
+  25% {
+    opacity: 1;
+    filter: brightness(3);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1);
+  }
+  75% {
+    opacity: 1;
+    filter: brightness(3);
+  }
+  100% {
+    opacity: 0.8;
+    filter: brightness(1);
+  }
+}
+
+/* Apply clockwise animation to light bulbs using data attributes */
+.light-bulb[data-pulse-delay="0"] { animation: counterclockwisePulse 1.5s infinite; }
+.light-bulb[data-pulse-delay="0.04"] { animation: counterclockwisePulse 1.5s infinite 0.04s; }
+.light-bulb[data-pulse-delay="0.08"] { animation: counterclockwisePulse 1.5s infinite 0.08s; }
+.light-bulb[data-pulse-delay="0.12"] { animation: counterclockwisePulse 1.5s infinite 0.12s; }
+.light-bulb[data-pulse-delay="0.16"] { animation: counterclockwisePulse 1.5s infinite 0.16s; }
+.light-bulb[data-pulse-delay="0.2"] { animation: counterclockwisePulse 1.5s infinite 0.2s; }
+.light-bulb[data-pulse-delay="0.24"] { animation: counterclockwisePulse 1.5s infinite 0.24s; }
+.light-bulb[data-pulse-delay="0.28"] { animation: counterclockwisePulse 1.5s infinite 0.28s; }
+.light-bulb[data-pulse-delay="0.32"] { animation: counterclockwisePulse 1.5s infinite 0.32s; }
+.light-bulb[data-pulse-delay="0.36"] { animation: counterclockwisePulse 1.5s infinite 0.36s; }
+.light-bulb[data-pulse-delay="0.4"] { animation: counterclockwisePulse 1.5s infinite 0.4s; }
+.light-bulb[data-pulse-delay="0.44"] { animation: counterclockwisePulse 1.5s infinite 0.44s; }
+.light-bulb[data-pulse-delay="0.48"] { animation: counterclockwisePulse 1.5s infinite 0.48s; }
+.light-bulb[data-pulse-delay="0.52"] { animation: counterclockwisePulse 1.5s infinite 0.52s; }
+.light-bulb[data-pulse-delay="0.56"] { animation: counterclockwisePulse 1.5s infinite 0.56s; }
+.light-bulb[data-pulse-delay="0.6"] { animation: counterclockwisePulse 1.5s infinite 0.6s; }
+.light-bulb[data-pulse-delay="0.64"] { animation: counterclockwisePulse 1.5s infinite 0.64s; }
+.light-bulb[data-pulse-delay="0.68"] { animation: counterclockwisePulse 1.5s infinite 0.68s; }
+.light-bulb[data-pulse-delay="0.72"] { animation: counterclockwisePulse 1.5s infinite 0.72s; }
+.light-bulb[data-pulse-delay="0.76"] { animation: counterclockwisePulse 1.5s infinite 0.76s; }
+.light-bulb[data-pulse-delay="0.8"] { animation: counterclockwisePulse 1.5s infinite 0.8s; }
+.light-bulb[data-pulse-delay="0.84"] { animation: counterclockwisePulse 1.5s infinite 0.84s; }
+.light-bulb[data-pulse-delay="0.88"] { animation: counterclockwisePulse 1.5s infinite 0.88s; }
+.light-bulb[data-pulse-delay="0.92"] { animation: counterclockwisePulse 1.5s infinite 0.92s; }
+.light-bulb[data-pulse-delay="0.96"] { animation: counterclockwisePulse 1.5s infinite 0.96s; }
+.light-bulb[data-pulse-delay="1"] { animation: counterclockwisePulse 1.5s infinite 1s; }
+.light-bulb[data-pulse-delay="1.04"] { animation: counterclockwisePulse 1.5s infinite 1.04s; }
+.light-bulb[data-pulse-delay="1.08"] { animation: counterclockwisePulse 1.5s infinite 1.08s; }
+.light-bulb[data-pulse-delay="1.12"] { animation: counterclockwisePulse 1.5s infinite 1.12s; }
+.light-bulb[data-pulse-delay="1.16"] { animation: counterclockwisePulse 1.5s infinite 1.16s; }
+.light-bulb[data-pulse-delay="1.2"] { animation: counterclockwisePulse 1.5s infinite 1.2s; }
+.light-bulb[data-pulse-delay="1.24"] { animation: counterclockwisePulse 1.5s infinite 1.24s; }
+.light-bulb[data-pulse-delay="1.28"] { animation: counterclockwisePulse 1.5s infinite 1.28s; }
+.light-bulb[data-pulse-delay="1.32"] { animation: counterclockwisePulse 1.5s infinite 1.32s; }
+.light-bulb[data-pulse-delay="1.36"] { animation: counterclockwisePulse 1.5s infinite 1.36s; }
+.light-bulb[data-pulse-delay="1.4"] { animation: counterclockwisePulse 1.5s infinite 1.4s; }
+.light-bulb[data-pulse-delay="1.44"] { animation: counterclockwisePulse 1.5s infinite 1.44s; }
+.light-bulb[data-pulse-delay="1.48"] { animation: counterclockwisePulse 1.5s infinite 1.48s; }
+.light-bulb[data-pulse-delay="1.52"] { animation: counterclockwisePulse 1.5s infinite 1.52s; }
+.light-bulb[data-pulse-delay="1.56"] { animation: counterclockwisePulse 1.5s infinite 1.56s; }
+.light-bulb[data-pulse-delay="1.6"] { animation: counterclockwisePulse 1.5s infinite 1.6s; }
+.light-bulb[data-pulse-delay="1.64"] { animation: counterclockwisePulse 1.5s infinite 1.64s; }
+.light-bulb[data-pulse-delay="1.68"] { animation: counterclockwisePulse 1.5s infinite 1.68s; }
+.light-bulb[data-pulse-delay="1.72"] { animation: counterclockwisePulse 1.5s infinite 1.72s; }
+.light-bulb[data-pulse-delay="1.76"] { animation: counterclockwisePulse 1.5s infinite 1.76s; }
+.light-bulb[data-pulse-delay="1.8"] { animation: counterclockwisePulse 1.5s infinite 1.8s; }
+.light-bulb[data-pulse-delay="1.84"] { animation: counterclockwisePulse 1.5s infinite 1.84s; }
+.light-bulb[data-pulse-delay="1.88"] { animation: counterclockwisePulse 1.5s infinite 1.88s; }
+
+/* Golden neon text effect for casino title */
+.neon-text {
+  color: #fef1a2;
+  -webkit-text-stroke: 2px #a54e07;
+  text-stroke: 2px #a54e07;
+  text-shadow: 
+    0 0 4px #fef1a2,
+    0 0 8px #fef1a2,
+    0 0 12px #bc881b;
+  animation: neonGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlow {
+  from {
+    text-shadow: 
+      0 0 2px #fef1a2,
+      0 0 4px #fef1a2,
+      0 0 6px #bc881b;
+  }
+  to {
+    text-shadow: 
+      0 0 4px #fef1a2,
+      0 0 8px #fef1a2,
+      0 0 12px #bc881b,
+      0 0 16px #a54e07;
+  }
+}
 
 /* Casino card styles */
 .ibox {

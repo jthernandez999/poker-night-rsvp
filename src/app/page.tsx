@@ -2,23 +2,16 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import PokerRegistrationModal from "../components/TwitterCheckModal";
-import Slots from "../components/Slots";
-import WinModal from "../components/WinModal";
-import LModal from "../components/LModal";
 import RSVPForm from "../components/RSVPForm";
 import Header from "../components/Header";
 
 export default function Home() {
-  const [spin, setSpin] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showWinModal, setShowWinModal] = useState(false);
-  const [showLModal, setShowLModal] = useState(false);
   const [twitterCheck, setTwitterCheck] = useState(false);
-  const [approved, setApproved] = useState(false);
   const [walletAddy, setWalletAddy] = useState("");
   const [checking, setChecking] = useState(false);
-  const [spinning, setSpinning] = useState(false);
   const [_audioStatus, setAudioStatus] = useState(false);
   const [_claimed, setClaimed] = useState(false);
   const [_showPP, setShowPP] = useState(false);
@@ -110,54 +103,20 @@ export default function Home() {
     setAudioStatus(false);
   };
 
-  useEffect(() => {
-    if (twitterCheck) {
-      setSpinning(true);
-      setSpin(true);
-      setShowModal(false);
-      setTwitterCheck(false);
-    }
-  }, [twitterCheck]);
-
-  useEffect(() => {
-    if (!showLModal && !showWinModal) {
-      pauseAudio();
-      }
-  }, [showLModal, showWinModal]);
-
-  useEffect(() => {
-    if (showModal) {
-      startAudio();
-    } else if (!showModal && spinning === false) {
-      pauseAudio();
-    }
-  }, [showModal, spinning]);
-
   const handleCheck = async () => {
     setChecking(true);
     // Simplified poker night check - always approve for demonstration
-    setApproved(true);
     setTwitterCheck(true);
-    setSpinning(true);
     setChecking(false);
     setClaimed(false);
     setWalletAddy("");
   };
 
   const _handleModalOpen = () => {
-    if (spinning === false) setShowModal(true);
+    setShowModal(true);
   };
 
-  // Direct spin handler that bypasses modal
-  const handleDirectSpin = () => {
-    if (spinning === false) {
-      // Randomly decide if player wins (20% chance)
-      const willWin = Math.random() < 0.2;
-      setApproved(willWin);
-      setSpinning(true);
-      setSpin(true);
-    }
-  };
+
 
   // Prevent hydration mismatch during SSR
   if (!mounted) {
@@ -180,42 +139,19 @@ export default function Home() {
       <Header />
       
       <div className=" pt-16 flex flex-col  lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide  relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible ">
-        <div className="lg:hidden relative z-20 flex flex-col mb-0 mt-6 px-4 ">
-          <h1 className="font-myriad pt-2 font-[1100] break-normal leading-[1] text-[40px] sm:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] ">
+        <div className="flex flex-col items-center justify-center min-h-[400px] lg:min-h-[600px] text-center px-4">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] font-myriad mb-6">
             Join the Poker Night!
           </h1>
-
-          <p className="hidden sm:flex px-6 font-myriad leading-[1.1] font-[1100] text-xl sm:text-2xl pt-4 min-w-max text-[#cf976a]">
-            Place your bet
+          <p className="text-xl md:text-2xl text-[#cf976a] font-myriadpro mb-8 max-w-2xl">
+            Experience the finest poker nights at Hernandez Casino
           </p>
-        </div>
-        <div className="flex flex-col-reverse lg:flex-row lg:px-[5%] w-full justify-end lg:justify-between  overflow-y-visible overflow-x-clip  lg:overflow-hidden h-max min-h-[416px] lg:min-h-[612px] 2xl:min-h-[798px] lg:my-auto ">
-          <div className="relative z-30 lg:mt-[128px] flex flex-col  items-center lg:h-full min-h-max min-w-max scale-105 text-center lg:self-start xl:mr-12 2xl:scale-125 2xl:mt-[17.5%]">
-            <h1 className="  hidden lg:flex cursor-default font-myriad leading-[1.1] font-[1100] text-[84px] font- text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] max-w-[372px]">
-              Join the Poker Night!
-            </h1>
-            <p className=" hidden lg:flex font-myriadpro text-xl lg:text-2xl pt-4 min-w-max  text-[#cf976a]">
-              Place your bet
-            </p>
-            <p className="hidden font-myriadpro md:flex text-xs md:text-base mt-0 mb-2 lg:mt-0 text-[#cf976a]">
-              or..
-            </p>
-            <div className="relative z-50">
-              <button className="golden-btn2" onClick={handleDirectSpin}>
-                click to spin
+          <div className="space-y-4">
+            <Link href="/house-reel">
+              <button className="golden-btn text-xl px-8 py-4">
+                Play House Reel
               </button>
-            </div>
-          </div>
-          <div className="2xl:scale-125 md:mt-16 lg:mt-0 xl:-translate-x-14 lg:z-40 relative min-h-[298px] lg:min-h-max lg:min-w-[712px] my-4 lg:my-0 lg:h-max w-full lg:w-[712px] flex flex-col xl:justify-center self-center mx-auto lg:pr-[5%] overflow-y-visible overflow-x-clip md:overflow-visible">
-            <Slots
-              setMakeSpin={setSpin}
-              makeSpin={spin}
-              handleModalOpen={handleDirectSpin}
-              approved={approved}
-              setSpinning={setSpinning}
-              setShowWin={setShowWinModal}
-              setShowL={setShowLModal}
-            />
+            </Link>
           </div>
         </div>
 
@@ -369,6 +305,47 @@ export default function Home() {
               </div>
             </div>
 
+            {/* House Reel Section - Full Width */}
+            <div className="mb-12">
+              <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+                {/* Background image for mobile */}
+                <div className="absolute inset-0 opacity-10 md:hidden">
+                  <Image
+                    src="/Background.png"
+                    alt="Background"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
+                    House Reel
+                  </h2>
+                  <div className="max-w-4xl mx-auto text-center">
+                    <h3 className="text-xl md:text-2xl font-bold text-[#b98459] mb-4 font-casino">
+                      Experience the Legendary House Reel!
+                    </h3>
+                    <p className="text-[#b98459] text-base md:text-lg leading-relaxed mb-6">
+                      Test your luck and timing with our exclusive House Reel game. Watch the score climb as you keep the reel spinning, then cash out at the perfect moment to beat your high score!
+                    </p>
+                    <div className="space-y-3 text-[#b98459] text-sm md:text-base mb-8">
+                      <p>🎰 <strong>Interactive Gameplay:</strong> Start and stop the reel at your own pace</p>
+                      <p>🏆 <strong>High Score Challenge:</strong> Compete against yourself and others</p>
+                      <p>🎵 <strong>Casino Atmosphere:</strong> Full audio experience with authentic sounds</p>
+                      <p>💎 <strong>Beautiful Design:</strong> Stunning casino-style interface</p>
+                    </div>
+                    <div>
+                      <Link href="/house-reel">
+                        <button className="golden-btn text-lg px-8 py-4">
+                          Play House Reel Now
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Who's Coming Section - Full Width */}
             <div className="mb-12">
               <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
@@ -494,22 +471,7 @@ export default function Home() {
         />
         )}
 
-      {/* Win Modal */}
-      {showWinModal && (
-        <WinModal
-          setShowModal={setShowWinModal}
-          showModal={showWinModal}
-                          claimed={_claimed}
-        />
-      )}
 
-      {/* Lose Modal */}
-      {showLModal && (
-        <LModal
-          setShowModal={setShowLModal}
-          showModal={showLModal}
-        />
-      )}
 
       <audio ref={myRef} src="/bga2.mp3" className="hidden" loop />
     </div>

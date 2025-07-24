@@ -47,22 +47,40 @@ export default function PP({ showModal, setShowModal }: Props) {
     e?.preventDefault();
     //if the form is valid, submit the form
     if (valid) {
-      //send the form data to https://docs.google.com/forms/d/1z7HftArWwKWQKeZD
-      //this is the google form that will be used to collect the data
-      const response = await fetch(
-        `https://docs.google.com/forms/u/0/d/e/1FAIpQLSfVs1vrDhUm1af4C-hS_Z8yLJbFhmm6--jCpRAVF9KVx43BYg/formResponse?entry.1461373607=${projectName}&entry.1610611256=${website}&entry.630467492=${twitter}&entry.1752846728=${otherLinks}&entry.1174185597=${whitelists}&entry.321859373=${why}&entry.1954487422=${token}&entry.1459734509=${contact}`,
-        {
+      try {
+        const response = await fetch('/api/partnership', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
-        })
+          body: JSON.stringify({
+            projectName,
+            website,
+            twitter,
+            otherLinks,
+            whitelists,
+            why,
+            token,
+            contact
+          })
+        });
         
-      response ? setValidationMessage("Form submitted successfully") : setValidationMessage("Form submission failed");
-      setSubmitted(true);
+        const result = await response.json();
+        
+        if (result.success) {
+          setValidationMessage(result.message || "Form submitted successfully");
+        } else {
+          setValidationMessage(result.message || "Form submission failed");
+        }
+        
+        setSubmitted(true);
+      } catch (error) {
+        console.error('Partnership submission error:', error);
+        setValidationMessage("Form submission failed. Please try again.");
+        setSubmitted(true);
       }
-
     }
+  }
 
   return (
     <Transition.Root show={showModal} as={Fragment}>

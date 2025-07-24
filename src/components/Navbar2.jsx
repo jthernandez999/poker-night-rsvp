@@ -154,6 +154,27 @@ const Navbar = ({ play, setPlay }) => {
                 </a>
               )}
             </li>
+            <p className="self-center cursor-default text-[#985E3E] mx-2">
+              {" "}
+              |{" "}
+            </p>
+            <li className="mr-2 text-sm group uppercase hover:cursor-pointer font-myriad text-transparent bg-clip-text bg-gradient-to-br from-[#f0c0a6] to-[#9E6343]  hover:text-[#985E3E] self-center">
+              <Link href="/house-reel">
+                <a>
+                  <div className="w-max h-max flex ">
+                    <img
+                      draggable={false}
+                      src="/Lever.png"
+                      alt="house-reel"
+                      className=" min-w-max max-h-[28px]"
+                    />
+                    <p className="self-center group-hover:scale-105 font-myriad text-base  pt-[6px] duration-300 ease-in-out pl-2">
+                      House Reel
+                    </p>
+                  </div>{" "}
+                </a>
+              </Link>
+            </li>
             <p className="self-center cursor-default text-[#985E3E] mx-">
               {" "}
               |{" "}
@@ -433,6 +454,21 @@ const Navbar = ({ play, setPlay }) => {
                   </div>{" "}
                 </a>
               )}
+              <Link href="/house-reel">
+                <a className="group" onClick={handleNav}>
+                  <div className="w-max h-max flex ">
+                    <img
+                      draggable={false}
+                      src="/Lever.png"
+                      alt="house-reel"
+                      className=" min-w-max max-h-[28px]"
+                    />
+                    <p className="group-hover:text-[#985E3E] font-myriad text-base pt-1 self-center pl-2">
+                      House Reel
+                    </p>
+                  </div>{" "}
+                </a>
+              </Link>
                             <Link href="https://dapp.cardanoriver.io/#partner_program">
                 <a className="group" onClick={handleNav}>
                   <div className="w-max h-max flex ">

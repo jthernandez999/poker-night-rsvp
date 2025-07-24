@@ -235,7 +235,7 @@ export default function Home() {
               {/* Content */}
               <div className="relative z-20 p-8 md:p-12">
                               <p className="text-[#b98459] text-3xl md:text-4xl lg:text-6xl xl:text-7xl leading-relaxed max-w-4xl mx-auto font-myriadpro group font-bold px-4 text-center mb-8 drop-shadow-lg">
-                <span className="block text-center">You&apos;re invited to celebrate<br className="block md:hidden" /> Joe & Ayde&apos;s birthday!</span> <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 block text-center">(revolution around the sun)!</span>
+                <span className="block text-center">You&apos;re invited to celebrate<br className="block md:hidden" /> Joe & Ayde&apos;s birthday!</span> <span className="opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300 block text-center">(revolution around the sun)!</span>
               </p>
                 
                 {/* Welcome Text Between Header Lines */}
@@ -487,13 +487,13 @@ export default function Home() {
                       <p>🎵 <strong>Casino Atmosphere:</strong> Full audio experience with authentic sounds</p>
                       <p>💎 <strong>Beautiful Design:</strong> Stunning casino-style interface</p>
                     </div>
-                    <div>
+                    {/* <div>
                       <Link href="/house-reel">
                         <button className="golden-btn text-lg px-8 py-4">
                           Play House Reel Now
                         </button>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

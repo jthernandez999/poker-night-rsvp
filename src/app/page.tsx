@@ -6,8 +6,11 @@ import Link from "next/link";
 import PokerRegistrationModal from "../components/TwitterCheckModal";
 import RSVPForm from "../components/RSVPForm";
 import Header from "../components/Header";
+import LanguageToggle from "../components/LanguageToggle";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Home() {
+  const { t } = useLanguage();
   const [showModal, setShowModal] = useState(false);
   const [twitterCheck, setTwitterCheck] = useState(false);
   const [walletAddy, setWalletAddy] = useState("");
@@ -166,6 +169,7 @@ export default function Home() {
       <div id="home" />
       
       <Header />
+      <LanguageToggle />
       
       <div className=" pt-16 flex flex-col  lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide  relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible ">
         
@@ -278,23 +282,13 @@ export default function Home() {
                 <div className="text-center mb-8 space-y-4">
                   <div>
                     <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md">
-                      📅 When: Sat, July 26, 2025
+                      📅 {t('date')}
                     </p>
                   </div>
                   <div>
                     <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md">
-                      📍 Where:
+                      📍 {t('location')}
                     </p>
-                    <a 
-                      href="https://maps.google.com/maps?q=11811+Beverly+Blvd+Apt+1+Whittier+CA+90601"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block hover:scale-105 transition-transform duration-200"
-                    >
-                      <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md cursor-pointer hover:text-[#FFDB24] transition-colors duration-200">
-                        11811 Beverly Blvd Apt 1, Whittier, CA 90601
-                      </p>
-                    </a>
                   </div>
                 </div>
                 
@@ -324,16 +318,16 @@ export default function Home() {
                 </div>
                 <div className="relative z-10">
                   <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-                    RSVP
+                    {t('rsvp')}
                   </h2>
                   
                   {loadingRSVPs ? (
                     <div className="text-center">
-                      <p className="text-[#b98459] text-lg">Loading RSVPs...</p>
+                      <p className="text-[#b98459] text-lg">{t('loadingRSVPs')}</p>
                     </div>
                   ) : rsvpResponses.length === 0 ? (
                     <div className="text-center">
-                      <p className="text-[#b98459] text-lg">No RSVPs yet. Be the first to join!</p>
+                      <p className="text-[#b98459] text-lg">{t('noRSVPs')}</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -353,10 +347,10 @@ export default function Home() {
                             <span className="text-[#b98459] font-bold text-lg">{rsvp.name}</span>
                           </div>
                           <p className="text-[#b98459] text-sm mb-2">
-                            <strong>Game:</strong> {rsvp.preferredGame === "all" ? "All Games" : 
-                              rsvp.preferredGame === "texas-holdem" ? "Texas Hold'em" :
-                              rsvp.preferredGame === "blackjack" ? "Blackjack" :
-                              rsvp.preferredGame === "loteria" ? "Lotería" : "All Games"}
+                            <strong>Game:</strong> {rsvp.preferredGame === "all" ? t('allGames') : 
+                              rsvp.preferredGame === "texas-holdem" ? t('texasHoldem') :
+                              rsvp.preferredGame === "blackjack" ? t('blackjackGame') :
+                              rsvp.preferredGame === "loteria" ? t('loteriaGame') : t('allGames')}
                           </p>
                           {rsvp.message && (
                             <p className="text-[#b98459] text-sm italic mb-2">
@@ -376,13 +370,13 @@ export default function Home() {
                       onClick={() => setShowRSVPForm(!showRSVPForm)}
                       className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] text-black font-bold transition-all duration-300"
                     >
-                      {showRSVPForm ? "Hide RSVP Form" : "RSVP Now"}
+                      {showRSVPForm ? t('hideRSVPForm') : t('rsvpNow')}
                     </button>
                     <button 
                       onClick={fetchRSVPs}
                       className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-transparent hover:bg-[#b98459] hover:text-black text-[#b98459] font-bold transition-all duration-300"
                     >
-                      Refresh RSVPs
+                      {t('refreshRSVPs')}
                     </button>
                   </div>
                 </div>
@@ -414,7 +408,7 @@ export default function Home() {
                 </div>
                 <div className="relative z-10">
                   <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#c79a63] font-casino">
-                    Birthday Edition Schedule
+                    {t('birthdaySchedule')}
                   </h2>
                   
                   {/* Timeline */}
@@ -426,8 +420,8 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-[#c79a63] font-bold text-base">Food & Refreshments</h4>
-                        <p className="text-[#b98459] text-sm">Enjoy delicious birthday treats and drinks</p>
+                        <h4 className="text-[#c79a63] font-bold text-base">{t('foodRefreshments')}</h4>
+                        <p className="text-[#b98459] text-sm">{t('foodDescription')}</p>
                       </div>
                     </div>
                     
@@ -438,8 +432,8 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-[#c79a63] font-bold text-base">Gaming Begins!</h4>
-                        <p className="text-[#b98459] text-sm">All games open for play</p>
+                        <h4 className="text-[#c79a63] font-bold text-base">{t('gamingBegins')}</h4>
+                        <p className="text-[#b98459] text-sm">{t('gamingDescription')}</p>
                       </div>
                     </div>
                     
@@ -450,39 +444,39 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-[#c79a63] font-bold text-base">Casino Closes</h4>
-                        <p className="text-[#b98459] text-sm">Final chip count and prize distribution</p>
+                        <h4 className="text-[#c79a63] font-bold text-base">{t('casinoCloses')}</h4>
+                        <p className="text-[#b98459] text-sm">{t('casinoDescription')}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Activities Grid */}
                   <div className="mb-6">
-                    <h3 className="text-[#c79a63] font-bold text-lg mb-3 text-center">Activities & Games</h3>
+                    <h3 className="text-[#c79a63] font-bold text-lg mb-3 text-center">{t('activitiesGames')}</h3>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">🎤 Karaoke</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('karaoke')}</span>
                       </div>
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">💃 Dancing</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('dancing')}</span>
                       </div>
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">🃏 Poker</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('poker')}</span>
                       </div>
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">🃏 Blackjack (21)</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('blackjack')}</span>
                       </div>
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">🎰 Slot Machines</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('slotMachines')}</span>
                       </div>
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">🎮 Video Games</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('videoGames')}</span>
                       </div>
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">🎲 Lotería</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('loteria')}</span>
                       </div>
                       <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
-                        <span className="text-[#b98459] text-sm font-medium">🎯 Pirinola</span>
+                        <span className="text-[#b98459] text-sm font-medium">{t('pirinola')}</span>
                       </div>
                     </div>
                   </div>
@@ -492,7 +486,7 @@ export default function Home() {
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-[#c79a63] rounded-full"></div>
                       <p className="text-[#b98459] text-sm">
-                        <strong>Buy-in required</strong> - <a href="#house-rules" className="text-[#c79a63] hover:text-[#FFDB24] underline transition-colors duration-200">see house rules for details</a>
+                        <strong>{t('buyInRequired')}</strong> - <a href="#house-rules" className="text-[#c79a63] hover:text-[#FFDB24] underline transition-colors duration-200">{t('seeHouseRules')}</a>
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -526,34 +520,34 @@ export default function Home() {
                 </div>
                 <div className="relative z-10">
                   <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-                    House Rules
+                    {t('houseRules')}
                   </h2>
                   
                   {/* Game Rules & Pricing */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-8">
                     <div className="text-center bg-[#2a0a0a40] p-4 rounded-lg border border-[#b98459]">
-                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">💰 Buy-in</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">{t('buyIn')}</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        <strong>Base: $5 = 500 chips</strong><br/>
-                        <strong>Bonus: $10 = 1,200 chips</strong><br/>
-                        <strong>VIP: $20 = 2,800 chips</strong><br/>
-                        <em>Better value the more you buy!</em>
+                        <strong>{t('baseBuyIn')}</strong><br/>
+                        <strong>{t('bonusBuyIn')}</strong><br/>
+                        <strong>{t('vipBuyIn')}</strong><br/>
+                        <em>{t('betterValue')}</em>
                       </p>
                     </div>
                     <div className="text-center bg-[#2a0a0a40] p-4 rounded-lg border border-[#b98459]">
-                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">🏆 Prizes</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">{t('prizes')}</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        <strong>2 winners</strong> based on total chip value at the end of the night. The more chips you have, the better your chances!
+                        {t('twoWinners')}
                       </p>
                     </div>
                     <div className="text-center bg-[#2a0a0a40] p-4 rounded-lg border border-[#b98459]">
-                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">🎮 Game Buy-ins</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">{t('gameBuyIns')}</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        <strong>Varies per game:</strong><br/>
-                        • Poker: 100-500 chips<br/>
-                        • Blackjack: 50-300 chips<br/>
-                        • Lotería: 25-150 chips<br/>
-                        • Slot Machines: 10-100 chips
+                        <strong>{t('variesPerGame')}</strong><br/>
+                        {t('pokerChips')}<br/>
+                        {t('blackjackChips')}<br/>
+                        {t('loteriaChips')}<br/>
+                        {t('slotChips')}
                       </p>
                     </div>
                   </div>
@@ -561,21 +555,21 @@ export default function Home() {
                   {/* Family-Friendly House Rules */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                     <div className="text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">🤝 Be Kind & Play Nice</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">{t('beKind')}</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        We&apos;re all here to celebrate! Keep the friendly banter light and remember it&apos;s real money! 😄
+                        {t('beKindDesc')}
                       </p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">🎯 Keep It Fair</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">{t('keepItFair')}</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        No sneaky moves or &quot;creative accounting&quot; with your chips. We&apos;re watching... but mostly just to cheer you on! 🎉
+                        {t('keepItFairDesc')}
                       </p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">🎉 Have a Blast!</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">{t('haveABlast')}</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        This is a birthday party, not the World Series of Poker! Dance, laugh, and make memories. The winner is whoever has the most fun! 🎊
+                        {t('haveABlastDesc')}
                       </p>
                     </div>
                   </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface RSVPData {
   name: string;
@@ -17,6 +18,7 @@ interface RSVPFormProps {
 }
 
 export default function RSVPForm({ onRSVPSubmit, isSubmitting }: RSVPFormProps) {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -51,13 +53,13 @@ export default function RSVPForm({ onRSVPSubmit, isSubmitting }: RSVPFormProps) 
       </div>
       <div className="relative z-10">
         <h3 className="text-2xl font-bold text-[#b98459] mb-6 text-center font-casino">
-          RSVP for Poker Night
+          {t('rsvp')} for Poker Night
         </h3>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-[#b98459] font-bold mb-2">
-              Name *
+              {t('name')} *
             </label>
             <input
               type="text"
@@ -73,7 +75,7 @@ export default function RSVPForm({ onRSVPSubmit, isSubmitting }: RSVPFormProps) 
 
           <div>
             <label htmlFor="email" className="block text-[#b98459] font-bold mb-2">
-              Email *
+              {t('email')} *
             </label>
             <input
               type="email"
@@ -89,7 +91,7 @@ export default function RSVPForm({ onRSVPSubmit, isSubmitting }: RSVPFormProps) 
 
           <div>
             <label htmlFor="response" className="block text-[#b98459] font-bold mb-2">
-              Will you attend? *
+              {t('response')} *
             </label>
             <select
               id="response"
@@ -99,15 +101,15 @@ export default function RSVPForm({ onRSVPSubmit, isSubmitting }: RSVPFormProps) 
               required
               className="w-full px-4 py-2 bg-[#1a1a1a] border border-[#b98459] rounded-lg text-[#b98459] focus:outline-none focus:border-[#FFDB24]"
             >
-              <option value="yes">Yes, I&apos;ll be there!</option>
-              <option value="maybe">Maybe, I&apos;ll let you know</option>
-              <option value="no">No, I can&apos;t make it</option>
+              <option value="yes">{t('yes')}</option>
+              <option value="maybe">{t('maybe')}</option>
+              <option value="no">{t('no')}</option>
             </select>
           </div>
 
           <div>
             <label htmlFor="preferredGame" className="block text-[#b98459] font-bold mb-2">
-              Preferred Game
+              {t('preferredGame')}
             </label>
             <select
               id="preferredGame"
@@ -116,16 +118,16 @@ export default function RSVPForm({ onRSVPSubmit, isSubmitting }: RSVPFormProps) 
               onChange={handleChange}
               className="w-full px-4 py-2 bg-[#1a1a1a] border border-[#b98459] rounded-lg text-[#b98459] focus:outline-none focus:border-[#FFDB24]"
             >
-              <option value="all">All Games</option>
-              <option value="texas-holdem">Texas Hold&apos;em</option>
-              <option value="blackjack">Blackjack</option>
-              <option value="loteria">Lotería</option>
+              <option value="all">{t('allGames')}</option>
+              <option value="texas-holdem">{t('texasHoldem')}</option>
+              <option value="blackjack">{t('blackjackGame')}</option>
+              <option value="loteria">{t('loteriaGame')}</option>
             </select>
           </div>
 
           <div>
             <label htmlFor="message" className="block text-[#b98459] font-bold mb-2">
-              Message (Optional)
+              {t('message')}
             </label>
             <textarea
               id="message"
@@ -144,7 +146,7 @@ export default function RSVPForm({ onRSVPSubmit, isSubmitting }: RSVPFormProps) 
               disabled={isSubmitting}
               className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] disabled:bg-[#b98459] disabled:opacity-50 text-black font-bold transition-all duration-300"
             >
-              {isSubmitting ? "Submitting..." : "Submit RSVP"}
+              {isSubmitting ? t('submitting') : t('submit')}
             </button>
           </div>
         </form>

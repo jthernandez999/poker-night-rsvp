@@ -9,17 +9,31 @@ import Header from "../components/Header";
 import LanguageToggle from "../components/LanguageToggle";
 import { useLanguage } from "../contexts/LanguageContext";
 
-// Safe parallax hook with error handling
+// Safe parallax hook with mobile optimization
 const useParallax = (speed: number = 0.5) => {
   const [offset, setOffset] = useState(0);
   
   useEffect(() => {
+    // Disable parallax on mobile devices for better performance
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    if (isMobile) {
+      return;
+    }
+    
+    let ticking = false;
+    
     const handleScroll = () => {
-      try {
-        const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-        setOffset(scrolled * speed);
-      } catch (error) {
-        console.warn('Parallax scroll error:', error);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          try {
+            const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+            setOffset(scrolled * speed);
+          } catch (error) {
+            console.warn('Parallax scroll error:', error);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     
@@ -53,6 +67,19 @@ export default function Home() {
   const shineOffset = useParallax(0.4);
   const dice1Offset = useParallax(0.6);
   const dice2Offset = useParallax(0.5);
+
+  // Mobile detection for conditional rendering
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
 
   // RSVP type definition
@@ -208,7 +235,7 @@ export default function Home() {
           {/* Coins Background - Slowest parallax */}
           <div 
             className="absolute inset-0 flex items-center justify-center opacity-80"
-            style={{ transform: `translateY(${coinsOffset}px)` }}
+            style={{ transform: isMobile ? 'none' : `translateY(${coinsOffset}px)` }}
           >
             <Image 
               draggable={false}
@@ -224,7 +251,7 @@ export default function Home() {
           {/* Shine Effect - Medium parallax */}
           <div 
             className="absolute inset-0 flex items-center justify-center opacity-60"
-            style={{ transform: `translateY(${shineOffset}px)` }}
+            style={{ transform: isMobile ? 'none' : `translateY(${shineOffset}px)` }}
           >
             <Image 
               draggable={false} 
@@ -239,7 +266,7 @@ export default function Home() {
           {/* Dice Decorations - Faster parallax */}
           <div 
             className="absolute top-20 right-10 opacity-90"
-            style={{ transform: `translateY(${dice2Offset}px)` }}
+            style={{ transform: isMobile ? 'none' : `translateY(${dice2Offset}px)` }}
           >
             <Image 
               draggable={false} 
@@ -252,7 +279,7 @@ export default function Home() {
           </div>
           <div 
             className="absolute bottom-20 left-10 opacity-90"
-            style={{ transform: `translateY(${dice1Offset}px)` }}
+            style={{ transform: isMobile ? 'none' : `translateY(${dice1Offset}px)` }}
           >
             <Image 
               draggable={false} 
@@ -283,13 +310,13 @@ export default function Home() {
         <div className="w-full max-h-[2px] h-[2px] absolute -translate-y-40 bottom-0 hidden z-0 md:flex justify-between  xl:pr-[0%] xl:pl-[7.5%] px-[.5%] pb-[2%]">
           <div 
             className="-translate-y-12 md:-translate-y-0"
-            style={{ transform: `translateY(${coinsOffset * 0.3}px)` }}
+            style={{ transform: isMobile ? 'none' : `translateY(${coinsOffset * 0.3}px)` }}
           >
             <Image draggable={false} src="/coinL.png" alt="" width={100} height={100} />
           </div>
           <div 
             className="-translate-y-12 md:-translate-y-0"
-            style={{ transform: `translateY(${coinsOffset * 0.3}px)` }}
+            style={{ transform: isMobile ? 'none' : `translateY(${coinsOffset * 0.3}px)` }}
           >
             <Image draggable={false} src="/coinR.png" alt="" width={100} height={100} />
           </div>

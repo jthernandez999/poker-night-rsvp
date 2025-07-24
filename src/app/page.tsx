@@ -9,22 +9,7 @@ import Header from "../components/Header";
 import LanguageToggle from "../components/LanguageToggle";
 import { useLanguage } from "../contexts/LanguageContext";
 
-// Custom hook for parallax effect
-const useParallax = (speed: number = 0.5) => {
-  const [offset, setOffset] = useState(0);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.pageYOffset;
-      setOffset(scrolled * speed);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [speed]);
-  
-  return offset;
-};
+
 
 export default function Home() {
   const { t } = useLanguage();
@@ -42,11 +27,7 @@ export default function Home() {
   const [showRSVPForm, setShowRSVPForm] = useState(false);
   const myRef = useRef<HTMLAudioElement>(null);
 
-  // Parallax offsets for different background elements
-  const coinsOffset = useParallax(0.3);
-  const shineOffset = useParallax(0.5);
-  const dice1Offset = useParallax(0.8);
-  const dice2Offset = useParallax(0.6);
+
 
   // RSVP type definition
   type RSVPResponse = {
@@ -196,13 +177,10 @@ export default function Home() {
       
       <div className=" pt-16 flex flex-col  lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide  relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible ">
         
-        {/* Background Images from Slot Component with Parallax */}
+        {/* Background Images from Slot Component */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Coins Background - Slowest parallax */}
-          <div 
-            className="absolute inset-0 flex items-center justify-center opacity-80"
-            style={{ transform: `translateY(${coinsOffset}px)` }}
-          >
+          {/* Coins Background */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-80">
             <Image 
               draggable={false}
               priority
@@ -214,11 +192,8 @@ export default function Home() {
             />
           </div>
           
-          {/* Shine Effect - Medium parallax */}
-          <div 
-            className="absolute inset-0 flex items-center justify-center opacity-60"
-            style={{ transform: `translateY(${shineOffset}px)` }}
-          >
+          {/* Shine Effect */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-60">
             <Image 
               draggable={false} 
               src="/Shine.png" 
@@ -229,11 +204,8 @@ export default function Home() {
             />
           </div>
           
-          {/* Dice Decorations - Fastest parallax */}
-          <div 
-            className="absolute top-20 right-10 opacity-90"
-            style={{ transform: `translateY(${dice2Offset}px)` }}
-          >
+          {/* Dice Decorations */}
+          <div className="absolute top-20 right-10 opacity-90">
             <Image 
               draggable={false} 
               className="w-16 h-16 md:w-20 md:h-20" 
@@ -243,10 +215,7 @@ export default function Home() {
               alt="dice decoration" 
             />
           </div>
-          <div 
-            className="absolute bottom-20 left-10 opacity-90"
-            style={{ transform: `translateY(${dice1Offset}px)` }}
-          >
+          <div className="absolute bottom-20 left-10 opacity-90">
             <Image 
               draggable={false} 
               src="/dice1.png" 

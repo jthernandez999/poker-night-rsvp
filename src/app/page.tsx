@@ -59,6 +59,35 @@ export default function Home() {
     }
   }, [mounted]);
 
+  // Intersection Observer for revolution text on mobile
+  useEffect(() => {
+    if (mounted && typeof window !== 'undefined') {
+      const revolutionText = document.getElementById('revolution-text');
+      if (revolutionText) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // Only show on mobile (screen width < 768px)
+                if (window.innerWidth < 768) {
+                  revolutionText.style.opacity = '1';
+                }
+              }
+            });
+          },
+          {
+            threshold: 0.5, // Trigger when 50% of the element is visible
+            rootMargin: '0px 0px -20% 0px' // Trigger when element is near the top
+          }
+        );
+        
+        observer.observe(revolutionText);
+        
+        return () => observer.disconnect();
+      }
+    }
+  }, [mounted]);
+
   // Handle RSVP submission
   const handleRSVPSubmit = async (rsvpData: { name: string; email: string; response: "yes" | "no" | "maybe"; message?: string; preferredGame?: "texas-holdem" | "blackjack" | "loteria" | "all" }) => {
     setSubmittingRSVP(true);
@@ -235,28 +264,38 @@ export default function Home() {
               {/* Content */}
               <div className="relative z-20 p-8 md:p-12">
                               <p className="text-[#b98459] text-3xl md:text-4xl lg:text-6xl xl:text-7xl leading-relaxed max-w-4xl mx-auto font-myriadpro group font-bold px-4 text-center mb-8 drop-shadow-lg">
-                <span className="block text-center">You&apos;re invited to celebrate<br className="block md:hidden" /> Joe & Ayde&apos;s birthday!</span> <span className="opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300 block text-center">(revolution around the sun)!</span>
+                <span className="block text-center">You&apos;re invited to celebrate<br className="block md:hidden" /> Joe & Ayde&apos;s birthday!</span> <span id="revolution-text" className="opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 transition-opacity duration-300 block text-center">(revolution around the sun)!</span>
               </p>
                 
                 {/* Welcome Text Between Header Lines */}
                 <div className="text-center mb-8">
                   <p className="text-[#b98459] text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-myriadpro drop-shadow-md">
-                    Turning 38 & 36 - because what better way to celebrate getting older than pretending we&apos;re high rollers? Two families, one night, zero regrets (hopefully)!
+                    Turning 38 & 36 - because what better way to celebrate getting older than pretending we&apos;re high rollers? Two families, one night, zero regrets!
                   </p>
                 </div>
                 
-                {/* Address */}
-                <div className="text-center mb-8 flex justify-center items-center">
-                  <a 
-                    href="https://maps.google.com/maps?q=11811+Beverly+Blvd+Apt+1+Whittier+CA+90601"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block hover:scale-105 transition-transform duration-200 text-center"
-                  >
-                    <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md cursor-pointer hover:text-[#FFDB24] transition-colors duration-200 text-center">
-                      📍 11811 Beverly Blvd Apt 1, Whittier, CA 90601
+                {/* Date and Location */}
+                <div className="text-center mb-8 space-y-4">
+                  <div>
+                    <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md">
+                      📅 When: Sat, July 26, 2025
                     </p>
-                  </a>
+                  </div>
+                  <div>
+                    <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md">
+                      📍 Where:
+                    </p>
+                    <a 
+                      href="https://maps.google.com/maps?q=11811+Beverly+Blvd+Apt+1+Whittier+CA+90601"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block hover:scale-105 transition-transform duration-200"
+                    >
+                      <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md cursor-pointer hover:text-[#FFDB24] transition-colors duration-200">
+                        11811 Beverly Blvd Apt 1, Whittier, CA 90601
+                      </p>
+                    </a>
+                  </div>
                 </div>
                 
                 <div className="flex justify-center">
@@ -271,10 +310,99 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Who's Coming Section - Full Width */}
+            <div className="mb-12">
+              <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+                {/* Background image for mobile */}
+                <div className="absolute inset-0 opacity-10 md:hidden">
+                  <Image
+                    src="/Background.png"
+                    alt="Background"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
+                    RSVP
+                  </h2>
+                  
+                  {loadingRSVPs ? (
+                    <div className="text-center">
+                      <p className="text-[#b98459] text-lg">Loading RSVPs...</p>
+                    </div>
+                  ) : rsvpResponses.length === 0 ? (
+                    <div className="text-center">
+                      <p className="text-[#b98459] text-lg">No RSVPs yet. Be the first to join!</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                      {rsvpResponses
+                        .filter(rsvp => rsvp.response === "yes")
+                        .map((rsvp, _index) => (
+                        <div 
+                          key={rsvp.id} 
+                          className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-30"
+                        >
+                          <div className="flex items-center mb-3">
+                            <div className="w-12 h-12 bg-[#b98459] rounded-full flex items-center justify-center mr-3">
+                              <span className="text-black font-bold text-lg">
+                                {rsvp.name.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                            <span className="text-[#b98459] font-bold text-lg">{rsvp.name}</span>
+                          </div>
+                          <p className="text-[#b98459] text-sm mb-2">
+                            <strong>Game:</strong> {rsvp.preferredGame === "all" ? "All Games" : 
+                              rsvp.preferredGame === "texas-holdem" ? "Texas Hold'em" :
+                              rsvp.preferredGame === "blackjack" ? "Blackjack" :
+                              rsvp.preferredGame === "loteria" ? "Lotería" : "All Games"}
+                          </p>
+                          {rsvp.message && (
+                            <p className="text-[#b98459] text-sm italic mb-2">
+                              &quot;{rsvp.message}&quot;
+                            </p>
+                          )}
+                          <p className="text-[#b98459] text-xs opacity-75">
+                            {new Date(rsvp.timestamp).toLocaleDateString()}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="text-center mt-8 flex flex-col sm:flex-row gap-4 sm:gap-0 sm:space-x-4">
+                    <button 
+                      onClick={() => setShowRSVPForm(!showRSVPForm)}
+                      className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] text-black font-bold transition-all duration-300"
+                    >
+                      {showRSVPForm ? "Hide RSVP Form" : "RSVP Now"}
+                    </button>
+                    <button 
+                      onClick={fetchRSVPs}
+                      className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-transparent hover:bg-[#b98459] hover:text-black text-[#b98459] font-bold transition-all duration-300"
+                    >
+                      Refresh RSVPs
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* RSVP Form - Full Width Below Grid */}
+            {showRSVPForm && (
+              <div className="mt-8">
+                <RSVPForm 
+                  onRSVPSubmit={handleRSVPSubmit}
+                  isSubmitting={submittingRSVP}
+                />
+              </div>
+            )}
+
             {/* Birthday Edition Schedule Section */}
             <div className="mb-12">
               {/* Game Schedule Section */}
-              <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+              <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
                 {/* Background image for mobile */}
                 <div className="absolute inset-0 opacity-10 md:hidden">
                   <Image
@@ -386,7 +514,7 @@ export default function Home() {
 
             {/* House Rules Section - Full Width */}
             <div id="house-rules" className="mb-12">
-              <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
+              <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
                 {/* Background image for mobile */}
                 <div className="absolute inset-0 opacity-10 md:hidden">
                   <Image
@@ -400,9 +528,6 @@ export default function Home() {
                   <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
                     House Rules
                   </h2>
-                  <p className="text-[#b98459] text-base md:text-lg leading-relaxed mb-6 text-center max-w-4xl mx-auto">
-                    At Hernandez Casino, we believe in creating a welcoming and fair environment for all players. Our house rules ensure everyone has a great time while maintaining the integrity of the game.
-                  </p>
                   
                   {/* Game Rules & Pricing */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-8">
@@ -438,7 +563,7 @@ export default function Home() {
                     <div className="text-center">
                       <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">🤝 Be Kind & Play Nice</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        We&apos;re all here to celebrate! Keep the friendly banter light and remember - it&apos;s just chips, not real money! 😄
+                        We&apos;re all here to celebrate! Keep the friendly banter light and remember it&apos;s real money! 😄
                       </p>
                     </div>
                     <div className="text-center">
@@ -459,9 +584,8 @@ export default function Home() {
             </div>
 
             {/* House Reel Section - Full Width */}
-            <div className="mb-12">
+            {/* <div className="mb-12">
               <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-                {/* Background image for mobile */}
                 <div className="absolute inset-0 opacity-10 md:hidden">
                   <Image
                     src="/Background.png"
@@ -487,106 +611,12 @@ export default function Home() {
                       <p>🎵 <strong>Casino Atmosphere:</strong> Full audio experience with authentic sounds</p>
                       <p>💎 <strong>Beautiful Design:</strong> Stunning casino-style interface</p>
                     </div>
-                    {/* <div>
-                      <Link href="/house-reel">
-                        <button className="golden-btn text-lg px-8 py-4">
-                          Play House Reel Now
-                        </button>
-                      </Link>
-                    </div> */}
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            {/* Who's Coming Section - Full Width */}
-            <div className="mb-12">
-              <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-                {/* Background image for mobile */}
-                <div className="absolute inset-0 opacity-10 md:hidden">
-                  <Image
-                    src="/Background.png"
-                    alt="Background"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="relative z-10">
-                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-                    Who&apos;s Coming
-                  </h2>
-                  
-                  {loadingRSVPs ? (
-                    <div className="text-center">
-                      <p className="text-[#b98459] text-lg">Loading RSVPs...</p>
-                    </div>
-                  ) : rsvpResponses.length === 0 ? (
-                    <div className="text-center">
-                      <p className="text-[#b98459] text-lg">No RSVPs yet. Be the first to join!</p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                      {rsvpResponses
-                        .filter(rsvp => rsvp.response === "yes")
-                        .map((rsvp, _index) => (
-                        <div 
-                          key={rsvp.id} 
-                          className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-30"
-                        >
-                          <div className="flex items-center mb-3">
-                            <div className="w-12 h-12 bg-[#b98459] rounded-full flex items-center justify-center mr-3">
-                              <span className="text-black font-bold text-lg">
-                                {rsvp.name.charAt(0).toUpperCase()}
-                              </span>
-                            </div>
-                            <span className="text-[#b98459] font-bold text-lg">{rsvp.name}</span>
-                          </div>
-                          <p className="text-[#b98459] text-sm mb-2">
-                            <strong>Game:</strong> {rsvp.preferredGame === "all" ? "All Games" : 
-                              rsvp.preferredGame === "texas-holdem" ? "Texas Hold'em" :
-                              rsvp.preferredGame === "blackjack" ? "Blackjack" :
-                              rsvp.preferredGame === "loteria" ? "Lotería" : "All Games"}
-                          </p>
-                          {rsvp.message && (
-                            <p className="text-[#b98459] text-sm italic mb-2">
-                              &quot;{rsvp.message}&quot;
-                            </p>
-                          )}
-                          <p className="text-[#b98459] text-xs opacity-75">
-                            {new Date(rsvp.timestamp).toLocaleDateString()}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
 
-                  <div className="text-center mt-8 flex flex-col sm:flex-row gap-4 sm:gap-0 sm:space-x-4">
-                    <button 
-                      onClick={() => setShowRSVPForm(!showRSVPForm)}
-                      className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-[#FFDB24] hover:bg-[#caa600] text-black font-bold transition-all duration-300"
-                    >
-                      {showRSVPForm ? "Hide RSVP Form" : "RSVP Now"}
-                    </button>
-                    <button 
-                      onClick={fetchRSVPs}
-                      className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-transparent hover:bg-[#b98459] hover:text-black text-[#b98459] font-bold transition-all duration-300"
-                    >
-                      Refresh RSVPs
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* RSVP Form - Full Width Below Grid */}
-            {showRSVPForm && (
-              <div className="mt-8">
-                <RSVPForm 
-                  onRSVPSubmit={handleRSVPSubmit}
-                  isSubmitting={submittingRSVP}
-                />
-              </div>
-            )}
           </div>
         </div>
 

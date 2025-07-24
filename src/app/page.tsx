@@ -139,7 +139,57 @@ export default function Home() {
       <Header />
       
       <div className=" pt-16 flex flex-col  lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide  relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible ">
-        <div className="flex flex-col items-center justify-center min-h-[400px] lg:min-h-[600px] text-center px-4">
+        
+        {/* Background Images from Slot Component */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          {/* Coins Background */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-80">
+            <Image 
+              draggable={false}
+              priority
+              src="/Coins.png"
+              width={864}
+              height={642}
+              alt="coins background"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          
+          {/* Shine Effect */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-60">
+            <Image 
+              draggable={false} 
+              src="/Shine.png" 
+              width={800}
+              height={864}
+              alt="shine effect"
+              className="w-full h-full object-cover" 
+            />
+          </div>
+          
+          {/* Dice Decorations */}
+          <div className="absolute top-20 right-10 opacity-90">
+            <Image 
+              draggable={false} 
+              className="w-16 h-16 md:w-20 md:h-20" 
+              src="/dice2.png" 
+              width={128}
+              height={128}
+              alt="dice decoration" 
+            />
+          </div>
+          <div className="absolute bottom-20 left-10 opacity-90">
+            <Image 
+              draggable={false} 
+              src="/dice1.png" 
+              width={112}
+              height={112}
+              alt="dice decoration" 
+              className="w-14 h-14 md:w-16 md:h-16" 
+            />
+          </div>
+        </div>
+        {/* <div className="flex flex-col items-center justify-center min-h-[400px] lg:min-h-[600px] text-center px-4">
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] font-myriad mb-6">
             Join the Poker Night!
           </h1>
@@ -153,7 +203,7 @@ export default function Home() {
               </button>
             </Link>
           </div>
-        </div>
+        </div> */}
 
         <div className="w-full max-h-[2px] h-[2px] absolute -translate-y-40 bottom-0 hidden z-0 md:flex justify-between  xl:pr-[0%] xl:pl-[7.5%] px-[.5%] pb-[2%]">
           <div className="-translate-y-12 md:-translate-y-0">
@@ -165,65 +215,64 @@ export default function Home() {
         </div>
 
         {/* Casino Sections - 2x2 Grid */}
-        <div className="w-full px-6 md:px-[28px] pt-6 md:pt-12">
+        <div className="w-full px-4 sm:px-6 md:px-[28px] pt-6 md:pt-12">
           <div className="max-w-6xl mx-auto">
             {/* Intro Text */}
-            <div className="text-center mb-12">
-              <div className="flex justify-center mb-8">
-                <Image
-                  src="/headerLine.svg"
-                  alt="Header Line"
-                  width={200}
-                  height={20}
-                  className="h-8 w-auto"
-                />
+            <div className="text-center mb-12 relative z-10 flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] rounded-3xl overflow-hidden">
+              {/* Beautiful Expensive Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a0a] via-[#2a0a0a] to-[#3a0a0a] rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#b98459]/20 via-transparent to-[#c79a63]/30 rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-bl from-[#FFDB24]/10 via-transparent to-[#D2B688]/20 rounded-3xl"></div>
+              
+              {/* Animated Shimmer Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse rounded-3xl"></div>
+              
+              {/* Border Glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#b98459] via-[#c79a63] to-[#FFDB24] p-[2px] rounded-3xl">
+                <div className="bg-gradient-to-br from-[#1a0a0a] via-[#2a0a0a] to-[#3a0a0a] rounded-3xl h-full w-full"></div>
               </div>
-              <p className="text-[#b98459] text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-myriadpro">
-                Welcome to Hernandez Casino, where the finest poker nights come to life! Experience the thrill of Texas Hold&apos;em, the strategy of Blackjack, the excitement of Lotería, and the fortune of our legendary slot machines.
-              </p>
-            </div>
-
-            {/* 2x2 Grid Layout for Hernandez Casino and Game Schedule */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              {/* Hernandez Casino Section */}
-              <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
-                {/* Background image for mobile */}
-                <div className="absolute inset-0 opacity-10 md:hidden">
+              
+              {/* Content */}
+              <div className="relative z-20 p-8 md:p-12">
+                <p className="text-[#b98459] text-2xl md:text-3xl lg:text-4xl leading-relaxed max-w-4xl mx-auto font-myriadpro group font-bold px-4 text-center mb-8 drop-shadow-lg">
+                  <span className="block text-center">You&apos;re invited to celebrate<br className="block md:hidden" /> Joe & Ayde&apos;s birthday!</span> <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 block text-center">(revolution around the sun)!</span>
+                </p>
+                
+                {/* Welcome Text Between Header Lines */}
+                <div className="text-center mb-8">
+                  <p className="text-[#b98459] text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-myriadpro drop-shadow-md">
+                    Turning 38 & 36 - because what better way to celebrate getting older than pretending we&apos;re high rollers? Two families, one night, zero regrets (hopefully)!
+                  </p>
+                </div>
+                
+                {/* Address */}
+                <div className="text-center mb-8 flex justify-center items-center">
+                  <a 
+                    href="https://maps.google.com/maps?q=11811+Beverly+Blvd+Apt+1+Whittier+CA+90601"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block hover:scale-105 transition-transform duration-200 text-center"
+                  >
+                    <p className="text-[#c79a63] text-lg md:text-xl font-bold font-myriadpro drop-shadow-md cursor-pointer hover:text-[#FFDB24] transition-colors duration-200 text-center">
+                      📍 11811 Beverly Blvd Apt 1, Whittier, CA 90601
+                    </p>
+                  </a>
+                </div>
+                
+                <div className="flex justify-center">
                   <Image
-                    src="/Background.png"
-                    alt="Background"
-                    fill
-                    className="object-cover"
+                    src="/headerLine.svg"
+                    alt="Header Line"
+                    width={200}
+                    height={20}
+                    className="h-8 w-auto drop-shadow-lg"
                   />
                 </div>
-                <div className="relative z-10">
-                  <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#c79a63] font-casino">
-                    Hernandez Casino
-                  </h2>
-                  <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-4 font-casino">
-                    What makes our poker nights special:
-                  </h3>
-                  <ul className="text-[#b98459] text-sm md:text-base space-y-2">
-                    <li className="flex items-start">
-                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                      Professional-grade poker tables with premium felt and authentic casino chips.
-                    </li>
-                    <li className="flex items-start">
-                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                      Multiple game variations including Texas Hold&apos;em, Omaha, and Seven-Card Stud.
-                    </li>
-                    <li className="flex items-start">
-                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                      Complimentary drinks and snacks to keep the energy high throughout the night.
-                    </li>
-                    <li className="flex items-start">
-                      <div className="min-h-[12px] min-w-[12px] max-h-[12px] max-w-[12px] w-4 mr-2 mt-[6px] border border-[#b98459] bg-[#b98459] rounded-full" />
-                      Regular tournaments with exciting prizes and bragging rights for the champions.
-                    </li>
-                  </ul>
-                </div>
               </div>
+            </div>
 
+            {/* Birthday Edition Schedule Section */}
+            <div className="mb-12">
               {/* Game Schedule Section */}
               <div className="bg-[#005F5F80] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
                 {/* Background image for mobile */}
@@ -237,21 +286,99 @@ export default function Home() {
                 </div>
                 <div className="relative z-10">
                   <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-[#c79a63] font-casino">
-                    Game Schedule
+                    Birthday Edition Schedule
                   </h2>
-                  <p className="text-[#b98459] text-sm md:text-base leading-relaxed mb-4">
-                    Join us every weekend for the most exciting poker nights in town! Our schedule is designed to accommodate players of all skill levels, from beginners to seasoned pros.
-                  </p>
-                  <div className="space-y-3">
-                    <p className="text-[#b98459] text-sm md:text-base">
-                      <strong>Friday Nights:</strong> Texas Hold&apos;em tournaments with buy-ins starting at $20. Perfect for casual players looking to test their skills.
-                    </p>
-                    <p className="text-[#b98459] text-sm md:text-base">
-                      <strong>Saturday Nights:</strong> High-stakes cash games and special events. Our most popular night featuring multiple tables and exciting side games.
-                    </p>
-                    <p className="text-[#b98459] text-sm md:text-base">
-                      <strong>Sunday Afternoons:</strong> Family-friendly Lotería sessions and beginner-friendly poker lessons for those new to the game.
-                    </p>
+                  
+                  {/* Timeline */}
+                  <div className="space-y-4 mb-6">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex-shrink-0 w-16 text-center">
+                        <div className="bg-[#c79a63] text-[#2a0a0a] font-bold text-sm px-2 py-1 rounded-full">
+                          3-5 PM
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-[#c79a63] font-bold text-base">Food & Refreshments</h4>
+                        <p className="text-[#b98459] text-sm">Enjoy delicious birthday treats and drinks</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <div className="flex-shrink-0 w-16 text-center">
+                        <div className="bg-[#c79a63] text-[#2a0a0a] font-bold text-sm px-2 py-1 rounded-full">
+                          6 PM
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-[#c79a63] font-bold text-base">Gaming Begins!</h4>
+                        <p className="text-[#b98459] text-sm">All games open for play</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3">
+                      <div className="flex-shrink-0 w-16 text-center">
+                        <div className="bg-[#c79a63] text-[#2a0a0a] font-bold text-sm px-2 py-1 rounded-full">
+                          10 PM
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-[#c79a63] font-bold text-base">Casino Closes</h4>
+                        <p className="text-[#b98459] text-sm">Final chip count and prize distribution</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Activities Grid */}
+                  <div className="mb-6">
+                    <h3 className="text-[#c79a63] font-bold text-lg mb-3 text-center">Activities & Games</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">🎤 Karaoke</span>
+                      </div>
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">💃 Dancing</span>
+                      </div>
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">🃏 Poker</span>
+                      </div>
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">🃏 Blackjack (21)</span>
+                      </div>
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">🎰 Slot Machines</span>
+                      </div>
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">🎮 Video Games</span>
+                      </div>
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">🎲 Lotería</span>
+                      </div>
+                      <div className="bg-[#2a0a0a80] p-2 rounded text-center border border-[#b98459]">
+                        <span className="text-[#b98459] text-sm font-medium">🎯 Pirinola</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Game Info */}
+                  <div className="space-y-3 bg-[#2a0a0a40] p-4 rounded-lg border border-[#b98459]">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-[#c79a63] rounded-full"></div>
+                      <p className="text-[#b98459] text-sm">
+                        <strong>Buy-in:</strong> Base: $5 = 500 chips | Bonus: $10 = 1,200 chips | VIP: $20 = 2,800 chips
+                      </p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-[#c79a63] rounded-full"></div>
+                      <p className="text-[#b98459] text-sm">
+                        <strong>Prizes:</strong> 2 winners based on total chip value
+                      </p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-[#c79a63] rounded-full"></div>
+                      <p className="text-[#b98459] text-sm">
+                        <strong>Game Buy-ins:</strong> Varies per game
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -276,6 +403,37 @@ export default function Home() {
                   <p className="text-[#b98459] text-base md:text-lg leading-relaxed mb-6 text-center max-w-4xl mx-auto">
                     At Hernandez Casino, we believe in creating a welcoming and fair environment for all players. Our house rules ensure everyone has a great time while maintaining the integrity of the game.
                   </p>
+                  
+                  {/* Game Rules & Pricing */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-8">
+                    <div className="text-center bg-[#2a0a0a40] p-4 rounded-lg border border-[#b98459]">
+                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">💰 Buy-in</h3>
+                      <p className="text-[#b98459] text-sm md:text-base">
+                        <strong>Base: $5 = 500 chips</strong><br/>
+                        <strong>Bonus: $10 = 1,200 chips</strong><br/>
+                        <strong>VIP: $20 = 2,800 chips</strong><br/>
+                        <em>Better value the more you buy!</em>
+                      </p>
+                    </div>
+                    <div className="text-center bg-[#2a0a0a40] p-4 rounded-lg border border-[#b98459]">
+                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">🏆 Prizes</h3>
+                      <p className="text-[#b98459] text-sm md:text-base">
+                        <strong>2 winners</strong> based on total chip value at the end of the night. The more chips you have, the better your chances!
+                      </p>
+                    </div>
+                    <div className="text-center bg-[#2a0a0a40] p-4 rounded-lg border border-[#b98459]">
+                      <h3 className="text-lg md:text-xl font-bold text-[#c79a63] mb-3 font-casino">🎮 Game Buy-ins</h3>
+                      <p className="text-[#b98459] text-sm md:text-base">
+                        <strong>Varies per game:</strong><br/>
+                        • Poker: 100-500 chips<br/>
+                        • Blackjack: 50-300 chips<br/>
+                        • Lotería: 25-150 chips<br/>
+                        • Slot Machines: 10-100 chips
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Traditional House Rules */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                     <div className="text-center">
                       <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Respect & Sportsmanship</h3>
@@ -284,22 +442,17 @@ export default function Home() {
                       </p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Buy-ins & Cashouts</h3>
-                      <p className="text-[#b98459] text-sm md:text-base">
-                        Minimum buy-in is $20, maximum is $500 per table. All cashouts are processed immediately at the end of each session.
-                      </p>
-                    </div>
-                    <div className="text-center">
                       <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Game Integrity</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
                         All games are monitored by professional dealers. Any suspicion of cheating will result in immediate removal from the premises.
                       </p>
                     </div>
-                  </div>
-                  <div className="text-center mt-8">
-                    <p className="text-[#b98459] text-lg md:text-xl font-bold">
-                      Age Requirement: 21+ with valid ID required for entry
-                    </p>
+                    <div className="text-center">
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Have Fun!</h3>
+                      <p className="text-[#b98459] text-sm md:text-base">
+                        Remember, this is a birthday celebration! Laugh, enjoy, and make memories. The best player is the one having the most fun.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

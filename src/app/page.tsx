@@ -364,7 +364,7 @@ export default function Home() {
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-[#c79a63] rounded-full"></div>
                       <p className="text-[#b98459] text-sm">
-                        <strong>Buy-in:</strong> Base: $5 = 500 chips | Bonus: $10 = 1,200 chips | VIP: $20 = 2,800 chips
+                        <strong>Buy-in required</strong> - <a href="#house-rules" className="text-[#c79a63] hover:text-[#FFDB24] underline transition-colors duration-200">see house rules for details</a>
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -385,7 +385,7 @@ export default function Home() {
             </div>
 
             {/* House Rules Section - Full Width */}
-            <div className="mb-12">
+            <div id="house-rules" className="mb-12">
               <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50 relative overflow-hidden">
                 {/* Background image for mobile */}
                 <div className="absolute inset-0 opacity-10 md:hidden">

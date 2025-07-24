@@ -492,13 +492,13 @@ export default function Home() {
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-[#c79a63] rounded-full"></div>
                       <p className="text-[#b98459] text-sm">
-                        <strong>Prizes:</strong> 2 winners based on total chip value
+                        <strong>{t('prizes')}:</strong> {t('twoWinners')}
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-[#c79a63] rounded-full"></div>
                       <p className="text-[#b98459] text-sm">
-                        <strong>Game Buy-ins:</strong> Varies per game
+                        <strong>{t('gameBuyIns')}:</strong> {t('variesPerGame')}
                       </p>
                     </div>
                   </div>

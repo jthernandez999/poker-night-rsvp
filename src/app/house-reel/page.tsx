@@ -25,6 +25,9 @@ export default function HouseReel() {
   const [gameStarted, setGameStarted] = useState(false);
   const [customStartingChips, setCustomStartingChips] = useState(100);
   const [currentWinAmount, setCurrentWinAmount] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [showHighScore, setShowHighScore] = useState(false);
   const myRef = useRef<HTMLAudioElement>(null);
 
   // Game history type
@@ -51,6 +54,11 @@ export default function HouseReel() {
   // Handle hydration mismatch
   useEffect(() => {
     setMounted(true);
+    // Load high score from localStorage
+    const savedHighScore = localStorage.getItem('houseReelHighScore');
+    if (savedHighScore) {
+      setHighScore(parseInt(savedHighScore));
+    }
   }, []);
 
   const startAudio = () => {
@@ -65,6 +73,19 @@ export default function HouseReel() {
       myRef.current.pause();
     }
     setAudioStatus(false);
+  };
+
+  // Update high score and current score
+  const updateScores = (winAmount: number) => {
+    const newCurrentScore = currentScore + winAmount;
+    setCurrentScore(newCurrentScore);
+    
+    if (newCurrentScore > highScore) {
+      setHighScore(newCurrentScore);
+      localStorage.setItem('houseReelHighScore', newCurrentScore.toString());
+      setShowHighScore(true);
+      setTimeout(() => setShowHighScore(false), 3000); // Show for 3 seconds
+    }
   };
 
   useEffect(() => {
@@ -153,6 +174,11 @@ export default function HouseReel() {
       setGameHistory(prev => [...prev, newHistory]);
       setTotalWinnings(prev => prev + winAmount);
       
+      // Update scores for high score tracking
+      if (winAmount > 0) {
+        updateScores(winAmount);
+      }
+      
       // Set current win amount for modal
       if (winAmount > 0) {
         setCurrentWinAmount(winAmount);
@@ -174,6 +200,7 @@ export default function HouseReel() {
     setStartingChips(customStartingChips);
     setBetAmount(5);
     setTotalWinnings(0);
+    setCurrentScore(0);
     setGameHistory([]);
     setShowCashout(false);
     setGameStarted(true);
@@ -301,6 +328,21 @@ export default function HouseReel() {
                     <div className="text-xl font-bold text-[#D2B688]">
                       {totalWinnings} chips
                     </div>
+                  </div>
+
+                  <div className="bg-[#005F5F80] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
+                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">🏆 High Score Challenge</h3>
+                    <div className="text-sm text-[#b98459] mb-2">
+                      Current Score: <span className="text-[#D2B688] font-bold">{currentScore}</span> chips
+                    </div>
+                    <div className="text-sm text-[#b98459]">
+                      High Score: <span className="text-[#FFDB24] font-bold">{highScore}</span> chips
+                    </div>
+                    {showHighScore && (
+                      <div className="mt-2 text-center">
+                        <span className="text-[#FFDB24] font-bold animate-pulse">🎉 NEW HIGH SCORE! 🎉</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Game Buttons */}

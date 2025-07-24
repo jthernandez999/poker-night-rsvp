@@ -41,57 +41,38 @@ export default function LModal({ showModal, setShowModal }: Props) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-[#0A0B0F] px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 border-4 border-red-500">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-[#0A0B0F] px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl sm:p-6 md:p-8 border-4 border-red-500">
                 <div className="relative z-10 text-center">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 mb-4">
-                    <span className="text-2xl">😔</span>
+                  <div className="mx-auto flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-red-100 mb-6">
+                    <span className="text-3xl md:text-4xl">😔</span>
                   </div>
                   
                   <Dialog.Title
                     as="h3"
-                    className="text-2xl font-bold leading-6 text-red-400 mb-4"
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold leading-6 text-red-400 mb-6"
                   >
                     Better Luck Next Time!
                   </Dialog.Title>
                   
-                  <div className="mb-6">
-                    <p className="text-lg text-white mb-2">
+                  <div className="mb-8">
+                    <p className="text-xl md:text-2xl lg:text-3xl text-white mb-4">
                       🎰 House Wins 🎰
                     </p>
-                                         <p className="text-red-300 text-base">
-                       Fortune wasn&apos;t in your favor this round at Hernandez Casino.
-                     </p>
-                    <p className="text-yellow-300 text-sm mt-2">
+                    <p className="text-red-300 text-lg md:text-xl lg:text-2xl">
+                      Fortune wasn&apos;t in your favor this round at Hernandez Casino.
+                    </p>
+                    <p className="text-yellow-300 text-base md:text-lg lg:text-xl mt-4">
                       The night is young - come back to the poker tables! 🎲
                     </p>
                   </div>
                   
-                  <div className="flex justify-center space-x-4 mb-6">
-                    <a
-                      href="https://discord.gg/poker-night"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
-                    >
-                      <span>🎮</span>
-                      <span>Join Discord</span>
-                    </a>
-                    <a
-                      href="https://twitter.com/poker-night"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors"
-                    >
-                      <span>🐦</span>
-                      <span>Follow Updates</span>
-                    </a>
-                  </div>
+
                 </div>
                 
                 <div className="relative z-10 mt-5 sm:mt-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition-colors duration-200"
+                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-6 py-4 md:px-8 md:py-5 text-lg md:text-xl lg:text-2xl font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition-colors duration-200"
                     onClick={() => setShowModal(false)}
                     ref={cancelButtonRef}
                   >

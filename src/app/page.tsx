@@ -270,7 +270,7 @@ export default function Home() {
           >
             <Image 
               draggable={false} 
-              className="w-16 h-16 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96" 
+              className="w-16 h-16 md:w-36 md:h-36 lg:w-48 lg:h-48 xl:w-56 xl:h-56 2xl:w-64 2xl:h-64" 
               src="/dice2.png" 
               width={128}
               height={128}
@@ -287,7 +287,7 @@ export default function Home() {
               width={112}
               height={112}
               alt="dice decoration" 
-              className="w-14 h-14 md:w-40 md:h-40 lg:w-56 lg:h-56 xl:w-72 xl:h-72 2xl:w-88 2xl:h-88" 
+              className="w-14 h-14 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 2xl:w-56 2xl:h-56" 
             />
           </div>
         </div>

@@ -5,7 +5,7 @@ export const translations = {
     mainTitle: "You're invited to celebrate Joe & Ayde's birthday!",
     revolutionText: "(revolution around the sun)!",
     welcomeText: "Turning 38 & 36 - because what better way to celebrate getting older than pretending we're high rollers? Two families, one night, zero regrets!",
-    date: "Saturday, March 16th, 2024",
+    date: "Saturday, July 26th, 2025",
     time: "3:00 PM - 10:00 PM",
     location: "11811 Beverly Blvd Apt 1, Whittier, CA 90601",
     
@@ -92,7 +92,7 @@ export const translations = {
     mainTitle: "¡Estás invitado a celebrar el cumpleaños de Joe & Ayde!",
     revolutionText: "¡(revolución alrededor del sol)!",
     welcomeText: "Cumpliendo 38 & 36 - porque ¿qué mejor manera de celebrar envejecer que pretendiendo ser apostadores de alto nivel? ¡Dos familias, una noche, cero arrepentimientos!",
-    date: "Sábado, 16 de Marzo, 2024",
+    date: "Sábado, 26 de Julio, 2025",
     time: "3:00 PM - 10:00 PM",
     location: "11811 Beverly Blvd Apt 1, Whittier, CA 90601",
     

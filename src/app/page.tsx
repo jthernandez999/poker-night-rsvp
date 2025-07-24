@@ -234,9 +234,9 @@ export default function Home() {
               
               {/* Content */}
               <div className="relative z-20 p-8 md:p-12">
-                <p className="text-[#b98459] text-2xl md:text-3xl lg:text-4xl leading-relaxed max-w-4xl mx-auto font-myriadpro group font-bold px-4 text-center mb-8 drop-shadow-lg">
-                  <span className="block text-center">You&apos;re invited to celebrate<br className="block md:hidden" /> Joe & Ayde&apos;s birthday!</span> <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 block text-center">(revolution around the sun)!</span>
-                </p>
+                              <p className="text-[#b98459] text-3xl md:text-4xl lg:text-6xl xl:text-7xl leading-relaxed max-w-4xl mx-auto font-myriadpro group font-bold px-4 text-center mb-8 drop-shadow-lg">
+                <span className="block text-center">You&apos;re invited to celebrate<br className="block md:hidden" /> Joe & Ayde&apos;s birthday!</span> <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 block text-center">(revolution around the sun)!</span>
+              </p>
                 
                 {/* Welcome Text Between Header Lines */}
                 <div className="text-center mb-8">
@@ -433,24 +433,24 @@ export default function Home() {
                     </div>
                   </div>
                   
-                  {/* Traditional House Rules */}
+                  {/* Family-Friendly House Rules */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                     <div className="text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Respect & Sportsmanship</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">🤝 Be Kind & Play Nice</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        Treat all players with courtesy and respect. No trash talking or unsportsmanlike behavior will be tolerated.
+                        We&apos;re all here to celebrate! Keep the friendly banter light and remember - it&apos;s just chips, not real money! 😄
                       </p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Game Integrity</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">🎯 Keep It Fair</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        All games are monitored by professional dealers. Any suspicion of cheating will result in immediate removal from the premises.
+                        No sneaky moves or &quot;creative accounting&quot; with your chips. We&apos;re watching... but mostly just to cheer you on! 🎉
                       </p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Have Fun!</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">🎉 Have a Blast!</h3>
                       <p className="text-[#b98459] text-sm md:text-base">
-                        Remember, this is a birthday celebration! Laugh, enjoy, and make memories. The best player is the one having the most fun.
+                        This is a birthday party, not the World Series of Poker! Dance, laugh, and make memories. The winner is whoever has the most fun! 🎊
                       </p>
                     </div>
                   </div>

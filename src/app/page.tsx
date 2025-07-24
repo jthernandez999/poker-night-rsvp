@@ -9,7 +9,28 @@ import Header from "../components/Header";
 import LanguageToggle from "../components/LanguageToggle";
 import { useLanguage } from "../contexts/LanguageContext";
 
-
+// Safe parallax hook with error handling
+const useParallax = (speed: number = 0.5) => {
+  const [offset, setOffset] = useState(0);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      try {
+        const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+        setOffset(scrolled * speed);
+      } catch (error) {
+        console.warn('Parallax scroll error:', error);
+      }
+    };
+    
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+  }, [speed]);
+  
+  return offset;
+};
 
 export default function Home() {
   const { t } = useLanguage();
@@ -27,6 +48,11 @@ export default function Home() {
   const [showRSVPForm, setShowRSVPForm] = useState(false);
   const myRef = useRef<HTMLAudioElement>(null);
 
+  // Safe parallax offsets with different speeds
+  const coinsOffset = useParallax(0.2);
+  const shineOffset = useParallax(0.4);
+  const dice1Offset = useParallax(0.6);
+  const dice2Offset = useParallax(0.5);
 
 
   // RSVP type definition
@@ -177,10 +203,13 @@ export default function Home() {
       
       <div className=" pt-16 flex flex-col  lg:items-center justify-between md:h-screen md:max-h-[1198px] min-h-[676px] sm:min-h-[724px] md:min-h-[828px] 2xl:min-h-[998px] w-full scrollbar-hide  relative overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible ">
         
-        {/* Background Images from Slot Component */}
+        {/* Background Images from Slot Component with Safe Parallax */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* Coins Background */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-80">
+          {/* Coins Background - Slowest parallax */}
+          <div 
+            className="absolute inset-0 flex items-center justify-center opacity-80"
+            style={{ transform: `translateY(${coinsOffset}px)` }}
+          >
             <Image 
               draggable={false}
               priority
@@ -192,8 +221,11 @@ export default function Home() {
             />
           </div>
           
-          {/* Shine Effect */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-60">
+          {/* Shine Effect - Medium parallax */}
+          <div 
+            className="absolute inset-0 flex items-center justify-center opacity-60"
+            style={{ transform: `translateY(${shineOffset}px)` }}
+          >
             <Image 
               draggable={false} 
               src="/Shine.png" 
@@ -204,8 +236,11 @@ export default function Home() {
             />
           </div>
           
-          {/* Dice Decorations */}
-          <div className="absolute top-20 right-10 opacity-90">
+          {/* Dice Decorations - Faster parallax */}
+          <div 
+            className="absolute top-20 right-10 opacity-90"
+            style={{ transform: `translateY(${dice2Offset}px)` }}
+          >
             <Image 
               draggable={false} 
               className="w-16 h-16 md:w-20 md:h-20" 
@@ -215,7 +250,10 @@ export default function Home() {
               alt="dice decoration" 
             />
           </div>
-          <div className="absolute bottom-20 left-10 opacity-90">
+          <div 
+            className="absolute bottom-20 left-10 opacity-90"
+            style={{ transform: `translateY(${dice1Offset}px)` }}
+          >
             <Image 
               draggable={false} 
               src="/dice1.png" 
@@ -243,10 +281,16 @@ export default function Home() {
         </div> */}
 
         <div className="w-full max-h-[2px] h-[2px] absolute -translate-y-40 bottom-0 hidden z-0 md:flex justify-between  xl:pr-[0%] xl:pl-[7.5%] px-[.5%] pb-[2%]">
-          <div className="-translate-y-12 md:-translate-y-0">
+          <div 
+            className="-translate-y-12 md:-translate-y-0"
+            style={{ transform: `translateY(${coinsOffset * 0.3}px)` }}
+          >
             <Image draggable={false} src="/coinL.png" alt="" width={100} height={100} />
           </div>
-          <div className="-translate-y-12 md:-translate-y-0">
+          <div 
+            className="-translate-y-12 md:-translate-y-0"
+            style={{ transform: `translateY(${coinsOffset * 0.3}px)` }}
+          >
             <Image draggable={false} src="/coinR.png" alt="" width={100} height={100} />
           </div>
         </div>

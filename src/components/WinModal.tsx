@@ -2,6 +2,7 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import animationData from "./images/falling_coins.json";
+import { useLanguage } from "../contexts/LanguageContext";
 
 function Coins() {
   return (
@@ -27,6 +28,7 @@ export default function WinModal({
   winAmount = 0,
 }: Props) {
   const cancelButtonRef = useRef(null);
+  const { t } = useLanguage();
 
   return (
     <Transition.Root show={showModal} as={Fragment}>
@@ -73,31 +75,31 @@ export default function WinModal({
                     as="h3"
                     className="text-3xl md:text-4xl lg:text-5xl font-bold leading-6 text-yellow-400 mb-6 animate-pulse"
                   >
-                    🎰 JACKPOT! 🎰
+                    {t('winModalJackpotTitle')}
                   </Dialog.Title>
                   
                   {/* Win Amount Display */}
                   <div className="mb-8">
                     <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg p-6 md:p-8 mb-6 border-4 border-yellow-300 shadow-2xl">
                       <p className="text-2xl md:text-3xl lg:text-4xl text-black font-bold mb-2">
-                        YOU WON
+                        {t('winModalYouWon')}
                       </p>
                       <div className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-black animate-pulse">
-                        {winAmount} CHIPS!
+                        {winAmount} {t('winModalChips')}
                       </div>
                       <p className="text-lg md:text-xl lg:text-2xl text-black font-semibold mt-2">
-                        💰 CASH OUT NOW! 💰
+                        {t('winModalCashOutNow')}
                       </p>
                     </div>
                     
                     <p className="text-xl md:text-2xl lg:text-3xl text-white mb-4 font-bold">
-                      🎰 CONGRATULATIONS! 🎰
+                      {t('winModalCongratulations')}
                     </p>
                     <p className="text-yellow-300 text-lg md:text-xl lg:text-2xl">
-                      You hit the jackpot at Hernandez Casino!
+                      {t('winModalHitTheJackpot')}
                     </p>
                     <p className="text-yellow-300 text-base md:text-lg lg:text-xl mt-4">
-                      Time to celebrate at the poker tables! 🎲
+                      {t('winModalTimeToCelebrate')}
                     </p>
                   </div>
                 </div>
@@ -109,7 +111,7 @@ export default function WinModal({
                     onClick={() => setShowModal(false)}
                     ref={cancelButtonRef}
                   >
-                    Collect {winAmount} Chips! 💰
+                    {t('winModalCollectChips').replace('{amount}', winAmount.toString())}
                   </button>
                 </div>
               </Dialog.Panel>

@@ -7,8 +7,11 @@ import Header from "../../components/Header";
 import Slots from "../../components/Slots";
 import WinModal from "../../components/WinModal";
 import LModal from "../../components/LModal";
+import LanguageToggle from "../../components/LanguageToggle";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export default function HouseReel() {
+  const { t } = useLanguage();
   const [spin, setSpin] = useState(false);
   const [showWinModal, setShowWinModal] = useState(false);
   const [showLModal, setShowLModal] = useState(false);
@@ -224,26 +227,22 @@ export default function HouseReel() {
   return (
     <div className="min-h-max relative mx-auto max-w-[2000px]">
       <Header />
+      <LanguageToggle />
       
       <div className="pt-16 flex flex-col lg:items-center justify-between min-h-screen w-full scrollbar-hide relative overflow-y-auto overflow-x-hidden">
-        <div className="lg:hidden relative z-20 flex flex-col mb-0 mt-6 px-4">
-          <h1 className="font-myriad pt-2 font-[1100] break-normal leading-[1] text-[40px] sm:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33]">
-            House Reel
+        {/* Title Section - Above everything */}
+        <div className="relative z-50 flex flex-col items-center mb-8 mt-6 px-4">
+          <h1 className="font-myriad pt-2 font-[1100] leading-[1] text-[80px] sm:text-8xl lg:text-[160px] text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] max-w-[1200px] text-center whitespace-nowrap">
+            {t('houseReel')}
           </h1>
-          <p className="hidden sm:flex px-6 font-myriad leading-[1.1] font-[1100] text-xl sm:text-2xl pt-4 min-w-max text-[#cf976a]">
-            Place your bet
+          <p className="font-myriadpro text-3xl sm:text-4xl lg:text-5xl pt-8 min-w-max text-[#cf976a] text-center">
+            {t('placeYourBet')}
           </p>
         </div>
         
         <div className="flex flex-col-reverse lg:flex-row lg:px-[5%] w-full justify-between overflow-y-visible overflow-x-clip lg:overflow-hidden min-h-[800px] lg:min-h-[900px] 2xl:min-h-[1000px] lg:my-auto mb-16">
           {/* Left Side - Game Controls */}
-          <div className="relative z-30 lg:mt-[128px] flex flex-col items-center min-h-[600px] lg:min-h-[700px] min-w-max scale-105 text-center lg:self-start lg:justify-self-start 2xl:scale-125 2xl:mt-[17.5%] pb-32 lg:pb-40">
-            <h1 className="hidden lg:flex cursor-default font-myriad leading-[1.1] font-[1100] text-[84px] text-transparent bg-clip-text bg-gradient-to-br from-[#D2B688] to-[#7A3F33] max-w-[372px]">
-              House Reel
-            </h1>
-            <p className="hidden lg:flex font-myriadpro text-xl lg:text-2xl pt-4 min-w-max text-[#cf976a]">
-              Place your bet
-            </p>
+          <div className="relative z-30 flex flex-col items-center min-h-[600px] lg:min-h-[700px] min-w-max scale-105 text-center lg:self-start lg:justify-self-start 2xl:scale-150 2xl:mt-[17.5%] pb-32 lg:pb-40">
             
             {/* Game Controls */}
             <div className="mt-8 space-y-4">
@@ -251,7 +250,7 @@ export default function HouseReel() {
                 // Starting chip selection
                 <div className="space-y-4">
                   <div className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
-                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">Choose Starting Chips</h3>
+                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">{t('chooseStartingChips')}</h3>
                     <div className="grid grid-cols-2 gap-2 mb-3">
                       {[50, 100, 200, 500].map((amount) => (
                         <button
@@ -268,7 +267,7 @@ export default function HouseReel() {
                       ))}
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="text-[#b98459] text-sm">Custom:</span>
+                      <span className="text-[#b98459] text-sm">{t('custom')}</span>
                       <input
                         type="number"
                         value={customStartingChips}
@@ -277,7 +276,7 @@ export default function HouseReel() {
                         min="1"
                         max="1000"
                       />
-                      <span className="text-[#b98459] text-sm">chips</span>
+                      <span className="text-[#b98459] text-sm">{t('chips')}</span>
                     </div>
                   </div>
                   
@@ -285,24 +284,24 @@ export default function HouseReel() {
                     className="golden-btn2 w-full" 
                     onClick={handleStartGame}
                   >
-                    Start Game with {customStartingChips} chips
+                    {t('startGameWith')} {customStartingChips} {t('chips')}
                   </button>
                 </div>
               ) : (
                 // Game in progress
                 <>
                   <div className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
-                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">Your Chips</h3>
+                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">{t('yourChips')}</h3>
                     <div className="text-2xl font-bold text-[#D2B688] mb-2">
-                      {currentChips} chips
+                      {currentChips} {t('chips')}
                     </div>
                     <div className="text-sm text-[#b98459]">
-                      Starting: {startingChips} chips
+                      {t('starting')} {startingChips} {t('chips')}
                     </div>
                   </div>
 
                   <div className="bg-[#005F5F80] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
-                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">Bet Amount</h3>
+                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">{t('betAmount')}</h3>
                     <div className="flex space-x-2 mb-3">
                       {[1, 5, 10, 25].map((amount) => (
                         <button
@@ -319,28 +318,28 @@ export default function HouseReel() {
                       ))}
                     </div>
                     <div className="text-sm text-[#b98459]">
-                      Current bet: {betAmount} chips
+                      {t('currentBet')} {betAmount} {t('chips')}
                     </div>
                   </div>
 
                   <div className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
-                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">Total Winnings</h3>
+                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">{t('totalWinnings')}</h3>
                     <div className="text-xl font-bold text-[#D2B688]">
-                      {totalWinnings} chips
+                      {totalWinnings} {t('chips')}
                     </div>
                   </div>
 
                   <div className="bg-[#005F5F80] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
-                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">🏆 High Score Challenge</h3>
+                    <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino">{t('highScoreChallenge')}</h3>
                     <div className="text-sm text-[#b98459] mb-2">
-                      Current Score: <span className="text-[#D2B688] font-bold">{currentScore}</span> chips
+                      {t('currentScore')} <span className="text-[#D2B688] font-bold">{currentScore}</span> {t('chips')}
                     </div>
                     <div className="text-sm text-[#b98459]">
-                      High Score: <span className="text-[#FFDB24] font-bold">{highScore}</span> chips
+                      {t('highScore')} <span className="text-[#FFDB24] font-bold">{highScore}</span> {t('chips')}
                     </div>
                     {showHighScore && (
                       <div className="mt-2 text-center">
-                        <span className="text-[#FFDB24] font-bold animate-pulse">🎉 NEW HIGH SCORE! 🎉</span>
+                        <span className="text-[#FFDB24] font-bold animate-pulse">{t('newHighScore')}</span>
                       </div>
                     )}
                   </div>
@@ -351,14 +350,14 @@ export default function HouseReel() {
                       className="border-2 border-[#b98459] rounded-lg py-3 px-6 font-myriadpro bg-transparent hover:bg-[#b98459] hover:text-black text-[#b98459] font-bold transition-all duration-300 w-full"
                       onClick={handleCashout}
                     >
-                      Cash Out
+                      {t('cashOut')}
                     </button>
                     
                     <button 
                       className="border-2 border-red-500 rounded-lg py-3 px-6 font-myriadpro bg-transparent hover:bg-red-500 hover:text-black text-red-500 font-bold transition-all duration-300 w-full"
                       onClick={handleReset}
                     >
-                      New Game
+                      {t('newGame')}
                     </button>
                   </div>
                 </>
@@ -368,7 +367,7 @@ export default function HouseReel() {
             <div className="mt-12">
               <Link href="/">
                 <button className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-transparent hover:bg-[#b98459] hover:text-black text-[#b98459] font-bold transition-all duration-300">
-                  Back to Home
+                  {t('backToHome')}
                 </button>
               </Link>
             </div>
@@ -394,7 +393,7 @@ export default function HouseReel() {
                   onClick={handleSpin}
                   disabled={currentChips < betAmount || spinning}
                 >
-                  {spinning ? 'Spinning...' : `Spin for ${betAmount} chips`}
+                  {spinning ? t('spinning') : `${t('spinFor')} ${betAmount} ${t('chips')}`}
                 </button>
               </div>
             )}
@@ -405,10 +404,10 @@ export default function HouseReel() {
             <div className="hidden lg:flex flex-col mt-16 min-w-[280px] lg:justify-self-end">
               <div className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
                 <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino text-center">
-                  Current Bet: {betAmount} chips
+                  {t('currentBet')} {betAmount} {t('chips')}
                 </h3>
                 <h4 className="text-md font-bold text-[#b98459] mb-2 font-casino text-center">
-                  Potential Wins
+                  {t('potentialWins')}
                 </h4>
                 <div className="text-[#b98459] text-sm space-y-1">
                   <div className="flex justify-between items-center">
@@ -463,30 +462,30 @@ export default function HouseReel() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-[#5F000080] rounded-[10%] p-6 md:p-8 border border-[#b98459] bg-opacity-50">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#c79a63] font-casino">
-                House Reel Rules
+                {t('houseReelRules')}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                 <div className="text-center">
-                  <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">How to Play</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">{t('howToPlay')}</h3>
                   <div className="text-[#b98459] text-sm md:text-base space-y-2">
-                    <p>• Exchange money for poker chips with the dealer</p>
-                    <p>• Choose your bet amount (1, 5, 10, or 25 chips)</p>
-                    <p>• Click &quot;Spin&quot; to play the slot machine</p>
-                    <p>• Match 3 symbols to win!</p>
-                    <p>• Click &quot;Cash Out&quot; when you&apos;re done</p>
+                    <p>{t('howToPlayDesc1')}</p>
+                    <p>{t('howToPlayDesc2')}</p>
+                    <p>{t('howToPlayDesc3')}</p>
+                    <p>{t('howToPlayDesc4')}</p>
+                    <p>{t('howToPlayDesc5')}</p>
                   </div>
                 </div>
                 <div className="text-center">
-                  <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">Winning Combinations</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">{t('winningCombinations')}</h3>
                   <div className="text-[#b98459] text-sm md:text-base space-y-1">
-                    <p><strong>🐸 FROG-FROG-FROG:</strong> Win 25x your bet (Jackpot!)</p>
-                    <p><strong>💎 DIAMOND-DIAMOND-DIAMOND:</strong> Win 20x your bet</p>
-                    <p><strong>🎲 SEVEN-SEVEN-SEVEN:</strong> Win 15x your bet</p>
-                    <p><strong>🎲 DICE-DICE-DICE:</strong> Win 10x your bet</p>
-                    <p><strong>🐸 FROG-FROG:</strong> Win 8x your bet</p>
-                    <p><strong>💎 DIAMOND-DIAMOND:</strong> Win 6x your bet</p>
-                    <p><strong>🎲 SEVEN-SEVEN:</strong> Win 5x your bet</p>
-                    <p><strong>🎲 DICE-DICE:</strong> Win 3x your bet</p>
+                    <p><strong>🐸 FROG-FROG-FROG:</strong> {t('jackpot')}</p>
+                    <p><strong>💎 DIAMOND-DIAMOND-DIAMOND:</strong> {t('win20x')}</p>
+                    <p><strong>🎲 SEVEN-SEVEN-SEVEN:</strong> {t('win15x')}</p>
+                    <p><strong>🎲 DICE-DICE-DICE:</strong> {t('win10x')}</p>
+                    <p><strong>🐸 FROG-FROG:</strong> {t('win8x')}</p>
+                    <p><strong>💎 DIAMOND-DIAMOND:</strong> {t('win6x')}</p>
+                    <p><strong>🎲 SEVEN-SEVEN:</strong> {t('win5x')}</p>
+                    <p><strong>🎲 DICE-DICE:</strong> {t('win3x')}</p>
                   </div>
                 </div>
               </div>
@@ -500,26 +499,26 @@ export default function HouseReel() {
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
           <div className="bg-[#5F000080] rounded-lg p-8 border-4 border-[#b98459] max-w-md w-full">
             <h2 className="text-3xl font-bold text-center mb-6 text-[#c79a63] font-casino">
-              Cash Out Summary
+              {t('cashOutSummary')}
             </h2>
             <div className="space-y-4 text-[#b98459]">
               <div className="flex justify-between">
-                <span>Starting Chips:</span>
+                <span>{t('startingChips')}</span>
                 <span className="font-bold">{startingChips}</span>
               </div>
               <div className="flex justify-between">
-                <span>Current Chips:</span>
+                <span>{t('currentChips')}</span>
                 <span className="font-bold">{currentChips}</span>
               </div>
               <div className="flex justify-between">
-                <span>Total Winnings:</span>
+                <span>{t('totalWinningsLabel')}</span>
                 <span className="font-bold text-[#D2B688]">{totalWinnings}</span>
               </div>
               <div className="border-t border-[#b98459] pt-2">
                 <div className="flex justify-between font-bold text-lg">
-                  <span>Net Profit/Loss:</span>
+                  <span>{t('netProfitLoss')}</span>
                   <span className={currentChips - startingChips >= 0 ? 'text-green-400' : 'text-red-400'}>
-                    {currentChips - startingChips >= 0 ? '+' : ''}{currentChips - startingChips} chips
+                    {currentChips - startingChips >= 0 ? '+' : ''}{currentChips - startingChips} {t('chips')}
                   </span>
                 </div>
               </div>
@@ -530,7 +529,7 @@ export default function HouseReel() {
                 onClick={() => setShowCashout(false)}
                 className="w-full golden-btn text-lg py-3"
               >
-                Close
+                {t('close')}
               </button>
             </div>
           </div>

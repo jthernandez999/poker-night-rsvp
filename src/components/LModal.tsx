@@ -1,6 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 type Props = {
   setShowModal: (showModal: boolean) => void;
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export default function LModal({ showModal, setShowModal }: Props) {
+  const { t } = useLanguage();
   const cancelButtonRef = useRef(null);
 
   return (
@@ -51,18 +53,18 @@ export default function LModal({ showModal, setShowModal }: Props) {
                     as="h3"
                     className="text-3xl md:text-4xl lg:text-5xl font-bold leading-6 text-red-400 mb-6"
                   >
-                    Better Luck Next Time!
+                    {t('betterLuckNextTime')}
                   </Dialog.Title>
                   
                   <div className="mb-8">
                     <p className="text-xl md:text-2xl lg:text-3xl text-white mb-4">
-                      🎰 House Wins 🎰
+                      {t('houseWins')}
                     </p>
                     <p className="text-red-300 text-lg md:text-xl lg:text-2xl">
-                      Fortune wasn&apos;t in your favor this round at Hernandez Casino.
+                      {t('fortuneNotInFavor')}
                     </p>
                     <p className="text-yellow-300 text-base md:text-lg lg:text-xl mt-4">
-                      The night is young - come back to the poker tables! 🎲
+                      {t('nightIsYoung')}
                     </p>
                   </div>
                   
@@ -76,7 +78,7 @@ export default function LModal({ showModal, setShowModal }: Props) {
                     onClick={() => setShowModal(false)}
                     ref={cancelButtonRef}
                   >
-                    Try Again! 🎰
+                    {t('tryAgain')}
                   </button>
                 </div>
               </Dialog.Panel>

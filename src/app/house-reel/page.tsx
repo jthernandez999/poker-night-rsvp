@@ -104,91 +104,44 @@ export default function HouseReel() {
     }
   };
 
+  // Handle win result from Slots component
+  const handleWinResult = (winAmount: number, combination: string) => {
+    // Add to game history
+    const newHistory: GameHistory = {
+      id: Date.now(),
+      bet: betAmount,
+      win: winAmount,
+      timestamp: new Date().toLocaleTimeString(),
+      combination: combination
+    };
+    
+    setGameHistory(prev => [...prev, newHistory]);
+    setTotalWinnings(prev => prev + winAmount);
+    
+    // Update scores for high score tracking
+    if (winAmount > 0) {
+      updateScores(winAmount);
+    }
+    
+    // Set current win amount for modal
+    if (winAmount > 0) {
+      setCurrentWinAmount(winAmount);
+      setTimeout(() => {
+        setCurrentChips(prev => prev + winAmount);
+      }, 2000);
+    }
+  };
+
   // Handle spin with betting
   const handleSpin = () => {
     if (currentChips >= betAmount && !spinning) {
       // Deduct bet from chips
       setCurrentChips(prev => prev - betAmount);
       
-      // Casino-style winning algorithm
-      const random = Math.random();
-      let willWin = false;
-      let winAmount = 0;
-      let winningCombination = "No Win";
-      
-      // Determine win based on probability (house edge ~15%)
-      if (random < 0.05) {
-        // 5% chance for FROG-FROG-FROG (highest payout)
-        willWin = true;
-        winAmount = betAmount * winningCombinations["FROG-FROG-FROG"];
-        winningCombination = "FROG-FROG-FROG";
-      } else if (random < 0.12) {
-        // 7% chance for DIAMOND-DIAMOND-DIAMOND
-        willWin = true;
-        winAmount = betAmount * winningCombinations["DIAMOND-DIAMOND-DIAMOND"];
-        winningCombination = "DIAMOND-DIAMOND-DIAMOND";
-      } else if (random < 0.20) {
-        // 8% chance for SEVEN-SEVEN-SEVEN
-        willWin = true;
-        winAmount = betAmount * winningCombinations["SEVEN-SEVEN-SEVEN"];
-        winningCombination = "SEVEN-SEVEN-SEVEN";
-      } else if (random < 0.30) {
-        // 10% chance for DICE-DICE-DICE
-        willWin = true;
-        winAmount = betAmount * winningCombinations["DICE-DICE-DICE"];
-        winningCombination = "DICE-DICE-DICE";
-      } else if (random < 0.45) {
-        // 15% chance for FROG-FROG
-        willWin = true;
-        winAmount = betAmount * winningCombinations["FROG-FROG"];
-        winningCombination = "FROG-FROG";
-      } else if (random < 0.60) {
-        // 15% chance for DIAMOND-DIAMOND
-        willWin = true;
-        winAmount = betAmount * winningCombinations["DIAMOND-DIAMOND"];
-        winningCombination = "DIAMOND-DIAMOND";
-      } else if (random < 0.75) {
-        // 15% chance for SEVEN-SEVEN
-        willWin = true;
-        winAmount = betAmount * winningCombinations["SEVEN-SEVEN"];
-        winningCombination = "SEVEN-SEVEN";
-      } else if (random < 0.85) {
-        // 10% chance for DICE-DICE
-        willWin = true;
-        winAmount = betAmount * winningCombinations["DICE-DICE"];
-        winningCombination = "DICE-DICE";
-      }
-      // 15% chance of no win (house edge)
-      
-      setApproved(willWin);
+      setApproved(false); // Let the Slots component determine the win
       setSpinning(true);
       setSpin(true);
       startAudio();
-
-      // Add to game history
-      const newHistory: GameHistory = {
-        id: Date.now(),
-        bet: betAmount,
-        win: winAmount,
-        timestamp: new Date().toLocaleTimeString(),
-        combination: winningCombination
-      };
-      
-      setGameHistory(prev => [...prev, newHistory]);
-      setTotalWinnings(prev => prev + winAmount);
-      
-      // Update scores for high score tracking
-      if (winAmount > 0) {
-        updateScores(winAmount);
-      }
-      
-      // Set current win amount for modal
-      if (winAmount > 0) {
-        setCurrentWinAmount(winAmount);
-        setTimeout(() => {
-          setCurrentChips(prev => prev + winAmount);
-        }, 2000);
-      }
     }
   };
 
@@ -383,6 +336,8 @@ export default function HouseReel() {
               setSpinning={setSpinning}
               setShowWin={setShowWinModal}
               setShowL={setShowLModal}
+              betAmount={betAmount}
+              onWinResult={handleWinResult}
             />
             
             {/* Spin Button Below Reel */}
@@ -411,35 +366,35 @@ export default function HouseReel() {
                 </h4>
                 <div className="text-[#b98459] text-sm space-y-1">
                   <div className="flex justify-between items-center">
-                    <span>🐸 FROG-FROG-FROG:</span>
+                    <span>{t('frogFrogFrog')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 25}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>💎 DIAMOND-DIAMOND-DIAMOND:</span>
+                    <span>{t('diamondDiamondDiamond')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 20}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>🎲 SEVEN-SEVEN-SEVEN:</span>
+                    <span>{t('sevenSevenSeven')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 15}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>🎲 DICE-DICE-DICE:</span>
+                    <span>{t('diceDiceDice')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 10}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>🐸 FROG-FROG:</span>
+                    <span>{t('frogFrog')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 8}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>💎 DIAMOND-DIAMOND:</span>
+                    <span>{t('diamondDiamond')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 6}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>🎲 SEVEN-SEVEN:</span>
+                    <span>{t('sevenSeven')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 5}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>🎲 DICE-DICE:</span>
+                    <span>{t('diceDice')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 3}</span>
                   </div>
                 </div>
@@ -478,14 +433,14 @@ export default function HouseReel() {
                 <div className="text-center">
                   <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">{t('winningCombinations')}</h3>
                   <div className="text-[#b98459] text-sm md:text-base space-y-1">
-                    <p><strong>🐸 FROG-FROG-FROG:</strong> {t('jackpot')}</p>
-                    <p><strong>💎 DIAMOND-DIAMOND-DIAMOND:</strong> {t('win20x')}</p>
-                    <p><strong>🎲 SEVEN-SEVEN-SEVEN:</strong> {t('win15x')}</p>
-                    <p><strong>🎲 DICE-DICE-DICE:</strong> {t('win10x')}</p>
-                    <p><strong>🐸 FROG-FROG:</strong> {t('win8x')}</p>
-                    <p><strong>💎 DIAMOND-DIAMOND:</strong> {t('win6x')}</p>
-                    <p><strong>🎲 SEVEN-SEVEN:</strong> {t('win5x')}</p>
-                    <p><strong>🎲 DICE-DICE:</strong> {t('win3x')}</p>
+                    <p><strong>{t('frogFrogFrog')}:</strong> {t('jackpot')}</p>
+                    <p><strong>{t('diamondDiamondDiamond')}:</strong> {t('win20x')}</p>
+                    <p><strong>{t('sevenSevenSeven')}:</strong> {t('win15x')}</p>
+                    <p><strong>{t('diceDiceDice')}:</strong> {t('win10x')}</p>
+                    <p><strong>{t('frogFrog')}:</strong> {t('win8x')}</p>
+                    <p><strong>{t('diamondDiamond')}:</strong> {t('win6x')}</p>
+                    <p><strong>{t('sevenSeven')}:</strong> {t('win5x')}</p>
+                    <p><strong>{t('diceDice')}:</strong> {t('win3x')}</p>
                   </div>
                 </div>
               </div>

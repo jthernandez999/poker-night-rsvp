@@ -123,6 +123,7 @@ export const translations = {
     win8x: "Win 8x your bet",
     win6x: "Win 6x your bet",
     win5x: "Win 5x your bet",
+    win4x: "Win 4x your bet",
     win3x: "Win 3x your bet",
     cashOutSummary: "Cash Out Summary",
     startingChips: "Starting Chips:",
@@ -146,7 +147,17 @@ export const translations = {
     winModalCongratulations: "🎰 CONGRATULATIONS! 🎰",
     winModalHitTheJackpot: "You hit the jackpot at Hernandez Casino!",
     winModalTimeToCelebrate: "Time to celebrate at the poker tables! 🎲",
-    winModalCollectChips: "Collect {amount} Chips! 💰"
+    winModalCollectChips: "Collect {amount} Chips! 💰",
+    
+    // Winning Combination Names
+    frogFrogFrog: "🐸 FROG-FROG-FROG",
+    diamondDiamondDiamond: "💎 DIAMOND-DIAMOND-DIAMOND",
+    sevenSevenSeven: "🎲 SEVEN-SEVEN-SEVEN",
+    diceDiceDice: "🎲 DICE-DICE-DICE",
+    frogFrog: "🐸 FROG-FROG",
+    diamondDiamond: "💎 DIAMOND-DIAMOND",
+    sevenSeven: "🎲 SEVEN-SEVEN",
+    diceDice: "🎲 DICE-DICE"
   },
   es: {
     // Intro Section
@@ -272,6 +283,7 @@ export const translations = {
     win8x: "Gana 8x tu apuesta",
     win6x: "Gana 6x tu apuesta",
     win5x: "Gana 5x tu apuesta",
+    win4x: "Gana 4x tu apuesta",
     win3x: "Gana 3x tu apuesta",
     cashOutSummary: "Resumen de Cobro",
     startingChips: "Fichas Iniciales:",
@@ -295,7 +307,17 @@ export const translations = {
     winModalCongratulations: "🎰 ¡FELICITACIONES! 🎰",
     winModalHitTheJackpot: "¡Ganaste el jackpot en el Casino Hernandez!",
     winModalTimeToCelebrate: "¡Es hora de celebrar en las mesas de poker! 🎲",
-    winModalCollectChips: "¡Cobra {amount} Fichas! 💰"
+    winModalCollectChips: "¡Cobra {amount} Fichas! 💰",
+    
+    // Winning Combination Names
+    frogFrogFrog: "🐸 RANA-RANA-RANA",
+    diamondDiamondDiamond: "💎 DIAMANTE-DIAMANTE-DIAMANTE",
+    sevenSevenSeven: "🎲 SIETE-SIETE-SIETE",
+    diceDiceDice: "🎲 DADOS-DADOS-DADOS",
+    frogFrog: "🐸 RANA-RANA",
+    diamondDiamond: "💎 DIAMANTE-DIAMANTE",
+    sevenSeven: "🎲 SIETE-SIETE",
+    diceDice: "🎲 DADOS-DADOS"
   }
 };
 

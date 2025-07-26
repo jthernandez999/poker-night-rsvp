@@ -12,6 +12,8 @@ interface SlotsProps {
   setSpinning: (spinning: boolean) => void;
   setShowWin: (show: boolean) => void;
   setShowL: (show: boolean) => void;
+  betAmount: number;
+  onWinResult: (winAmount: number, combination: string) => void;
 }
 
 const Slots: React.FC<SlotsProps> = ({ 
@@ -21,12 +23,20 @@ const Slots: React.FC<SlotsProps> = ({
   approved, 
   setSpinning, 
   setShowWin, 
-  setShowL 
+  setShowL,
+  betAmount,
+  onWinResult
 }) => {
     const [spin, setSpin] = useState(false);
     const [ring1, setRing1] = useState<number | undefined>();
     const [ring2, setRing2] = useState<number | undefined>();
     const [ring3, setRing3] = useState<number | undefined>();
+    // Add state to store the intended symbols for visual rendering
+    const [intendedSymbols, setIntendedSymbols] = useState<{ring1: string, ring2: string, ring3: string}>({
+      ring1: 'dice',
+      ring2: 'dice', 
+      ring3: 'dice'
+    });
     const [leverPull, setLeverPull] = useState(false);
     const [bgPlaying, setBgPlaying] = useState(false);
 
@@ -82,670 +92,453 @@ const Slots: React.FC<SlotsProps> = ({
         }
     }, [makeSpin, setMakeSpin, setSpinning, play]);
 
+    // Function to render the correct symbol set for ring 1 (left)
+    const renderSymbolSet1 = (symbol: string, isMoving: boolean = false) => {
+        const className = isMoving ? 'ringMoving' : 'ringEnd';
+        
+        switch(symbol) {
+            case 'seven':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                    </>
+                );
+            case 'diamond':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                    </>
+                );
+            case 'dice':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
+                        </div>
+                    </>
+                );
+            case 'frog':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                    </>
+                );
+            default:
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
+                        </div>
+                    </>
+                );
+        }
+    };
+
+    // Function to render the correct symbol set for ring 2 (middle)
+    const renderSymbolSet2 = (symbol: string, isMoving: boolean = false) => {
+        const className = isMoving ? 'ringMoving' : 'ringEnd';
+        
+        switch(symbol) {
+            case 'seven':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_middle.png' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                    </>
+                );
+            case 'diamond':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_middle.png' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                    </>
+                );
+            case 'dice':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_middle.png' alt='' />
+                        </div>
+                    </>
+                );
+            case 'frog':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_middle.png' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                    </>
+                );
+            default:
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 -translate-x-4' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_middle.png' alt='' />
+                        </div>
+                    </>
+                );
+        }
+    };
+
+    // Function to render the correct symbol set for ring 3 (right)
+    const renderSymbolSet3 = (symbol: string, isMoving: boolean = false) => {
+        const className = isMoving ? 'ringMoving' : 'ringEnd';
+        
+        switch(symbol) {
+            case 'seven':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Right.png' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 md:-translate-x-[20px] -translate-x-[10px]' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                    </>
+                );
+            case 'diamond':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Right.png' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 md:-translate-x-[20px] -translate-x-[10px]' alt='' />
+                        </div>
+                    </>
+                );
+            case 'dice':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 md:-translate-x-[20px] -translate-x-[10px]' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Right.png' alt='' />
+                        </div>
+                    </>
+                );
+            case 'frog':
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 md:-translate-x-[20px] -translate-x-[10px]' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Right.png' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                    </>
+                );
+            default:
+                return (
+                    <>
+                        <div className={className}>
+                            <img draggable={false} src='/Frog_middle.png' className='mt-4 md:-translate-x-[20px] -translate-x-[10px]' alt='' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Dice.png' alt='' className='md:h-max h-[72px] md:mt-0 mt-2' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Diamond.png' alt='' className='-translate-x-3' />
+                        </div>
+                        <div className={className}>
+                            <img draggable={false} src='/Seven_Right.png' alt='' />
+                        </div>
+                    </>
+                );
+        }
+    };
+
     function row1() {
         if (!spin) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
+            return renderSymbolSet1('seven', false);
         } else if (spin && ring1 == undefined) {
-            return (
-                <>
-                    <div className='ringMoving'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring1 && ring1 >= 1 && ring1 <= 50) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring1 && ring1 > 50 && ring1 <= 75) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
-                    </div>
-                </>
-            );
-        } else if (ring1 && ring1 > 75 && ring1 <= 95) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring1 && ring1 > 95 && ring1 <= 100) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Left.png' alt='' className='ml-2' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                </>
-            );
+            return renderSymbolSet1('seven', true);
+        } else {
+            return renderSymbolSet1(intendedSymbols.ring1, false);
         }
     }
 
     function row2() {
         if (!spin) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_middle.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
+            return renderSymbolSet2('seven', false);
         } else if (spin && ring2 == undefined) {
-            return (
-                <>
-                    <div className='ringMoving'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_middle.png' alt='' />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring2 && ring2 >= 1 && ring2 <= 50) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_middle.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring2 && ring2 > 50 && ring2 <= 75) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_middle.png' alt='' />
-                    </div>
-                </>
-            );
-        } else if (ring2 && ring2 > 75 && ring2 <= 95) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_middle.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring2 && ring2 > 95 && ring2 <= 100) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_middle.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 -translate-x-4'
-                            alt=''
-                        />
-                    </div>
-                </>
-            );
+            return renderSymbolSet2('seven', true);
+        } else {
+            return renderSymbolSet2(intendedSymbols.ring2, false);
         }
     }
 
     function row3() {
         if (!spin) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Right.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 md:-translate-x-[20px] -translate-x-[10px] '
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
+            return renderSymbolSet3('seven', false);
         } else if (spin && ring3 == undefined) {
-            return (
-                <>
-                    <div className='ringMoving'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Right.png' alt='' />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 md:-translate-x-[20px] -translate-x-[10px] '
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringMoving'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring3 && ring3 >= 1 && ring3 <= 50) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Right.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 md:-translate-x-[20px] -translate-x-[10px] '
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring3 && ring3 > 50 && ring3 <= 75) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 md:-translate-x-[20px] -translate-x-[10px] '
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Right.png' alt='' />
-                    </div>
-                </>
-            );
-        } else if (ring3 && ring3 > 75 && ring3 <= 95) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 md:-translate-x-[20px] -translate-x-[10px] '
-                            alt=''
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        {" "}
-                        <img
-                            draggable={false} src='/Seven_Right.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                </>
-            );
-        } else if (ring3 && ring3 > 95 && ring3 <= 100) {
-            return (
-                <>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Diamond.png'
-                            alt=''
-                            className='-translate-x-3 '
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false} src='/Seven_Right.png' alt='' />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Dice.png'
-                            alt=''
-                            className='md:h-max h-[72px] md:mt-0 mt-2'
-                        />
-                    </div>
-                    <div className='ringEnd'>
-                        <img
-                            draggable={false}
-                            src='/Frog_middle.png'
-                            className='mt-4 md:-translate-x-[20px] -translate-x-[10px] '
-                            alt=''
-                        />
-                    </div>
-                </>
-            );
+            return renderSymbolSet3('seven', true);
+        } else {
+            return renderSymbolSet3(intendedSymbols.ring3, false);
         }
     }
 
     function rand() {
         if (approved == true) {
-            setRing1(60);
+            // Force a win when approved (for testing/demo purposes)
+            // Create a realistic winning pattern - all sevens
+            setRing1(25); // Seven position (1-50 range)
             boop();
             setTimeout(function () {
-                setRing2(60);
+                setRing2(25); // Seven position (1-50 range)
                 boop();
             }, 1000);
             setTimeout(function () {
-                setRing3(60);
+                setRing3(25); // Seven position (1-50 range)
                 boop();
             }, 2000);
             setTimeout(function () {
                 win();
                 setShowWin(true);
+                // Communicate win result to parent with correct multiplier
+                onWinResult(betAmount * 15, "SEVEN-SEVEN-SEVEN");
+                // Track the win
+                const currentWins = sessionStorage.getItem('slotWins') ? parseInt(sessionStorage.getItem('slotWins')!) : 0;
+                sessionStorage.setItem('slotWins', (currentWins + 1).toString());
             }, 2500);
             setTimeout(function () {
                 setSpinning(false);
             }, 3500);
         } else {
-            const rand1 = Math.floor(Math.random() * 100) + 1;
-            const rand2 = Math.floor(Math.random() * 100) + 1;
-            setRing1(rand1);
+            // NEW ALGORITHM: Lookup table approach for exact multipliers
+            const random = Math.random();
+            let willWin = false;
+            let winAmount = 0;
+            let winningCombination = "No Win";
+            let ring1Symbol: string = 'dice', ring2Symbol: string = 'dice', ring3Symbol: string = 'dice';
+            
+            // Lookup table for exact multipliers matching the display
+            const winningTable: Array<{
+                probability: number;
+                combination: string;
+                multiplier: number;
+                symbols: [string, string, string];
+            }> = [
+                { probability: 0.03, combination: "FROG-FROG-FROG", multiplier: 25, symbols: ['frog', 'frog', 'frog'] },
+                { probability: 0.08, combination: "DIAMOND-DIAMOND-DIAMOND", multiplier: 20, symbols: ['diamond', 'diamond', 'diamond'] },
+                { probability: 0.15, combination: "SEVEN-SEVEN-SEVEN", multiplier: 15, symbols: ['seven', 'seven', 'seven'] },
+                { probability: 0.25, combination: "DICE-DICE-DICE", multiplier: 10, symbols: ['dice', 'dice', 'dice'] },
+                { probability: 0.40, combination: "FROG-FROG", multiplier: 8, symbols: ['frog', 'frog', 'dice'] },
+                { probability: 0.55, combination: "DIAMOND-DIAMOND", multiplier: 6, symbols: ['diamond', 'diamond', 'dice'] },
+                { probability: 0.70, combination: "SEVEN-SEVEN", multiplier: 5, symbols: ['seven', 'seven', 'dice'] },
+                { probability: 0.80, combination: "DICE-DICE", multiplier: 3, symbols: ['dice', 'dice', 'seven'] }
+            ];
+            
+            // Check each winning combination
+            for (let i = 0; i < winningTable.length; i++) {
+                const entry = winningTable[i];
+                const prevProbability = i > 0 ? winningTable[i-1].probability : 0;
+                
+                if (random >= prevProbability && random < entry.probability) {
+                    willWin = true;
+                    winAmount = betAmount * entry.multiplier;
+                    winningCombination = entry.combination;
+                    ring1Symbol = entry.symbols[0];
+                    ring2Symbol = entry.symbols[1];
+                    ring3Symbol = entry.symbols[2];
+                    
+                    // DEBUG: Log the win calculation
+                    console.log(`DEBUG: Random=${random}, Combination=${entry.combination}, Multiplier=${entry.multiplier}, betAmount=${betAmount}, winAmount=${winAmount}`);
+                    
+                    break;
+                }
+            }
+            
+            // If no win, create losing combination
+            if (!willWin) {
+                const symbols = ['seven', 'diamond', 'dice', 'frog'];
+                ring1Symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                do {
+                    ring2Symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                } while (ring2Symbol === ring1Symbol);
+                
+                do {
+                    ring3Symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                } while (ring3Symbol === ring1Symbol || ring3Symbol === ring2Symbol);
+            }
+            
+            // Convert symbols to ring positions
+            const symbolToPosition = (symbol: string) => {
+                switch(symbol) {
+                    case 'seven': return Math.floor(Math.random() * 50) + 1;   // Seven position (1-50)
+                    case 'diamond': return Math.floor(Math.random() * 5) + 96; // Diamond position (96-100)
+                    case 'dice': return Math.floor(Math.random() * 25) + 51;   // Dice position (51-75)
+                    case 'frog': return Math.floor(Math.random() * 20) + 76;   // Frog position (76-95)
+                    default: return Math.floor(Math.random() * 100) + 1;
+                }
+            };
+            
+            const ring1Pos = symbolToPosition(ring1Symbol);
+            const ring2Pos = symbolToPosition(ring2Symbol);
+            const ring3Pos = symbolToPosition(ring3Symbol);
+            
+            // Store the intended symbols for visual rendering
+            setIntendedSymbols({
+                ring1: ring1Symbol,
+                ring2: ring2Symbol,
+                ring3: ring3Symbol
+            });
+            
+            // DEBUG: Log the symbols and positions
+            console.log(`DEBUG: Symbols: ${ring1Symbol}, ${ring2Symbol}, ${ring3Symbol}`);
+            console.log(`DEBUG: Positions: ${ring1Pos}, ${ring2Pos}, ${ring3Pos}`);
+            
+            setRing1(ring1Pos);
             boop();
             setTimeout(function () {
-                setRing2(rand2);
+                setRing2(ring2Pos);
                 boop();
             }, 1000);
             setTimeout(function () {
-                if (rand1 <= 50 && rand2 <= 50) {
-                    setRing3(95);
-                } else if (rand1 > 50 && rand2 > 50) {
-                    setRing3(3);
-                } else {
-                    setRing3(Math.floor(Math.random() * 100) + 1);
-                }
+                setRing3(ring3Pos);
                 boop();
             }, 2000);
+            
+            // DEBUG: Log which ring gets which position
+            console.log(`DEBUG: Ring1=${ring1Pos} (${ring1Symbol}), Ring2=${ring2Pos} (${ring2Symbol}), Ring3=${ring3Pos} (${ring3Symbol})`);
+            
             setTimeout(function () {
-                l()
-                setShowL(true);
+                if (willWin) {
+                    win();
+                    setShowWin(true);
+                    // Communicate win result to parent
+                    console.log(`DEBUG: Sending win result - winAmount=${winAmount}, combination=${winningCombination}`);
+                    onWinResult(winAmount, winningCombination);
+                    // Track the win
+                    const currentWins = sessionStorage.getItem('slotWins') ? parseInt(sessionStorage.getItem('slotWins')!) : 0;
+                    sessionStorage.setItem('slotWins', (currentWins + 1).toString());
+                } else {
+                    l();
+                    setShowL(true);
+                }
             }, 2750);
             setTimeout(function () {
                 setSpinning(false);

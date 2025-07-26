@@ -327,7 +327,7 @@ export default function HouseReel() {
           </div>
           
           {/* Center - Slot Machine */}
-          <div className="2xl:scale-125 md:mt-16 lg:mt-0 lg:z-40 relative min-h-[298px] lg:min-h-max lg:min-w-[712px] my-4 lg:my-0 lg:h-max w-full lg:w-[712px] flex flex-col xl:justify-center self-center mx-auto overflow-y-visible overflow-x-clip md:overflow-visible">
+          <div className={`${gameStarted ? '2xl:scale-175' : '2xl:scale-127'} md:mt-16 lg:mt-0 lg:z-40 relative min-h-[298px] lg:min-h-max lg:min-w-[712px] my-4 lg:my-0 lg:h-max w-full lg:w-[712px] flex flex-col xl:justify-center self-center mx-auto overflow-y-visible overflow-x-clip md:overflow-visible`}>
             <Slots
               setMakeSpin={setSpin}
               makeSpin={spin}

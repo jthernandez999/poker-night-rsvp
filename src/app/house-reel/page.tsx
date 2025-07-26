@@ -178,7 +178,7 @@ export default function HouseReel() {
   }
 
   return (
-    <div className="min-h-max relative mx-auto max-w-[2000px]">
+    <div className="min-h-max relative mx-auto max-w-[3000px]">
       <Header />
       <LanguageToggle />
       
@@ -317,7 +317,7 @@ export default function HouseReel() {
               )}
             </div>
 
-            <div className="mt-12">
+            <div className="mt-12 mb-12">
               <Link href="/">
                 <button className="border-2 border-[#b98459] rounded-lg py-3 px-8 font-myriadpro bg-transparent hover:bg-[#b98459] hover:text-black text-[#b98459] font-bold transition-all duration-300">
                   {t('backToHome')}
@@ -356,7 +356,7 @@ export default function HouseReel() {
           
           {/* Current Bet Winning Combinations - Far Right */}
           {gameStarted && (
-            <div className="hidden lg:flex flex-col mt-16 min-w-[280px] lg:justify-self-end">
+            <div className="hidden lg:flex flex-col mt-[15rem] min-w-[280px] lg:justify-self-end w-[20rem]">
               <div className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
                 <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino text-center">
                   {t('currentBet')} {betAmount} {t('chips')}

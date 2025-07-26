@@ -356,7 +356,7 @@ export default function HouseReel() {
           
           {/* Current Bet Winning Combinations - Far Right */}
           {gameStarted && (
-            <div className="hidden lg:flex flex-col mt-[15rem] min-w-[280px] lg:justify-self-end w-[20rem]">
+            <div className="hidden lg:flex flex-col mt-[10.6rem] min-w-[280px] lg:justify-self-end w-[20rem] translate-x-20">
               <div className="bg-[#5F000080] rounded-lg p-4 border border-[#b98459] bg-opacity-50">
                 <h3 className="text-lg font-bold text-[#c79a63] mb-3 font-casino text-center">
                   {t('currentBet')} {betAmount} {t('chips')}

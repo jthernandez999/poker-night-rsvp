@@ -450,22 +450,22 @@ const Slots: React.FC<SlotsProps> = ({
               multiplier: number;
               symbols: [string, string, string];
           }> = [
-              { probability: 0.02, combination: "FROG-FROG-FROG", multiplier: 25, symbols: ['frog', 'frog', 'frog'] },
-              { probability: 0.05, combination: "DIAMOND-DIAMOND-DIAMOND", multiplier: 20, symbols: ['diamond', 'diamond', 'diamond'] },
-              { probability: 0.10, combination: "SEVEN-SEVEN-SEVEN", multiplier: 15, symbols: ['seven', 'seven', 'seven'] },
-              { probability: 0.18, combination: "DICE-DICE-DICE", multiplier: 10, symbols: ['dice', 'dice', 'dice'] },
-              { probability: 0.25, combination: "FROG-FROG", multiplier: 8, symbols: ['frog', 'frog', 'dice'] },
-              { probability: 0.32, combination: "DIAMOND-DIAMOND", multiplier: 6, symbols: ['diamond', 'diamond', 'dice'] },
-              { probability: 0.40, combination: "SEVEN-SEVEN", multiplier: 5, symbols: ['seven', 'seven', 'dice'] },
-              { probability: 0.48, combination: "DICE-DICE", multiplier: 3, symbols: ['dice', 'dice', 'seven'] },
-              { probability: 0.55, combination: "FROG-DIAMOND-SEVEN", multiplier: 4, symbols: ['frog', 'diamond', 'seven'] },
-              { probability: 0.62, combination: "DICE-FROG-DIAMOND", multiplier: 4, symbols: ['dice', 'frog', 'diamond'] },
-              { probability: 0.69, combination: "SEVEN-DICE-FROG", multiplier: 4, symbols: ['seven', 'dice', 'frog'] },
-              { probability: 0.76, combination: "DIAMOND-SEVEN-DICE", multiplier: 4, symbols: ['diamond', 'seven', 'dice'] },
-              { probability: 0.82, combination: "FROG-SEVEN-DIAMOND", multiplier: 2, symbols: ['frog', 'seven', 'diamond'] },
-              { probability: 0.88, combination: "DICE-DIAMOND-SEVEN", multiplier: 2, symbols: ['dice', 'diamond', 'seven'] },
-              { probability: 0.94, combination: "SEVEN-FROG-DICE", multiplier: 2, symbols: ['seven', 'frog', 'dice'] },
-              { probability: 1.00, combination: "DIAMOND-DICE-FROG", multiplier: 2, symbols: ['diamond', 'dice', 'frog'] }
+              { probability: 0.005, combination: "FROG-FROG-FROG", multiplier: 25, symbols: ['frog', 'frog', 'frog'] },
+              { probability: 0.015, combination: "DIAMOND-DIAMOND-DIAMOND", multiplier: 20, symbols: ['diamond', 'diamond', 'diamond'] },
+              { probability: 0.025, combination: "SEVEN-SEVEN-SEVEN", multiplier: 15, symbols: ['seven', 'seven', 'seven'] },
+              { probability: 0.040, combination: "DICE-DICE-DICE", multiplier: 10, symbols: ['dice', 'dice', 'dice'] },
+              { probability: 0.060, combination: "FROG-FROG", multiplier: 8, symbols: ['frog', 'frog', 'dice'] },
+              { probability: 0.085, combination: "DIAMOND-DIAMOND", multiplier: 6, symbols: ['diamond', 'diamond', 'dice'] },
+              { probability: 0.115, combination: "SEVEN-SEVEN", multiplier: 5, symbols: ['seven', 'seven', 'dice'] },
+              { probability: 0.150, combination: "DICE-DICE", multiplier: 3, symbols: ['dice', 'dice', 'seven'] },
+              { probability: 0.180, combination: "FROG-DIAMOND-SEVEN", multiplier: 4, symbols: ['frog', 'diamond', 'seven'] },
+              { probability: 0.210, combination: "DICE-FROG-DIAMOND", multiplier: 4, symbols: ['dice', 'frog', 'diamond'] },
+              { probability: 0.240, combination: "SEVEN-DICE-FROG", multiplier: 4, symbols: ['seven', 'dice', 'frog'] },
+              { probability: 0.270, combination: "DIAMOND-SEVEN-DICE", multiplier: 4, symbols: ['diamond', 'seven', 'dice'] },
+              { probability: 0.295, combination: "FROG-SEVEN-DIAMOND", multiplier: 2, symbols: ['frog', 'seven', 'diamond'] },
+              { probability: 0.320, combination: "DICE-DIAMOND-SEVEN", multiplier: 2, symbols: ['dice', 'diamond', 'seven'] },
+              { probability: 0.345, combination: "SEVEN-FROG-DICE", multiplier: 2, symbols: ['seven', 'frog', 'dice'] },
+              { probability: 0.370, combination: "DIAMOND-DICE-FROG", multiplier: 2, symbols: ['diamond', 'dice', 'frog'] }
           ];
           
           // Check each winning combination

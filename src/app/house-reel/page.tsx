@@ -195,7 +195,7 @@ export default function HouseReel() {
         
         <div className="flex flex-col-reverse lg:flex-row lg:px-[5%] w-full justify-between overflow-y-visible overflow-x-clip lg:overflow-hidden min-h-[800px] lg:min-h-[900px] 2xl:min-h-[1000px] lg:my-auto mb-16">
           {/* Left Side - Game Controls */}
-          <div className="relative z-30 flex flex-col items-center min-h-[600px] lg:min-h-[700px] min-w-max scale-105 text-center lg:self-start lg:justify-self-start 2xl:scale-150 2xl:mt-[17.5%] pb-32 lg:pb-40">
+          <div className="relative z-30 flex flex-col items-center min-h-[600px] lg:min-h-[700px] min-w-max scale-105 text-center lg:self-start lg:justify-self-start 2xl:scale-150 2xl:mt-[20%] pb-32 lg:pb-40 -translate-y-60">
             
             {/* Game Controls */}
             <div className="mt-8 space-y-4">

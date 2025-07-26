@@ -154,7 +154,7 @@ export default function HouseReel() {
   const handleStartGame = () => {
     setCurrentChips(customStartingChips);
     setStartingChips(customStartingChips);
-    setBetAmount(5);
+    // Don't reset bet amount - let user keep their preferred bet
     setTotalWinnings(0);
     setCurrentScore(0);
     setGameHistory([]);
@@ -364,7 +364,7 @@ export default function HouseReel() {
                 <h4 className="text-md font-bold text-[#b98459] mb-2 font-casino text-center">
                   {t('potentialWins')}
                 </h4>
-                <div className="text-[#b98459] text-sm space-y-1">
+                <div className="text-[#b98459] text-sm md:text-base space-y-1">
                   <div className="flex justify-between items-center">
                     <span>{t('frogFrogFrog')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 25}</span>
@@ -396,6 +396,38 @@ export default function HouseReel() {
                   <div className="flex justify-between items-center">
                     <span>{t('diceDice')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 3}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Frog-Diamond-Seven:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Dice-Frog-Diamond:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Seven-Dice-Frog:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Diamond-Seven-Dice:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Frog-Seven-Diamond:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Dice-Diamond-Seven:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Seven-Frog-Dice:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Diamond-Dice-Frog:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
                   </div>
                 </div>
               </div>
@@ -441,6 +473,14 @@ export default function HouseReel() {
                     <p><strong>{t('diamondDiamond')}:</strong> {t('win6x')}</p>
                     <p><strong>{t('sevenSeven')}:</strong> {t('win5x')}</p>
                     <p><strong>{t('diceDice')}:</strong> {t('win3x')}</p>
+                    <p><strong>Frog-Diamond-Seven:</strong> Win 4x</p>
+                    <p><strong>Dice-Frog-Diamond:</strong> Win 4x</p>
+                    <p><strong>Seven-Dice-Frog:</strong> Win 4x</p>
+                    <p><strong>Diamond-Seven-Dice:</strong> Win 4x</p>
+                    <p><strong>Frog-Seven-Diamond:</strong> Win 2x</p>
+                    <p><strong>Dice-Diamond-Seven:</strong> Win 2x</p>
+                    <p><strong>Seven-Frog-Dice:</strong> Win 2x</p>
+                    <p><strong>Diamond-Dice-Frog:</strong> Win 2x</p>
                   </div>
                 </div>
               </div>

@@ -367,67 +367,67 @@ export default function HouseReel() {
                 <div className="text-[#b98459] text-sm md:text-base space-y-1">
                   <div className="flex justify-between items-center">
                     <span>{t('frogFrogFrog')}:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 25}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>{t('diamondDiamondDiamond')}:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 20}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>{t('sevenSevenSeven')}:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 15}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>{t('diceDiceDice')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 10}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>{t('frogFrog')}:</span>
+                    <span>{t('diamondDiamondDiamond')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 8}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>{t('diamondDiamond')}:</span>
+                    <span>{t('sevenSevenSeven')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 6}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>{t('sevenSeven')}:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 5}</span>
+                    <span>{t('diceDiceDice')}:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span>{t('diceDice')}:</span>
+                    <span>{t('frogFrog')}:</span>
                     <span className="font-bold text-[#D2B688]">{betAmount * 3}</span>
                   </div>
                   <div className="flex justify-between items-center">
+                    <span>{t('diamondDiamond')}:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 2.5}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>{t('sevenSeven')}:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>{t('diceDice')}:</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.5}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
                     <span>Frog-Diamond-Seven:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.8}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Dice-Frog-Diamond:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.8}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Seven-Dice-Frog:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.8}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Diamond-Seven-Dice:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 4}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.8}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Frog-Seven-Diamond:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.2}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Dice-Diamond-Seven:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.2}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Seven-Frog-Dice:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.2}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Diamond-Dice-Frog:</span>
-                    <span className="font-bold text-[#D2B688]">{betAmount * 2}</span>
+                    <span className="font-bold text-[#D2B688]">{betAmount * 1.2}</span>
                   </div>
                 </div>
               </div>
@@ -466,21 +466,21 @@ export default function HouseReel() {
                   <h3 className="text-lg md:text-xl font-bold text-[#b98459] mb-3 font-casino">{t('winningCombinations')}</h3>
                   <div className="text-[#b98459] text-sm md:text-base space-y-1">
                     <p><strong>{t('frogFrogFrog')}:</strong> {t('jackpot')}</p>
-                    <p><strong>{t('diamondDiamondDiamond')}:</strong> {t('win20x')}</p>
-                    <p><strong>{t('sevenSevenSeven')}:</strong> {t('win15x')}</p>
-                    <p><strong>{t('diceDiceDice')}:</strong> {t('win10x')}</p>
-                    <p><strong>{t('frogFrog')}:</strong> {t('win8x')}</p>
-                    <p><strong>{t('diamondDiamond')}:</strong> {t('win6x')}</p>
-                    <p><strong>{t('sevenSeven')}:</strong> {t('win5x')}</p>
-                    <p><strong>{t('diceDice')}:</strong> {t('win3x')}</p>
-                    <p><strong>Frog-Diamond-Seven:</strong> Win 4x</p>
-                    <p><strong>Dice-Frog-Diamond:</strong> Win 4x</p>
-                    <p><strong>Seven-Dice-Frog:</strong> Win 4x</p>
-                    <p><strong>Diamond-Seven-Dice:</strong> Win 4x</p>
-                    <p><strong>Frog-Seven-Diamond:</strong> Win 2x</p>
-                    <p><strong>Dice-Diamond-Seven:</strong> Win 2x</p>
-                    <p><strong>Seven-Frog-Dice:</strong> Win 2x</p>
-                    <p><strong>Diamond-Dice-Frog:</strong> Win 2x</p>
+                    <p><strong>{t('diamondDiamondDiamond')}:</strong> Win 8x</p>
+                    <p><strong>{t('sevenSevenSeven')}:</strong> Win 6x</p>
+                    <p><strong>{t('diceDiceDice')}:</strong> Win 4x</p>
+                    <p><strong>{t('frogFrog')}:</strong> Win 3x</p>
+                    <p><strong>{t('diamondDiamond')}:</strong> Win 2.5x</p>
+                    <p><strong>{t('sevenSeven')}:</strong> Win 2x</p>
+                    <p><strong>{t('diceDice')}:</strong> Win 1.5x</p>
+                    <p><strong>Frog-Diamond-Seven:</strong> Win 1.8x</p>
+                    <p><strong>Dice-Frog-Diamond:</strong> Win 1.8x</p>
+                    <p><strong>Seven-Dice-Frog:</strong> Win 1.8x</p>
+                    <p><strong>Diamond-Seven-Dice:</strong> Win 1.8x</p>
+                    <p><strong>Frog-Seven-Diamond:</strong> Win 1.2x</p>
+                    <p><strong>Dice-Diamond-Seven:</strong> Win 1.2x</p>
+                    <p><strong>Seven-Frog-Dice:</strong> Win 1.2x</p>
+                    <p><strong>Diamond-Dice-Frog:</strong> Win 1.2x</p>
                   </div>
                 </div>
               </div>
